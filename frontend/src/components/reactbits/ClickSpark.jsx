@@ -406,7 +406,9 @@ const ClickSpark = forwardRef(
             position: 'absolute',
             inset: 0,
             zIndex: layer === 'back' ? -1 : 1,
-            overflow: 'visible',
+            // Bursts retain their original coordinates during a viewport resize.
+            // Clip only the decorative layer so they cannot widen the document.
+            overflow: 'clip',
             pointerEvents: 'none'
           }}
         />

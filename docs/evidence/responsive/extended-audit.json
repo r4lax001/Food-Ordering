@@ -1,0 +1,1349 @@
+{
+  "checks": [
+    {
+      "width": 320,
+      "path": "/",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 320,
+      "path": "/menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 320,
+      "path": "/menu/1",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 320,
+      "path": "/cart",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 320,
+      "path": "/login",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 320,
+      "path": "/register",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 320,
+      "path": "/reservation",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 320,
+      "path": "/orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 320,
+      "path": "/reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 320,
+      "path": "/admin?section=overview",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 320,
+      "path": "/admin?section=menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 320,
+      "path": "/admin?section=categories",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 320,
+      "path": "/admin?section=tables",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 320,
+      "path": "/admin?section=orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 320,
+      "path": "/admin?section=reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 320,
+      "path": "/admin?section=users",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 360,
+      "path": "/",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 360,
+      "path": "/menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 360,
+      "path": "/menu/1",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 360,
+      "path": "/cart",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 360,
+      "path": "/login",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 360,
+      "path": "/register",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 360,
+      "path": "/reservation",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 360,
+      "path": "/orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 360,
+      "path": "/reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 360,
+      "path": "/admin?section=overview",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 360,
+      "path": "/admin?section=menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 360,
+      "path": "/admin?section=categories",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 360,
+      "path": "/admin?section=tables",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 360,
+      "path": "/admin?section=orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 360,
+      "path": "/admin?section=reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 360,
+      "path": "/admin?section=users",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 390,
+      "path": "/",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 390,
+      "path": "/menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 390,
+      "path": "/menu/1",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 390,
+      "path": "/cart",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 390,
+      "path": "/login",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 390,
+      "path": "/register",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 390,
+      "path": "/reservation",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 390,
+      "path": "/orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 390,
+      "path": "/reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 390,
+      "path": "/admin?section=overview",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 390,
+      "path": "/admin?section=menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 390,
+      "path": "/admin?section=categories",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 390,
+      "path": "/admin?section=tables",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 390,
+      "path": "/admin?section=orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 390,
+      "path": "/admin?section=reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 390,
+      "path": "/admin?section=users",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 430,
+      "path": "/",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 430,
+      "path": "/menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 430,
+      "path": "/menu/1",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 430,
+      "path": "/cart",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 430,
+      "path": "/login",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 430,
+      "path": "/register",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 430,
+      "path": "/reservation",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 430,
+      "path": "/orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 430,
+      "path": "/reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 430,
+      "path": "/admin?section=overview",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 430,
+      "path": "/admin?section=menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 430,
+      "path": "/admin?section=categories",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 430,
+      "path": "/admin?section=tables",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 430,
+      "path": "/admin?section=orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 430,
+      "path": "/admin?section=reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 430,
+      "path": "/admin?section=users",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 559,
+      "path": "/",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 559,
+      "path": "/menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 559,
+      "path": "/menu/1",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 559,
+      "path": "/cart",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 559,
+      "path": "/login",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 559,
+      "path": "/register",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 559,
+      "path": "/reservation",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 559,
+      "path": "/orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 559,
+      "path": "/reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 559,
+      "path": "/admin?section=overview",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 559,
+      "path": "/admin?section=menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 559,
+      "path": "/admin?section=categories",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 559,
+      "path": "/admin?section=tables",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 559,
+      "path": "/admin?section=orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 559,
+      "path": "/admin?section=reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 559,
+      "path": "/admin?section=users",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 600,
+      "path": "/",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 600,
+      "path": "/menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 600,
+      "path": "/menu/1",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 600,
+      "path": "/cart",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 600,
+      "path": "/login",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 600,
+      "path": "/register",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 600,
+      "path": "/reservation",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 600,
+      "path": "/orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 600,
+      "path": "/reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 600,
+      "path": "/admin?section=overview",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 600,
+      "path": "/admin?section=menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 600,
+      "path": "/admin?section=categories",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 600,
+      "path": "/admin?section=tables",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 600,
+      "path": "/admin?section=orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 600,
+      "path": "/admin?section=reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 600,
+      "path": "/admin?section=users",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 767,
+      "path": "/",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 767,
+      "path": "/menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 767,
+      "path": "/menu/1",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 767,
+      "path": "/cart",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 767,
+      "path": "/login",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 767,
+      "path": "/register",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 767,
+      "path": "/reservation",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 767,
+      "path": "/orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 767,
+      "path": "/reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 767,
+      "path": "/admin?section=overview",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 767,
+      "path": "/admin?section=menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 767,
+      "path": "/admin?section=categories",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 767,
+      "path": "/admin?section=tables",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 767,
+      "path": "/admin?section=orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 767,
+      "path": "/admin?section=reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 767,
+      "path": "/admin?section=users",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 768,
+      "path": "/",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 768,
+      "path": "/menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 768,
+      "path": "/menu/1",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 768,
+      "path": "/cart",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 768,
+      "path": "/login",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 768,
+      "path": "/register",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 768,
+      "path": "/reservation",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 768,
+      "path": "/orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 768,
+      "path": "/reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 768,
+      "path": "/admin?section=overview",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 768,
+      "path": "/admin?section=menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 768,
+      "path": "/admin?section=categories",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 768,
+      "path": "/admin?section=tables",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 768,
+      "path": "/admin?section=orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 768,
+      "path": "/admin?section=reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 768,
+      "path": "/admin?section=users",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 820,
+      "path": "/",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 820,
+      "path": "/menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 820,
+      "path": "/menu/1",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 820,
+      "path": "/cart",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 820,
+      "path": "/login",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 820,
+      "path": "/register",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 820,
+      "path": "/reservation",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 820,
+      "path": "/orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 820,
+      "path": "/reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 820,
+      "path": "/admin?section=overview",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 820,
+      "path": "/admin?section=menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 820,
+      "path": "/admin?section=categories",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 820,
+      "path": "/admin?section=tables",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 820,
+      "path": "/admin?section=orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 820,
+      "path": "/admin?section=reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 820,
+      "path": "/admin?section=users",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1024,
+      "path": "/",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1024,
+      "path": "/menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1024,
+      "path": "/menu/1",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1024,
+      "path": "/cart",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1024,
+      "path": "/login",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1024,
+      "path": "/register",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1024,
+      "path": "/reservation",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1024,
+      "path": "/orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1024,
+      "path": "/reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1024,
+      "path": "/admin?section=overview",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1024,
+      "path": "/admin?section=menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1024,
+      "path": "/admin?section=categories",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1024,
+      "path": "/admin?section=tables",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1024,
+      "path": "/admin?section=orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1024,
+      "path": "/admin?section=reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1024,
+      "path": "/admin?section=users",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1280,
+      "path": "/",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1280,
+      "path": "/menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1280,
+      "path": "/menu/1",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1280,
+      "path": "/cart",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1280,
+      "path": "/login",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1280,
+      "path": "/register",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1280,
+      "path": "/reservation",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1280,
+      "path": "/orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1280,
+      "path": "/reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1280,
+      "path": "/admin?section=overview",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1280,
+      "path": "/admin?section=menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1280,
+      "path": "/admin?section=categories",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1280,
+      "path": "/admin?section=tables",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1280,
+      "path": "/admin?section=orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1280,
+      "path": "/admin?section=reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1280,
+      "path": "/admin?section=users",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1440,
+      "path": "/",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1440,
+      "path": "/menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1440,
+      "path": "/menu/1",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1440,
+      "path": "/cart",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1440,
+      "path": "/login",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1440,
+      "path": "/register",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1440,
+      "path": "/reservation",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1440,
+      "path": "/orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1440,
+      "path": "/reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1440,
+      "path": "/admin?section=overview",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1440,
+      "path": "/admin?section=menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1440,
+      "path": "/admin?section=categories",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1440,
+      "path": "/admin?section=tables",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1440,
+      "path": "/admin?section=orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1440,
+      "path": "/admin?section=reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1440,
+      "path": "/admin?section=users",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1920,
+      "path": "/",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1920,
+      "path": "/menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1920,
+      "path": "/menu/1",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1920,
+      "path": "/cart",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1920,
+      "path": "/login",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1920,
+      "path": "/register",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1920,
+      "path": "/reservation",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1920,
+      "path": "/orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1920,
+      "path": "/reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1920,
+      "path": "/admin?section=overview",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1920,
+      "path": "/admin?section=menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1920,
+      "path": "/admin?section=categories",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1920,
+      "path": "/admin?section=tables",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1920,
+      "path": "/admin?section=orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1920,
+      "path": "/admin?section=reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 1920,
+      "path": "/admin?section=users",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 2560,
+      "path": "/",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 2560,
+      "path": "/menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 2560,
+      "path": "/menu/1",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 2560,
+      "path": "/cart",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 2560,
+      "path": "/login",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 2560,
+      "path": "/register",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 2560,
+      "path": "/reservation",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 2560,
+      "path": "/orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 2560,
+      "path": "/reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 2560,
+      "path": "/admin?section=overview",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 2560,
+      "path": "/admin?section=menu",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 2560,
+      "path": "/admin?section=categories",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 2560,
+      "path": "/admin?section=tables",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 2560,
+      "path": "/admin?section=orders",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 2560,
+      "path": "/admin?section=reservations",
+      "overflow": false,
+      "bad": []
+    },
+    {
+      "width": 2560,
+      "path": "/admin?section=users",
+      "overflow": false,
+      "bad": []
+    }
+  ],
+  "errors": []
+}

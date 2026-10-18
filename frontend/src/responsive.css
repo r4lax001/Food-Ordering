@@ -1098,7 +1098,8 @@ footer.admin-footer-minimal {
 .home-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
 .home-actions .btn { min-height: 48px; gap: 8px; font-size: 15px; }
 .home-service-note { display: block; margin-top: 12px; color: #897969; font-size: 12px; }
-.home-compact .hero-art { width: 100%; max-width: 480px; height: 340px; justify-self: center; }
+.home-compact .hero-art { width: 100%; max-width: 480px; height: 380px; justify-self: center; margin-block: 16px; }
+.home-compact .hero-art .food3d { padding-block: 16px; box-sizing: border-box; }
 .home-compact .hero-circle { max-height: 100%; width: auto; height: 100%; aspect-ratio: 1; }
 .home-compact .home-menu { margin-top: 0; }
 .home-compact .home-menu .section-title > a {
@@ -1123,9 +1124,11 @@ footer.admin-footer-minimal {
 .home-compact .home-menu .food-card:last-child { grid-column: auto; }
 @media (max-width: 600px) {
   .home-compact .hero { grid-template-columns: minmax(0, 1fr); padding: 24px 0 16px; gap: 8px; }
+  .home-compact .hero-copy { text-align: center; }
+  .home-compact .home-actions { justify-content: center; }
   .home-actions { gap: 10px; margin-top: 20px; }
   .home-actions .btn { flex: 1; padding: 12px 10px; }
-  .home-compact .hero-art { height: 220px; max-width: 320px; }
+  .home-compact .hero-art { height: 300px; max-width: 360px; margin-block: 24px 16px; }
   .home-compact .food-grid { grid-template-columns: minmax(0, 1fr); }
   .home-compact .home-menu .food-card { display: grid; grid-template-columns: 100px minmax(0, 1fr); align-items: center; }
   .home-compact .home-menu .food-image { height: 100%; min-height: 118px; }

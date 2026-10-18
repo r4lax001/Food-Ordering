@@ -66,12 +66,12 @@ export function Feedback({ loading, error, empty = false, reload }) {
     </div>
   ) : null;
 }
-export function SectionTitle({ title, to = "/menu", label = "ดูทั้งหมด" }) {
+export function SectionTitle({ title, to = "/menu", label = "ดูทั้งหมด", linkColor = "#F45B0B" }) {
   return (
     <div className="section-title">
       <AnimatedHeading as="h2">{title}</AnimatedHeading>
       <Link to={to}>
-        <ShinyText text={label} color="#F45B0B" shineColor="#ffd9a8" speed={3.2} />{" "}
+        <ShinyText text={label} color={linkColor} shineColor="#ffd9a8" speed={3.2} />{" "}
         <ArrowUpRight size={15} />
       </Link>
     </div>

@@ -1,3 +1,4 @@
+import { SiteHeader, BottomDock } from "./components/Navigation";
 import AnimatedHeading from "./components/AnimatedHeading";
 import React, { useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
@@ -36,37 +37,8 @@ import ClickSpark from "./components/reactbits/ClickSpark";
 import { Dialog } from "@base-ui/react/dialog";
 import "./styles.css";
 import "./responsive.css";
-
-function NavigationLinks({ user, onNavigate }) {
-  return (
-    <>
-      <NavLink to="/" onClick={onNavigate}>
-        หน้าหลัก
-      </NavLink>
-      <NavLink to="/menu" onClick={onNavigate}>
-        เมนูอาหาร
-      </NavLink>
-      <NavLink to="/reservation" onClick={onNavigate}>
-        จองโต๊ะ
-      </NavLink>
-      {user && (
-        <>
-          <NavLink to="/orders" onClick={onNavigate}>
-            รายการสั่งซื้อ
-          </NavLink>
-          <NavLink to="/reservations" onClick={onNavigate}>
-            การจองของฉัน
-          </NavLink>
-        </>
-      )}
-      {user?.role === "admin" && (
-        <NavLink to="/admin" onClick={onNavigate}>
-          จัดการร้าน
-        </NavLink>
-      )}
-    </>
-  );
-}
+import "./navigation.css";
+import "./menu-cards.css";
 
 function Protected({ children, admin = false }) {
   const { user, ready } = useStore();
@@ -78,19 +50,9 @@ function Protected({ children, admin = false }) {
   return children;
 }
 function App() {
-  const { user, cart, logout, notice } = useStore(),
-    [mobile, setMobile] = useState(false);
+  const { notice } = useStore();
   const location = useLocation();
   useEffect(() => {
-    const desktop = window.matchMedia("(min-width: 1280px)");
-    const closeOnDesktop = () => {
-      if (desktop.matches) setMobile(false);
-    };
-    desktop.addEventListener("change", closeOnDesktop);
-    return () => desktop.removeEventListener("change", closeOnDesktop);
-  }, []);
-  useEffect(() => {
-    setMobile(false);
     window.scrollTo(0, 0);
     const names = {
       "/": "หน้าหลัก",
@@ -112,90 +74,7 @@ function App() {
         <Heart size={12} />
       </div>
       <div className="site-shell">
-        <header>
-          <Brand />
-          <nav className="desktop-nav" aria-label="เมนูหลัก">
-            <NavigationLinks user={user} />
-          </nav>
-          <div className="header-actions">
-            <Link
-              className="cart-icon"
-              to="/cart"
-              aria-label={`ตะกร้าของฉัน ${cart.reduce((s, i) => s + i.quantity, 0)} รายการ`}
-            >
-              <ShoppingBag size={21} />
-              {cart.length > 0 && (
-                <b>{cart.reduce((s, i) => s + i.quantity, 0)}</b>
-              )}
-            </Link>
-            {user ? (
-              <button className="account" onClick={logout} title="ออกจากระบบ">
-                <span>{user.name.split(" ")[0]}</span>
-                <LogOut size={16} />
-              </button>
-            ) : (
-              <Link className="btn small header-login" to="/login">
-                เข้าสู่ระบบ <ArrowUpRight size={14} />
-              </Link>
-            )}
-            <Dialog.Root open={mobile} onOpenChange={setMobile}>
-              <Dialog.Trigger className="mobile-toggle" aria-label="เปิดเมนู">
-                <MenuIcon />
-              </Dialog.Trigger>
-              <Dialog.Portal>
-                <Dialog.Backdrop className="menu-backdrop" />
-                <Dialog.Popup className="mobile-menu">
-                  <div className="mobile-menu-heading">
-                    <Dialog.Title>เมนูพุงป่อง</Dialog.Title>
-                    <Dialog.Close className="icon-button" aria-label="ปิดเมนู">
-                      <X />
-                    </Dialog.Close>
-                  </div>
-                  <Dialog.Description>
-                    หิวเมื่อไหร่ พุงป่องจัดให้
-                  </Dialog.Description>
-                  <nav className="drawer-nav" aria-label="เมนูมือถือ">
-                    <NavigationLinks
-                      user={user}
-                      onNavigate={() => setMobile(false)}
-                    />
-                  </nav>
-                  <Link
-                    className="btn full"
-                    to="/cart"
-                    onClick={() => setMobile(false)}
-                  >
-                    <ShoppingBag size={18} />
-                    ตะกร้าของฉัน
-                  </Link>
-                  {user ? (
-                    <button
-                      className="btn secondary full"
-                      onClick={() => {
-                        logout();
-                        setMobile(false);
-                      }}
-                    >
-                      <LogOut size={18} />
-                      ออกจากระบบ
-                    </button>
-                  ) : (
-                    <Link
-                      className="btn secondary full"
-                      to="/login"
-                      onClick={() => setMobile(false)}
-                    >
-                      เข้าสู่ระบบ / สมัครสมาชิก
-                    </Link>
-                  )}
-                  <p className="mobile-menu-note">
-                    อิ่มอร่อย ส่งไว ถูกใจทุกมื้อ
-                  </p>
-                </Dialog.Popup>
-              </Dialog.Portal>
-            </Dialog.Root>
-          </div>
-        </header>
+        <SiteHeader />
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -262,6 +141,7 @@ function App() {
           </footer>
         )}
       </div>
+      <BottomDock />
       {notice && (
         <div className="toast" role="status">
           {notice}

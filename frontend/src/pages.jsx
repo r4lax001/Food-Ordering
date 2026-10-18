@@ -1,3 +1,4 @@
+import CategoryPicker from "./components/CategoryPicker";
 import AnimatedHeading from "./components/AnimatedHeading";
 import React, { useState, useEffect } from "react";
 import {
@@ -45,6 +46,9 @@ import {
 
 export function Home() {
   const menus = useData("/menu?limit=100");
+  const categories = useData("/categories?limit=100");
+  const [category, setCategory] = useState("");
+  const featured = menus.data.filter(item => !category || String(item.category_id) === category).slice(0, 4);
   return (
     <div className="home-grid home-compact">
       <div className="home-main">
@@ -68,12 +72,14 @@ export function Home() {
           </div>
         </section>
         <section className="home-menu">
-          <SectionTitle title="เมนูแนะนำ" label="ดูเมนูทั้งหมด" />
+          <CategoryPicker categories={categories.data} value={category} onChange={setCategory} />
+          <Feedback loading={categories.loading} error={categories.error} reload={categories.reload} />
+          <SectionTitle title="เมนูแนะนำ" label="ดูเมนูทั้งหมด" linkColor="#ffffff" />
           <Feedback loading={menus.loading} error={menus.error} reload={menus.reload}
-            empty={!menus.loading && !menus.error && menus.data.length === 0} />
+            empty={!menus.loading && !menus.error && featured.length === 0} />
           <AnimatedContent distance={50} duration={0.9}>
             <div className="food-grid">
-              {menus.data.slice(0, 3).map((m) => <FoodCard key={m.id} item={m} />)}
+              {featured.map((m) => <FoodCard key={m.id} item={m} />)}
             </div>
           </AnimatedContent>
         </section>
@@ -115,23 +121,8 @@ export function MenuPage() {
             }
           />
         </label>
-        <div className="filter-row">
-          <button
-            className={!category ? "active" : ""}
-            onClick={() => setParams({ q: query })}
-          >
-            ทั้งหมด
-          </button>
-          {categories.data.map((c) => (
-            <button
-              className={category === String(c.id) ? "active" : ""}
-              key={c.id}
-              onClick={() => setParams({ q: query, category: c.id })}
-            >
-              {c.name}
-            </button>
-          ))}
-        </div>
+        <CategoryPicker categories={categories.data} value={category}
+          onChange={value => setParams({ q: query, ...(value ? {category: value} : {}) })} />
       </div>
       <Feedback
         loading={loading}

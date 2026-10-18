@@ -231,7 +231,7 @@ const BlurText = ({
     words.forEach((word, w) => {
       const isLast = w === words.length - 1;
       if (animateBy === 'words') {
-        list.push({ word: w, content: isLast ? word : `${word}\u00A0`, key: `word-${w}` });
+        list.push({ word: w, content: word, key: `word-${w}` });
         return;
       }
       Array.from(word).forEach((char, c) => list.push({ word: w, content: char, key: `char-${w}-${c}` }));

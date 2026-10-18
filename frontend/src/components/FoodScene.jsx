@@ -512,15 +512,17 @@ function Sparkles({ active, reduced }) {
   }, []);
   const stars = useMemo(
     () =>
-      Array.from({ length: 12 }, (_, i) => {
+      Array.from({ length: 16 }, (_, i) => {
         const a = i * 2.39996 + 0.7;
         const r = 1.75 + noise(i + 2) * 0.85;
         return {
           pos: [Math.cos(a) * r, 0.5 + noise(i) * 2.15, Math.sin(a) * r * 0.9],
-          dur: 2 + noise(i + 3) * 2.2,
-          phase: noise(i + 5),
-          size: 0.15 + noise(i + 7) * 0.18,
+          dur: 2.6 + noise(i + 3) * 1.9,
+          phase: (i * 0.618034) % 1,
+          size: 0.19 + noise(i + 7) * 0.23,
           rot: noise(i + 9) * Math.PI,
+          color: i % 2 ? "#f4f7ff" : "#ffd27a",
+          base: 0.3 + noise(i + 11) * 0.14,
         };
       }),
     []
@@ -532,20 +534,26 @@ function Sparkles({ active, reduced }) {
         const sprite = group.current.children[i];
         sprite.position.set(s.pos[0], s.pos[1], s.pos[2]);
         sprite.scale.setScalar(s.size);
-        sprite.material.opacity = 0.32;
+        sprite.material.opacity = 0.45;
         sprite.material.rotation = s.rot;
       });
       return;
     }
     time.current += delta;
+    group.current.rotation.y += delta * 0.05;
     stars.forEach((s, i) => {
       const sprite = group.current.children[i];
       const k = (time.current / s.dur + s.phase) % 1;
-      const o = Math.sin(k * Math.PI);
-      sprite.position.set(s.pos[0], s.pos[1], s.pos[2]);
-      sprite.scale.setScalar(s.size * (0.4 + o * 1.15));
-      sprite.material.opacity = Math.pow(o, 1.4) * 0.95;
-      sprite.material.rotation = s.rot + time.current * 0.3;
+      // Slow twinkle but never fully dark: a base glow plus a bright peak.
+      const o = s.base + (1 - s.base) * Math.sin(k * Math.PI) ** 1.2;
+      sprite.position.set(
+        s.pos[0],
+        s.pos[1] + Math.sin(time.current * 0.9 + i * 1.7) * 0.06,
+        s.pos[2]
+      );
+      sprite.scale.setScalar(s.size * (0.65 + o * 0.75));
+      sprite.material.opacity = Math.min(1, o * 1.05);
+      sprite.material.rotation = s.rot + time.current * 0.25;
     });
     state.invalidate();
   });
@@ -553,7 +561,7 @@ function Sparkles({ active, reduced }) {
     <group ref={group}>
       {stars.map((s, i) => (
         <sprite key={i}>
-          <spriteMaterial map={texture} color="#ffce7a" transparent depthWrite={false} opacity={0} />
+          <spriteMaterial map={texture} color={s.color} transparent depthWrite={false} opacity={0} />
         </sprite>
       ))}
     </group>
@@ -646,8 +654,8 @@ const Meal = memo(function Meal({ progress, active, reduced }) {
 function FitView() {
   const { camera, size, invalidate } = useThree();
   useEffect(() => {
-    // Keep the wide cloche composition inside narrow mobile canvases.
-    camera.fov = Math.max(36, 2 * Math.atan(4.3 / (8.6 * (size.width / size.height))) * 180 / Math.PI);
+    // Reserve vertical room for the open lid as well as the plate and utensils.
+    camera.fov = Math.max(44, 2 * Math.atan(4.3 / (8.6 * (size.width / size.height))) * 180 / Math.PI);
     camera.updateProjectionMatrix();
     invalidate();
   }, [camera, size.width, size.height, invalidate]);

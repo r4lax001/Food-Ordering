@@ -1,0 +1,86 @@
+/* Fixed navigation lives outside the clipped page shell. */
+body { padding-bottom: calc(112px + env(safe-area-inset-bottom)); }
+html { scroll-padding-bottom: 128px; }
+.dock-header { justify-content: space-between; min-height: 84px; }
+.dock-header .header-actions { gap: 8px; }
+.profile-trigger, .header-signout, .dock-login {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  min-height: 44px; min-width: 44px; padding: 10px 14px; border: 1px solid #f0dfce;
+  border-radius: 16px; background: #fff5e9; color: #713d21; font: inherit; font-size: 13px;
+}
+.profile-trigger span { max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.account-details { overflow-wrap: anywhere; }
+.account-panel .drawer-nav a { display: flex; gap: 10px; align-items: center; }
+.bottom-dock {
+  position: fixed; z-index: 90; bottom: calc(16px + env(safe-area-inset-bottom));
+  left: 50%; transform: translateX(-50%); margin: 0;
+  width: min(440px, calc(100% - 40px)); display: grid;
+  grid-template-columns: 1fr 1fr 1.25fr 1fr 1fr; align-items: center;
+  gap: 6px; padding: 9px 12px; border: 1px solid #ffffff;
+  border-radius: 32px; background: #fffaf3f2; backdrop-filter: blur(18px);
+  box-shadow: 0 10px 36px #64422124, inset 0 1px 0 #fff;
+}
+.bottom-dock > a {
+  position: relative; min-width: 0; min-height: 58px; display: flex;
+  flex-direction: column; justify-content: center; align-items: center; gap: 5px;
+  padding: 6px 2px; border-radius: 20px; color: #857464; font-size: 11px;
+  text-decoration: none; white-space: nowrap; line-height: 1.4;
+}
+.bottom-dock > a > svg { width: 24px; height: 24px; stroke-width: 1.7; }
+.bottom-dock > a::after { display: none; }
+.bottom-dock > a:hover, .bottom-dock > a.active { color: #a73b00; background: #ffe8d5; }
+.bottom-dock > a.active { font-weight: 700; }
+.bottom-dock > a.dock-cart {
+  color: white; min-height: 64px; background: linear-gradient(145deg, #ef6a18, #c84600);
+  border: 1px solid #ffb47d; box-shadow: 0 5px 16px #e65c0040, inset 0 1px 2px #ffffff80;
+  border-radius: 24px; font-size: 12px; font-weight: 600;
+}
+.bottom-dock > a.dock-cart.active { background: linear-gradient(145deg,#d95009,#a43600); box-shadow: 0 0 0 3px #ffd9b9; }
+.bottom-dock .dock-count { position: absolute; top: 1px; right: 12%; border-radius: 20px; padding: 2px 5px; background: #bf3a00; color: white; font-size: 10px; line-height: 1.2; }
+.bottom-dock > a:focus-visible, .profile-trigger:focus-visible, .header-signout:focus-visible, .dock-login:focus-visible { outline: 3px solid #bd4800; outline-offset: 3px; }
+.toast { bottom: calc(112px + env(safe-area-inset-bottom)); }
+@media (max-width: 600px) {
+  .dock-header { padding: 14px 16px; min-height: 76px; gap: 12px; }
+  .profile-trigger span { display: none; }
+  .dock-header .header-actions { gap: 6px; }
+  .bottom-dock { gap: 2px; padding: 7px; bottom: calc(10px + env(safe-area-inset-bottom)); border-radius: 27px; }
+  .bottom-dock > a { font-size: 10px; }
+  .bottom-dock > a.dock-cart { font-size: 11px; }
+}
+@media (max-height: 450px) and (orientation: landscape) {
+  .bottom-dock { bottom: calc(6px + env(safe-area-inset-bottom)); padding: 4px 10px; }
+  .bottom-dock > a { min-height: 46px; gap: 2px; }
+  .bottom-dock > a.dock-cart { min-height: 50px; }
+}
+
+.bottom-dock .dock-cart .dock-count { background: #fff; color: #a73b00; border: 1px solid #f4c3a5; top: -3px; right: 3px; }
+
+.top-navigation { display: none; }
+@media (min-width: 1024px) {
+  body { padding-bottom: 0; }
+  html { scroll-padding-bottom: 24px; }
+  .bottom-dock { display: none; }
+  .toast { bottom: 24px; }
+  .dock-header { gap: 20px; }
+  .dock-header .top-navigation {
+    display: flex; align-items: center; justify-content: center;
+    flex: 1; min-width: 0; gap: 6px; margin: 0;
+  }
+  .top-navigation > a {
+    display: inline-flex; align-items: center; gap: 7px;
+    position: relative; min-height: 44px; padding: 10px 12px;
+    border-radius: 12px; color: #806b59; font-size: 13px;
+    white-space: nowrap; text-decoration: none;
+  }
+  .top-navigation > a > svg { width: 19px; height: 19px; }
+  .top-navigation > a::after { display: none; }
+  .top-navigation > a:hover, .top-navigation > a.active { background: #fff0df; color: #a73b00; }
+  .top-navigation > a.active { font-weight: 600; }
+  .top-navigation > a:focus-visible { outline: 3px solid #bd4800; outline-offset: 3px; }
+  .top-navigation .dock-count { border-radius: 12px; padding: 2px 5px; background: #bf3a00; color: white; font-size: 10px; }
+}
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .dock-header .profile-trigger span { display: none; }
+  .dock-header .top-navigation { gap: 2px; }
+  .top-navigation > a { padding-inline: 8px; gap: 5px; font-size: 12px; }
+}
