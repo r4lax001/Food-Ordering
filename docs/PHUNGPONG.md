@@ -74,3 +74,19 @@ frontend/src/main.jsx: layout/navigation/routes; pages.jsx: ลูกค้า; 
 รันทดสอบซ้ำ: `npm --prefix frontend run test:responsive` (เปิด API/MySQL/frontend และมี Chrome ติดตั้ง)
 
 [ผลตรวจ 146 รายการ](evidence/responsive/checks.json) · [มือถือ](evidence/responsive/home-390.png) · [แท็บเล็ต](evidence/responsive/home-768.png) · [เดสก์ท็อป](evidence/responsive/home-1440.png) · [ตะกร้า](evidence/responsive/cart-390.png) · [รายละเอียด ReUI และที่มา](../frontend/REUI.md)
+
+## ตกแต่งด้วย React Bits — 18 ตุลาคม 2569
+
+เพิ่มคอมโพเนนต์จาก [React Bits](https://reactbits.dev) รุ่นฟรี (สัญญาอนุญาต MIT + Commons Clause ดูที่ `frontend/src/components/reactbits/LICENSE.md`) เก็บซอร์สโค้ดไว้ในโปรเจกต์ที่ `frontend/src/components/reactbits/` ปรับเล็กน้อย 2 จุดคือ BlurText เรนเดอร์เป็น `<span>` แทน `<p>` เพื่อไม่ให้โดนสไตล์ย่อหน้าของเว็บและไม่ผิดหลัก HTML ใน h1/h2 และเปลี่ยน display เป็น inline-flex ให้ข้อความไหลบรรทัดเดียวกัน
+
+- ClickSpark — ประกายสีส้มพุ่งทุกครั้งที่คลิก ครอบทั้งแอปใน `main.jsx`
+- BlurText (ผ่าน `AnimatedHeading`) — หัวข้อทุกหน้าค่อย ๆ เบลอเข้ามา
+- GradientText — คำว่า "พุงป่อง" ใน hero หน้าแรกเป็นเกรเดียนต์ส้มไหล
+- StarBorder — ปุ่ม CTA หลัก (จองโต๊ะ / สั่งอาหาร / เพิ่มลงตะกร้า / ยืนยันคำสั่งซื้อ) มีดาววิ่งรอบขอบ
+- ShinyText — ลิงก์ "ดูทั้งหมด" และหัวข้อเล่า (eyebrow) มีแสงวาบ
+- AnimatedContent — ส่วนเมนูแนะนำ ตะกร้า ฟอร์มจองโต๊ะ เลื่อนเข้าฉากเมื่อ scroll
+- CountUp — ตัวเลขสถิติบนแดชบอร์ดผู้ดูแลนับจาก 0
+
+dependencies เพิ่ม: `gsap`, `@gsap/react` (SplitText/AnimatedContent), `motion` (BlurText/CountUp) — ติดตั้งแล้วใน `frontend/package.json` ทุกคอมโพเนนต์เคารพ `prefers-reduced-motion` ยกเว้นการหมุนเพลาของจาน 3D ที่เจ้าของเว็บกำหนดให้หมุนตลอด
+
+ผลตรวจ: production build ผ่าน, Playwright responsive 146 จุดผ่าน, `frontend/tests/food3d.mjs` ผ่าน (ปรับ locator เป็น `.food3d-stage canvas` เพราะปุ่ม StarBorder มี canvas ของตัวเอง)

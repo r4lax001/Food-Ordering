@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-17T11:46:14.850Z",
+  "date": "2026-10-18T08:38:43.777Z",
   "runner": "Newman (Postman collection)",
   "requests": 74,
   "assertions": 79,
@@ -539,12 +539,12 @@
       ]
     },
     {
-      "name": "48 Create table",
+      "name": "48 Admin cannot add table",
       "method": "POST",
-      "status": 201,
+      "status": 403,
       "assertions": [
         {
-          "name": "HTTP 201",
+          "name": "HTTP 403",
           "passed": true
         }
       ]
@@ -573,7 +573,7 @@
     },
     {
       "name": "51 Invalid capacity",
-      "method": "POST",
+      "method": "PUT",
       "status": 400,
       "assertions": [
         {

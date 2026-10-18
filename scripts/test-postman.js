@@ -15,7 +15,8 @@ const admin = JSON.parse(await readFile('.local/demo-admin.json','utf8'));
 const server = app.listen(0,'127.0.0.1');
 await once(server,'listening');
 const [[adminUser]] = await pool.execute('SELECT id FROM users WHERE email=?',[admin.email]);
-const settings = {base_url:`http://127.0.0.1:${server.address().port}`,admin_email:admin.email,admin_password:admin.password,invalid_token:'invalid-token',expired_token:jwt.sign({},config.JWT_SECRET,{subject:String(adminUser.id),issuer:'food-service',audience:'food-client',expiresIn:-60})};
+const [tableFixture] = await pool.execute('INSERT INTO `tables` (table_number, capacity) VALUES (?, ?)', ['QA' + Date.now(), 4]);
+const settings = {final_table_id:String(tableFixture.insertId),base_url:`http://127.0.0.1:${server.address().port}`,admin_email:admin.email,admin_password:admin.password,invalid_token:'invalid-token',expired_token:jwt.sign({},config.JWT_SECRET,{subject:String(adminUser.id),issuer:'food-service',audience:'food-client',expiresIn:-60})};
 for (const [key,value] of Object.entries(settings)) { const old=environment.values.find(v=>v.key===key); if(old) old.value=value; else environment.values.push({key,value,enabled:true}); }
 function redact(value) {
   if(Array.isArray(value)) return value.map(redact);
@@ -36,4 +37,9 @@ try {
   await writeFile('postman/Final-Acceptance.postman_collection.json',JSON.stringify(collection,null,2));
   console.log(JSON.stringify({requests:evidence.requests,assertions:evidence.assertions,failures:evidence.failures},null,2));
   if(evidence.failures.length) process.exitCode=1;
-} finally { await new Promise(resolve=>server.close(resolve)); await pool.end(); }
+} finally {
+  try {
+    await pool.execute('DELETE FROM reservations WHERE table_id=?', [tableFixture.insertId]);
+    await pool.execute('DELETE FROM `tables` WHERE id=?', [tableFixture.insertId]);
+  } finally { await new Promise(resolve=>server.close(resolve)); await pool.end(); }
+}

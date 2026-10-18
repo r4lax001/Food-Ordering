@@ -1,3 +1,4 @@
+import AnimatedHeading from "./components/AnimatedHeading";
 import React, { useState, useEffect } from "react";
 import {
   Link,
@@ -8,10 +9,8 @@ import {
 } from "react-router-dom";
 import {
   ArrowRight,
-  ArrowUpRight,
   Search,
   Clock,
-  Leaf,
   Utensils,
   CalendarDays,
   Heart,
@@ -21,16 +20,19 @@ import {
   Trash2,
   ChevronLeft,
   ShoppingBag,
-  Flame,
-  ChefHat,
   MapPin,
 } from "lucide-react";
 import { useStore, useData } from "./state";
 import { api, errorText } from "./services/api";
 import { FoodImage, FoodCard, SectionTitle, Feedback } from "./components";
+import TablePicker from "./components/TablePicker";
 import Food3D from "./components/Food3D";
 import { money, photos, photoFor, categoryPhoto, thaiDate, statusText } from "./utils";
 import { Badge } from "./components/reui/badge";
+import GradientText from "./components/reactbits/GradientText";
+import ShinyText from "./components/reactbits/ShinyText";
+import StarBorder from "./components/reactbits/StarBorder";
+import AnimatedContent from "./components/reactbits/AnimatedContent";
 import {
   NumberField,
   NumberFieldGroup,
@@ -42,200 +44,40 @@ import {
 
 
 export function Home() {
-  const menus = useData("/menu?limit=100"),
-    categories = useData("/categories?limit=100");
-  const [q, setQ] = useState("");
-  const navigate = useNavigate();
+  const menus = useData("/menu?limit=100");
   return (
-    <div className="home-grid">
+    <div className="home-grid home-compact">
       <div className="home-main">
         <section className="hero">
           <div className="hero-copy">
-            <span className="pill">
-              <Flame size={14} /> อร่อยทุกคำ อิ่มใจทุกมื้อ
-            </span>
-            <h1>
-              หิวเมื่อไหร่
-              <br />
-              <span>พุงป่อง</span>จัดให้<span className="hero-dot">.</span>
-            </h1>
-            <p>
-              อาหารตามสั่ง ปรุงสดใหม่ทุกจาน
-              <br />
-              ครบทั้งข้าวจานโปรด ต้มแกง และเครื่องดื่มสดชื่น
-            </p>
-            <form
-              className="hero-search"
-              onSubmit={(e) => {
-                e.preventDefault();
-                navigate(`/menu?q=${encodeURIComponent(q)}`);
-              }}
-            >
-              <Search size={19} />
-              <input
-                aria-label="ค้นหาเมนูที่อยากกิน"
-                placeholder="วันนี้อยากกินอะไรดี?"
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
-              />
-              <button className="btn" aria-label="ค้นหาอาหาร">
-                <ArrowRight size={20} />
-              </button>
-            </form>
-            <div className="hero-proof">
-              <div className="proof-icon">
-                <ChefHat size={25} />
-              </div>
-              <div>
-                <strong>ปรุงด้วยใจ เสิร์ฟด้วยรอยยิ้ม</strong>
-                <small>สดใหม่จากครัวพุงป่องทุกวัน</small>
-              </div>
+            <AnimatedHeading>หิวเมื่อไหร่<br /><span><GradientText colors={["#F45B0B", "#ff9a3d", "#ffb37a", "#F45B0B"]} variant="flow" animationSpeed={5} glow={0.25}>พุงป่อง</GradientText>จัดให้</span></AnimatedHeading>
+            <p>อาหารตามสั่ง ปรุงสดทุกจาน</p>
+            <div className="home-actions">
+              <StarBorder as={Link} to="/reservation" backgroundColor="#F45B0B" textColor="#fff8ef" color="#ffd9a8" trailColor="#ffe9cf" thickness={1.4} radius={12} duration={4.5} glow={0.5} sparkle>
+                <CalendarDays size={19} /> จองโต๊ะ
+              </StarBorder>
+              <StarBorder as={Link} to="/menu" backgroundColor="#fff4e6" textColor="#7c3a12" color="#F45B0B" trailColor="#ff9a3d" thickness={1.2} radius={12} duration={5.5} glow={0.35}>
+                <Utensils size={19} /> สั่งอาหาร
+              </StarBorder>
             </div>
+            <small className="home-service-note">สั่งล่วงหน้า รับและชำระเงินที่ร้าน</small>
           </div>
           <div className="hero-art">
             <div className="hero-circle" aria-hidden="true" />
             <Food3D />
           </div>
         </section>
-        <section className="category-section">
-          <SectionTitle title="หมวดหมู่อาหาร" />
-          <div className="category-row">
-            <Link to="/menu" className="category-tile selected">
-              <FoodImage src={photos.hero} alt="อาหารทั้งหมด" />
-              <strong>ทั้งหมด</strong>
-            </Link>
-            {categories.data.map((c) => (
-              <Link
-                key={c.id}
-                className="category-tile"
-                to={`/menu?category=${c.id}`}
-              >
-                <FoodImage
-                  src={categoryPhoto(c.name)}
-                  alt={c.name}
-                />
-                <strong>{c.name}</strong>
-              </Link>
-            ))}
-          </div>
-          <Feedback
-            loading={categories.loading}
-            error={categories.error}
-            reload={categories.reload}
-          />
-        </section>
-        <section className="reservation-banner">
-          <div className="plate-art">
-            <div>
-              <Utensils size={45} />
-              <span>อิ่มพร้อมหน้า</span>
-            </div>
-            <Leaf className="leaf" size={48} />
-          </div>
-          <div>
-            <span className="eyebrow orange">โต๊ะโปรด มื้อพิเศษ</span>
-            <h2>
-              อร่อยด้วยกัน
-              <br />
-              ยิ่งพุงป่องกว่าเดิม
-            </h2>
-            <p>
-              ชวนคนโปรดมาเจอกัน
-              <br />
-              เลือกวัน เวลา และโต๊ะที่ใช่ล่วงหน้า
-            </p>
-            <Link className="btn dark" to="/reservation">
-              จองโต๊ะเลย <ArrowUpRight size={17} />
-            </Link>
-          </div>
-          <span className="banner-flower">✳</span>
-        </section>
         <section className="home-menu">
-          <SectionTitle title="วันนี้กินอะไรดี?" />
-          <Feedback
-            loading={menus.loading}
-            error={menus.error}
-            reload={menus.reload}
-          />
-          <div className="food-grid">
-            {menus.data.slice(0, 3).map((m) => (
-              <FoodCard key={m.id} item={m} />
-            ))}
-          </div>
+          <SectionTitle title="เมนูแนะนำ" label="ดูเมนูทั้งหมด" />
+          <Feedback loading={menus.loading} error={menus.error} reload={menus.reload}
+            empty={!menus.loading && !menus.error && menus.data.length === 0} />
+          <AnimatedContent distance={50} duration={0.9}>
+            <div className="food-grid">
+              {menus.data.slice(0, 3).map((m) => <FoodCard key={m.id} item={m} />)}
+            </div>
+          </AnimatedContent>
         </section>
       </div>
-      <aside className="home-side">
-        <section>
-          <SectionTitle title="เมนูแนะนำ" />
-          <Feedback
-            loading={menus.loading}
-            error={menus.error}
-            reload={menus.reload}
-          />
-          <div className="popular-grid">
-            {menus.data.slice(0, 3).map((m) => (
-              <FoodCard key={m.id} item={m} compact />
-            ))}
-          </div>
-        </section>
-        <section className="offer-banner">
-          <span className="pill light">มื้ออร่อย ไม่ต้องรอ</span>
-          <h2>
-            พักเรื่องวุ่น ๆ<br />
-            มาอิ่มให้เต็มพุง
-          </h2>
-          <Link className="btn white small" to="/menu">
-            สั่งเลย <ArrowRight size={15} />
-          </Link>
-          <FoodImage src={photos.main} alt="อาหารจานโปรด" />
-        </section>
-        <section className="why-section">
-          <SectionTitle title="อิ่มใจในทุกมื้อ" label="เลือกเมนู" />
-          <div className="benefits">
-            <div>
-              <ChefHat />
-              <h3>ปรุงสดใหม่</h3>
-              <p>
-                ใส่ใจทุกรายการ
-                <br />
-                เหมือนทำให้คนที่บ้าน
-              </p>
-            </div>
-            <div>
-              <ShoppingBag />
-              <h3>สั่งง่าย</h3>
-              <p>
-                เลือก ใส่ตะกร้า
-                <br />
-                แล้วรอรับความอร่อย
-              </p>
-            </div>
-            <div>
-              <CalendarDays />
-              <h3>จองสะดวก</h3>
-              <p>
-                เลือกโต๊ะล่วงหน้า
-                <br />
-                เก็บเวลาไว้ให้คนโปรด
-              </p>
-            </div>
-          </div>
-        </section>
-        <section className="little-note">
-          <span>“</span>
-          <h3>
-            มื้อธรรมดา
-            <br />
-            ก็พิเศษได้
-          </h3>
-          <p>
-            เพราะความสุขเล็ก ๆ<br />
-            เริ่มต้นจากอาหารอร่อย
-          </p>
-          <div className="note-line" />
-          <small>จากครัวพุงป่อง ด้วยความใส่ใจ</small>
-        </section>
-      </aside>
     </div>
   );
 }
@@ -254,8 +96,8 @@ export function MenuPage() {
   return (
     <section className="page">
       <div className="page-heading">
-        <span className="eyebrow orange">เลือกความอร่อยในแบบคุณ</span>
-        <h1>เมนูโปรด มื้อไหนก็ใช่</h1>
+        <span className="eyebrow orange"><ShinyText text="เลือกความอร่อยในแบบคุณ" color="#F45B0B" shineColor="#ffd9a8" speed={3.5} /></span>
+        <AnimatedHeading>เมนูโปรด มื้อไหนก็ใช่</AnimatedHeading>
         <p>อาหารจากครัวพุงป่อง พร้อมเติมความสุขให้ทุกวัน</p>
       </div>
       <div className="menu-toolbar">
@@ -302,10 +144,12 @@ export function MenuPage() {
           <FoodCard key={m.id} item={m} />
         ))}
       </div>
-      <p className="fine-print">
-        ภาพประกอบอาหารอาจแตกต่างจากเมนูที่เสิร์ฟจริง ·
-        สั่งล่วงหน้าและชำระเงินที่ร้าน
-      </p>
+      <AnimatedContent distance={40} duration={0.8}>
+        <p className="fine-print">
+          ภาพประกอบอาหารอาจแตกต่างจากเมนูที่เสิร์ฟจริง ·
+          สั่งล่วงหน้าและชำระเงินที่ร้าน
+        </p>
+      </AnimatedContent>
     </section>
   );
 }
@@ -326,7 +170,7 @@ export function FoodDetail() {
         <FoodImage src={photoFor(item)} alt={item.name} />
         <div>
           <span className="pill">ปรุงจากครัวพุงป่อง</span>
-          <h1>{item.name}</h1>
+          <AnimatedHeading>{item.name}</AnimatedHeading>
           <p>{item.description}</p>
           <strong className="detail-price">{money(item.price)}</strong>
           <p>
@@ -335,13 +179,20 @@ export function FoodDetail() {
               : "เมนูนี้หมดชั่วคราว"}
           </p>
           <Quantity value={quantity} onChange={setQuantity} />
-          <button
-            className="btn"
+          <StarBorder
+            backgroundColor="#F45B0B"
+            textColor="#fff8ef"
+            color="#ffd9a8"
+            trailColor="#ffe9cf"
+            thickness={1.4}
+            radius={12}
+            duration={4.5}
+            glow={0.45}
             disabled={!item.is_available}
             onClick={() => add(item, quantity)}
           >
             เพิ่มลงตะกร้า · {money(Number(item.price) * quantity)}
-          </button>
+          </StarBorder>
           <p className="fine-print">
             ภาพประกอบเมนู · ชำระเงินและรับอาหารที่ร้าน
           </p>
@@ -407,8 +258,8 @@ export function Cart() {
   return (
     <section className="page">
       <div className="page-heading">
-        <span className="eyebrow orange">อีกนิดก็ได้อิ่ม</span>
-        <h1>ตะกร้าของฉัน</h1>
+        <span className="eyebrow orange"><ShinyText text="อีกนิดก็ได้อิ่ม" color="#F45B0B" shineColor="#ffd9a8" speed={3.5} /></span>
+        <AnimatedHeading>ตะกร้าของฉัน</AnimatedHeading>
       </div>
       {!cart.length ? (
         <div className="empty-state">
@@ -484,14 +335,26 @@ export function Cart() {
               </span>
             </div>
             <Feedback error={error} />
-            <button className="btn full" disabled={busy} onClick={order}>
+            <StarBorder
+              className="full"
+              backgroundColor="#F45B0B"
+              textColor="#fff8ef"
+              color="#ffd9a8"
+              trailColor="#ffe9cf"
+              thickness={1.4}
+              radius={12}
+              duration={4.5}
+              glow={0.45}
+              disabled={busy}
+              onClick={order}
+            >
               {busy
                 ? "กำลังส่งรายการ…"
                 : user
                   ? "ยืนยันคำสั่งซื้อ"
                   : "เข้าสู่ระบบเพื่อสั่งอาหาร"}
               <ArrowRight size={17} />
-            </button>
+            </StarBorder>
           </div>
         </div>
       )}
@@ -535,17 +398,17 @@ export function Auth({ register = false }) {
     <section className="auth-page">
       <div className="auth-art">
         <img src="/logo.svg" alt="โลโก้พุงป่อง" />
-        <h1>
+        <AnimatedHeading>
           ความสุข
           <br />
           เริ่มที่<span>พุงป่อง</span>
-        </h1>
+        </AnimatedHeading>
         <p>อิ่มอร่อย ส่งไว ถูกใจทุกมื้อ</p>
         <FoodImage src={photos.hero} alt="ข้าวจานโปรด ภาพประกอบอาหารตามสั่ง" />
       </div>
       <div className="auth-form">
-        <span className="eyebrow orange">GOOD FOOD, HAPPY BELLY.</span>
-        <h1>{register ? "มาเป็นเพื่อนกันนะ" : "ดีใจที่ได้เจอกันอีก"}</h1>
+        <span className="eyebrow orange"><ShinyText text="GOOD FOOD, HAPPY BELLY." color="#F45B0B" shineColor="#ffd9a8" speed={3} /></span>
+        <AnimatedHeading>{register ? "มาเป็นเพื่อนกันนะ" : "ดีใจที่ได้เจอกันอีก"}</AnimatedHeading>
         <p>
           {register
             ? "สมัครสมาชิกเพื่อสั่งอาหารและจองโต๊ะ"
@@ -624,6 +487,8 @@ export function Reservation() {
   const slots = useData("/reservation-slots"),
     [search, setSearch] = useState(null),
     [tables, setTables] = useState([]),
+    [roomTables, setRoomTables] = useState([]),
+    [freeTables, setFreeTables] = useState([]),
     [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
     [selected, setSelected] = useState(null),
@@ -641,8 +506,10 @@ export function Reservation() {
     setError("");
     setSelected(null);
     try {
-      const r = await api.get("/tables/availability", { params: d });
+      const [r, room, free] = await Promise.all([api.get("/tables/availability", { params: d }), api.get("/tables?limit=100"), api.get("/tables/availability", { params: { ...d, guests: 1 } })]);
       setTables(r.data.data);
+      setRoomTables(room.data.data);
+      setFreeTables(free.data.data);
       setSearch(d);
     } catch (err) {
       setSearch(null);
@@ -667,18 +534,19 @@ export function Reservation() {
   return (
     <section className="page">
       <div className="page-heading">
-        <span className="eyebrow orange">เก็บที่นั่งให้คนโปรด</span>
-        <h1>จองโต๊ะที่พุงป่อง</h1>
+        <span className="eyebrow orange"><ShinyText text="เก็บที่นั่งให้คนโปรด" color="#F45B0B" shineColor="#ffd9a8" speed={3.5} /></span>
+        <AnimatedHeading>จองโต๊ะที่พุงป่อง</AnimatedHeading>
         <p>เลือกเวลาแห่งความอร่อย · รอบละ 90 นาที · จองล่วงหน้าได้ 90 วัน</p>
       </div>
-      <form
-        className="booking-form"
-        onSubmit={find}
-        onChange={() => {
-          setSearch(null);
-          setSelected(null);
-        }}
-      >
+      <AnimatedContent distance={40} duration={0.8} trigger="mount">
+        <form
+          className="booking-form"
+          onSubmit={find}
+          onChange={() => {
+            setSearch(null);
+            setSelected(null);
+          }}
+        >
         <label>
           วันที่
           <input
@@ -719,28 +587,16 @@ export function Reservation() {
         >
           ค้นหาโต๊ะว่าง <Search size={17} />
         </button>
-      </form>
+        </form>
+      </AnimatedContent>
       <Feedback loading={busy} error={error || slots.error} />
       {search && (
         <>
-          <h2 className="spaced-heading">โต๊ะว่างสำหรับคุณ</h2>
-          <div className="tables-grid">
-            {tables.map((t) => (
-              <button
-                className={`table-card ${selected === t.id ? "selected" : ""}`}
-                key={t.id}
-                onClick={() => setSelected(t.id)}
-              >
-                <Utensils size={26} />
-                <strong>โต๊ะ {t.table_number}</strong>
-                <span>{t.capacity} ที่นั่ง</span>
-                {selected === t.id && <Check size={18} />}
-              </button>
-            ))}
-          </div>
+          <TablePicker freeTables={freeTables} roomTables={roomTables} tables={tables} selected={selected} onSelect={setSelected} guests={search.guests} busy={busy} />
           {!tables.length && <Feedback empty />}
           {selected && (
             <div className="booking-confirm">
+              <h3 aria-live="polite">โต๊ะ {tables.find(t => t.id === selected)?.table_number} · พร้อมสำหรับมื้อของคุณ</h3>
               <label>
                 หมายเหตุ
                 <textarea
@@ -802,8 +658,8 @@ export function History({ reservations = false }) {
   return (
     <section className="page">
       <div className="page-heading">
-        <span className="eyebrow orange">มื้ออร่อยของคุณ</span>
-        <h1>{reservations ? "การจองของฉัน" : "รายการสั่งซื้อของฉัน"}</h1>
+        <span className="eyebrow orange"><ShinyText text={reservations ? "มื้อดีๆ ที่วางแผนไว้" : "มื้ออร่อยของคุณ"} color="#F45B0B" shineColor="#ffd9a8" speed={3.5} /></span>
+        <AnimatedHeading>{reservations ? "การจองของฉัน" : "รายการสั่งซื้อของฉัน"}</AnimatedHeading>
         <p>แสดงรายการล่าสุดสูงสุด 100 รายการ</p>
       </div>
       <Feedback

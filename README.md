@@ -2,7 +2,15 @@
 
 **อิ่มอร่อย ส่งไว ถูกใจทุกมื้อ · Good Food, Happy Belly.**
 
-เว็บไซต์สั่งอาหารและจองโต๊ะ แบรนด์สีส้ม–ครีม พร้อม React + Vite frontend ใน `frontend/` เชื่อม Express/MySQL เดิม
+เว็บไซต์สั่งอาหารและจองโต๊ะ แบรนด์สีส้ม–ครีม ประกอบด้วย REST API (Node.js + Express + MySQL) และ frontend (React + Vite + Tailwind) ใน `frontend/` พร้อมจานอาหาร 3D หมุนได้บนหน้าแรก
+
+## ความสามารถ
+
+- **ลูกค้า** — ดูเมนู/ค้นหา/กรองหมวดหมู่, หน้ารายละเอียดเมนู, ตะกร้าและสั่งอาหาร, จองโต๊ะพร้อมเลือกโต๊ะจากผังร้าน 3D, ดูประวัติคำสั่งซื้อ/การจอง, ยกเลิกรายการ, สมัครสมาชิก/เข้าสู่ระบบ (JWT)
+- **ผู้ดูแลร้าน** — แดชบอร์ดภาพรวม (ออเดอร์ค้าง/การจองวันนี้/เมนูพร้อมขาย/โต๊ะ), จัดการเมนู หมวดหมู่ โต๊ะ, เปลี่ยนสถานะคำสั่งซื้อตาม state machine, ดูการจองจัดกลุ่มตามวัน, จัดการผู้ใช้
+- **ของตกแต่ง** — จานคลุม 3D หมุนเพลาตลอด เปิดฝาเผยข้าวกะเพราไก่พร้อมไอน้ำและประกายวิบวับ (React Three Fiber), ผังร้าน 3D เลือกโต๊ะ, หัวข้อเคลื่อนไหวและปุ่มมีดาววิ่งจาก React Bits, หน้าเว็บ responsive ครบมือถือถึงจอกว้าง
+
+รอบจอง 90 นาที ชำระเงินที่ร้าน ไม่มีระบบรับเงินออนไลน์หรือจัดส่ง (ขอบเขตที่ตกลงใช้)
 
 ## เปิดเว็บไซต์พุงป่อง
 
@@ -24,11 +32,20 @@ npm run frontend:dev
 
 สร้าง production frontend ด้วย `npm run frontend:build` ได้ไฟล์ใน `frontend/dist` เมื่อนำไปใช้งานจริงต้องกำหนด reverse proxy `/api` หรือ `VITE_API_URL` ให้ชี้ backend และกำหนด CORS_ORIGINS ให้ตรง origin หน้าเว็บ รวมถึงตั้ง SPA fallback ไป index.html
 
-ดู [รายละเอียด frontend และแบรนด์](docs/PHUNGPONG.md) สำหรับความสามารถ ข้อจำกัด และผลทดสอบ หน้าลูกค้าและ admin ใช้ข้อมูลจาก MySQL จริง การสั่งอาหารปัจจุบันเป็นรับและชำระที่ร้าน ยังไม่มี payment gateway หรือบริการจัดส่งออนไลน์
+ดู [รายละเอียด frontend และแบรนด์](docs/PHUNGPONG.md) สำหรับความสามารถ ข้อจำกัด และผลทดสอบ รวมถึง [จานอาหาร 3D](docs/FOOD-3D.md), [ผังร้านเลือกโต๊ะ 3D](docs/RESTAURANT-3D.md), [หลังบ้านผู้ดูแล](docs/ADMIN-UI.md) และ [ส่วนประกอบ ReUI](frontend/REUI.md) หน้าลูกค้าและ admin ใช้ข้อมูลจาก MySQL จริง การสั่งอาหารปัจจุบันเป็นรับและชำระที่ร้าน ยังไม่มี payment gateway หรือบริการจัดส่งออนไลน์
 
-หน้าเว็บใช้ ReUI Badge, Alert และ Number Field พร้อม responsive สำหรับมือถือ แท็บเล็ต และจอกว้าง ดู [ส่วนประกอบและวิธีทดสอบ](frontend/REUI.md) หรือรัน `npm --prefix frontend run test:responsive` หลังเปิดระบบ เพื่อตรวจ 12 ขนาดหน้าจอใน Chrome
+หน้าเว็บใช้ ReUI Badge, Alert และ Number Field และตกแต่งด้วยคอมโพเนนต์ [React Bits](https://reactbits.dev) รุ่นฟรี (BlurText, GradientText, StarBorder, ShinyText, AnimatedContent, CountUp, ClickSpark — ซอร์สเก็บใน `frontend/src/components/reactbits/` พร้อม LICENSE) พร้อม responsive สำหรับมือถือ แท็บเล็ต และจอกว้าง ดู [ส่วนประกอบและวิธีทดสอบ](frontend/REUI.md) หรือรัน `npm --prefix frontend run test:responsive` หลังเปิดระบบ เพื่อตรวจ 12 ขนาดหน้าจอใน Chrome
 
 ระบบ REST API สำหรับร้านอาหารหนึ่งร้าน เขียนด้วย Node.js + Express + MySQL
+
+## โครงสร้างเทคโนโลยี
+
+| ส่วน | เทคโนโลยี |
+|---|---|
+| Backend | Node.js 22, Express 5, MySQL (mysql2), JWT + bcrypt, zod, helmet, express-rate-limit |
+| Frontend | React 19, Vite 6, Tailwind CSS 4, React Router 7, axios, React Three Fiber + three.js, React Bits, ReUI, lucide-react |
+| ฐานข้อมูล | MySQL เฉพาะโปรเจกต์บน port 3307 (สครีมต์ใน `database/`) |
+| ทดสอบ | node:test (unit + integration), Playwright (UI/3D/responsive), Postman/Newman |
 
 ## ขอบเขตที่ตกลงใช้ในโปรเจกต์นี้
 
@@ -99,7 +116,7 @@ npm run test:postman
 
 Newman เป็นเครื่องมือทดสอบแยกใน .local ไม่ใช่ dependency ของ API สคริปต์เปิด API ชั่วคราวเอง และสร้าง expired JWT สำหรับทดสอบโดยไม่ส่ง JWT_SECRET ไปใน collection ระหว่างรันทดสอบ CORS ใช้ค่าเริ่มต้น localhost:5173
 
-เอกสารส่งงาน: [ER Diagram](ER-DIAGRAM.html), [Data Dictionary](docs/DATA-DICTIONARY.md), [API ฉบับเต็ม](docs/API-COMPLETE.md), [ความปลอดภัย](docs/SECURITY.md), [ลำดับสาธิต](docs/DEMO.md) และ [ผลตรวจรอบสุดท้าย](docs/FINAL-VERIFICATION.md) ตัว viewer ของ ER Diagram ใช้ปุ่มภาษาอังกฤษ ส่วนหัวข้อเป็นภาษาไทย
+เอกสารส่งงาน: [ER Diagram](ER-DIAGRAM.html), [Data Dictionary](docs/DATA-DICTIONARY.md), [API ฉบับเต็ม](docs/API-COMPLETE.md), [ความปลอดภัย](docs/SECURITY.md), [ลำดับสาธิต](docs/DEMO.md), [หลังบ้านผู้ดูแล](docs/ADMIN-UI.md) และ [ผลตรวจรอบสุดท้าย](docs/FINAL-VERIFICATION.md) ตัว viewer ของ ER Diagram ใช้ปุ่มภาษาอังกฤษ ส่วนหัวข้อเป็นภาษาไทย
 
 ## โครงสร้างไฟล์
 

@@ -231,6 +231,9 @@ try {
         await checkLayout(route);
       }
       await page
+        .getByRole("button", { name: /เมนูอาหาร/ })
+        .click();
+      await page
         .getByRole("button", { name: "เพิ่มรายการ", exact: true })
         .click();
       await checkLayout("admin form");

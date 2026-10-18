@@ -1,0 +1,7 @@
+.animated-heading { overflow-wrap: anywhere; }
+.animated-heading > .rb-text { color: inherit !important; }
+.rb-text { white-space: pre-wrap; }
+.rb-text > span { max-width: 100%; }
+@media (prefers-reduced-motion: reduce) {
+  .animated-heading * { animation: none !important; transition: none !important; }
+}

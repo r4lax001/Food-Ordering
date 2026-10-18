@@ -1,9 +1,14 @@
-import React, { useState } from "react";
-import { Plus, Pencil, Trash2, Check, X } from "lucide-react";
+import AnimatedHeading from "./components/AnimatedHeading";
+import React, { useState, useEffect, useRef } from "react";
+import { Plus, Check, X, Search, RefreshCw, ArrowUpRight } from "lucide-react";
 import { useData, useStore } from "./state";
 import { api, errorText } from "./services/api";
-import { money, statusText, thaiDate } from "./utils";
+import { statusText } from "./utils";
 import { Feedback } from "./components";
+import { useSearchParams, Link } from "react-router-dom";
+import { adminSections, Overview, AdminRecords } from "./admin-panels";
+import "./admin.css";
+import AdminUsers from "./admin-users";
 const tabs = {
   menu: "เมนูอาหาร",
   categories: "หมวดหมู่",
@@ -20,42 +25,50 @@ const transitions = {
   cancelled: [],
 };
 export default function Admin() {
-  const [tab, setTab] = useState("menu");
-  return (
-    <section className="page">
-      <div className="page-heading">
-        <span className="eyebrow orange">PHUNGPONG · สำหรับผู้ดูแล</span>
-        <h1>ดูแลร้านพุงป่อง</h1>
-        <p>จัดการความอร่อยและทุกการจองในที่เดียว</p>
+  const [params, setParams] = useSearchParams();
+  const tab = adminSections[params.get('section')] ? params.get('section') : 'overview';
+  const navigate = (section, category) => setParams({section, ...(category ? {category:String(category)} : {})});
+  const {user} = useStore();
+  return <section className="page admin-workspace">
+    <div className="admin-welcome"><div><span className="eyebrow orange">PHUNGPONG · จัดการร้าน</span><AnimatedHeading>ครัวพร้อม ร้านพร้อม</AnimatedHeading><p>สวัสดี {user?.name} ดูแลทุกมื้อได้จากที่เดียว</p></div><Link className="btn secondary small" to="/menu">ดูหน้าร้าน <ArrowUpRight size={16}/></Link></div>
+    <div className="admin-layout">
+      <nav className="admin-nav" aria-label="ส่วนจัดการร้าน">{Object.entries(adminSections).map(([key,item])=>{const Icon=item.icon;return <button key={key} aria-current={tab===key?'page':undefined} className={tab===key?'active':''} onClick={()=>navigate(key)}><Icon size={21}/><span><strong>{item.name}</strong><small>{item.description}</small></span></button>})}<p>พุงป่อง · หลังบ้านของมื้ออร่อย</p></nav>
+      <div className={'admin-content section-'+tab}>
+        {tab==='overview'?<Overview navigate={navigate}/>:tab==='users'?<AdminUsers/>:<Manager key={tab+':'+(params.get('category')||'')} tab={tab} initialCategory={params.get('category')||''} onCategory={id=>navigate('menu',id)}/>}
       </div>
-      <div className="filter-row admin-tabs">
-        {Object.entries(tabs).map(([key, name]) => (
-          <button
-            key={key}
-            className={tab === key ? "active" : ""}
-            onClick={() => setTab(key)}
-          >
-            {name}
-          </button>
-        ))}
-      </div>
-      <Manager key={tab} tab={tab} />
-    </section>
-  );
+    </div>
+  </section>;
 }
-function Manager({ tab }) {
+function Manager({ tab, initialCategory, onCategory }) {
   const collection = useData(
       `/${["orders", "reservations"].includes(tab) ? "admin/" : ""}${tab}?limit=100`,
     ),
-    categories = useData("/categories?limit=100");
+    categories = useData("/categories?limit=100"),
+    menuData = useData("/menu?limit=100"),
+    tableData = useData("/tables?limit=100");
   const [edit, setEdit] = useState(null),
     [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
     [remove, setRemove] = useState(null);
   const { setNotice } = useStore();
+  const [query,setQuery]=useState(''), [filter,setFilter]=useState(''), [categoryFilter,setCategoryFilter]=useState(initialCategory), [date,setDate]=useState('');
+  const formRef=useRef(null), confirmRef=useRef(null);
+  useEffect(()=>{if(edit){formRef.current?.scrollIntoView({block:'nearest'});formRef.current?.querySelector('input')?.focus();}},[edit]);
+  useEffect(()=>{if(remove){confirmRef.current?.scrollIntoView({block:'nearest'});confirmRef.current?.querySelector('button')?.focus();}},[remove]);
+  const filtered=collection.data.filter(row=>{
+    const hay=[row.name,row.table_number,row.id,row.user_id,row.note].filter(v=>v!=null).join(' ').toLowerCase();
+    return hay.includes(query.trim().toLowerCase()) && (!categoryFilter||tab!=='menu'||String(row.category_id)===categoryFilter)
+      && (!date||tab!=='reservations'||row.reservation_date.slice(0,10)===date)
+      && (!filter || (tab==='menu'?(filter==='available'?!!row.is_available:!row.is_available):tab==='tables'?String(row.capacity)===filter:row.status===filter));
+  });
+  const resetFilters=()=>{setQuery('');setFilter('');setCategoryFilter('');setDate('');};
   const managed = ["menu", "categories", "tables"].includes(tab);
   async function save(e) {
     e.preventDefault();
+    if (tab === "tables" && !edit?.id) {
+      setError("ไม่อนุญาตให้เพิ่มโต๊ะใหม่");
+      return;
+    }
     const d = Object.fromEntries(new FormData(e.currentTarget));
     if (tab === "menu") {
       d.price = Number(d.price);
@@ -99,6 +112,7 @@ function Manager({ tab }) {
   async function status(id, value) {
     if (!value) return;
     setBusy(true);
+    setError("");
     try {
       await api.patch(`/admin/orders/${id}/status`, { status: value });
       collection.reload();
@@ -112,10 +126,10 @@ function Manager({ tab }) {
   return (
     <>
       <div className="admin-title">
-        <h2>
+        <AnimatedHeading as="h2">
           {tabs[tab]} <small>({collection.data.length})</small>
-        </h2>
-        {managed && (
+        </AnimatedHeading>
+        {managed && tab !== "tables" && (
           <button
             className="btn small"
             onClick={() => {
@@ -133,9 +147,9 @@ function Manager({ tab }) {
         reload={collection.reload}
       />
       {edit && (
-        <form className="admin-form" onSubmit={save}>
+        <form ref={formRef} className="admin-form" onSubmit={save}>
           <div className="admin-title">
-            <h2>{edit.id ? "แก้ไขรายการ" : "เพิ่มรายการใหม่"}</h2>
+            <AnimatedHeading as="h2">{edit.id ? "แก้ไขรายการ" : "เพิ่มรายการใหม่"}</AnimatedHeading>
             <button
               type="button"
               className="icon-button"
@@ -252,7 +266,7 @@ function Manager({ tab }) {
         </form>
       )}
       {remove && (
-        <div className="confirm-box" role="alert">
+        <div ref={confirmRef} className="confirm-box" role="alert">
           <p>
             ยืนยัน{tab === "tables" ? "ปิดใช้งาน" : "ลบ"} “
             {remove.name || remove.table_number}” หรือไม่?
@@ -269,68 +283,19 @@ function Manager({ tab }) {
           </button>
         </div>
       )}
-      <div className="admin-list">
-        {collection.data.map((row) => (
-          <article key={row.id} className="admin-row">
-            <div>
-              <span className="eyebrow">#{row.id}</span>
-              <h3>
-                {row.name ||
-                  row.table_number ||
-                  `${tab === "orders" ? "คำสั่งซื้อ" : "การจอง"} #${row.id}`}
-              </h3>
-              <p>
-                {tab === "menu"
-                  ? `${money(row.price)} · ${row.is_available ? "พร้อมขาย" : "ปิดขาย"}`
-                  : tab === "tables"
-                    ? `${row.capacity} ที่นั่ง`
-                    : tab === "orders"
-                      ? `${money(row.total)} · ${statusText[row.status]}`
-                      : tab === "reservations"
-                        ? `${thaiDate(row.reservation_date)} ${row.slot} น. · โต๊ะ #${row.table_id} · ${row.guests} คน · ${statusText[row.status]}`
-                        : ""}
-              </p>
-            </div>
-            {managed ? (
-              <div className="row-actions">
-                <button
-                  className="icon-button"
-                  aria-label={`แก้ไข ${row.name || row.table_number}`}
-                  onClick={() => setEdit(row)}
-                >
-                  <Pencil size={18} />
-                </button>
-                <button
-                  className="icon-button"
-                  aria-label={`ลบ ${row.name || row.table_number}`}
-                  onClick={() => setRemove(row)}
-                >
-                  <Trash2 size={18} />
-                </button>
-              </div>
-            ) : tab === "orders" && transitions[row.status]?.length > 0 ? (
-              <select
-                aria-label={`เปลี่ยนสถานะคำสั่งซื้อ ${row.id}`}
-                value=""
-                disabled={busy}
-                onChange={(e) => status(row.id, e.target.value)}
-              >
-                <option value="">เปลี่ยนสถานะ</option>
-                {transitions[row.status].map((s) => (
-                  <option key={s} value={s}>
-                    {statusText[s]}
-                  </option>
-                ))}
-              </select>
-            ) : null}
-          </article>
-        ))}
-      </div>
-      <Feedback
-        empty={
-          !collection.loading && !collection.error && !collection.data.length
-        }
-      />
+      {!collection.loading && !collection.error && <>
+        <div className="admin-searchbar">
+          <label className="admin-search"><Search size={18}/><input aria-label="ค้นหาในหมวดนี้" placeholder={tab==='orders'||tab==='reservations'?'ค้นหาเลขรายการ / รหัสลูกค้า':'ค้นหาชื่อหรือหมายเลข'} value={query} onChange={e=>setQuery(e.target.value)}/></label>
+          {tab==='menu'&&<select aria-label="กรองหมวดอาหาร" value={categoryFilter} onChange={e=>setCategoryFilter(e.target.value)}><option value="">ทุกหมวดอาหาร</option>{categories.data.map(c=><option key={c.id} value={c.id}>{c.name}</option>)}</select>}
+          {tab!=='categories'&&<select aria-label="กรองสถานะหรือที่นั่ง" value={filter} onChange={e=>setFilter(e.target.value)}><option value="">{tab==='tables'?'ทุกขนาดโต๊ะ':'ทุกสถานะ'}</option>{(tab==='menu'?[['available','พร้อมขาย'],['unavailable','ปิดขาย']]:tab==='tables'?[...new Set(collection.data.map(t=>t.capacity))].sort((a,b)=>a-b).map(c=>[String(c),c+' ที่นั่ง']):Object.entries(statusText).filter(([k])=>tab==='orders'||['confirmed','cancelled'].includes(k))).map(([k,v])=><option key={k} value={k}>{v}</option>)}</select>}
+          {tab==='reservations'&&<input type="date" aria-label="กรองวันจอง" value={date} onChange={e=>setDate(e.target.value)}/>}
+          <button className="admin-refresh" aria-label="โหลดรายการใหม่" onClick={collection.reload}><RefreshCw size={18}/></button>
+        </div>
+        <div className="admin-results"><span>แสดง {filtered.length} จาก {collection.data.length} รายการ</span>{(query||filter||categoryFilter||date)&&<button onClick={resetFilters}>ล้างตัวกรอง</button>}</div>
+        {(tab==='categories'||tab==='reservations')&&<Feedback error={tab==='categories'?menuData.error:tableData.error} reload={tab==='categories'?menuData.reload:tableData.reload}/>}
+        <AdminRecords tab={tab} rows={filtered} categories={categories.data} menuData={menuData.data} menuLoading={menuData.loading} menuError={menuData.error} tableData={tableData.data} busy={busy} onEdit={row=>{setError('');setEdit(row)}} onRemove={setRemove} onStatus={status} transitions={transitions} onCategory={onCategory}/>
+        {!filtered.length&&<div className="admin-empty"><Search size={30}/><h3>ยังไม่มีรายการที่ตรงกัน</h3><p>ลองเปลี่ยนคำค้นหาหรือเลือกตัวกรองอื่น</p><button className="btn secondary small" onClick={resetFilters}>แสดงรายการทั้งหมด</button></div>}
+      </>}
       <p className="fine-print">
         แสดงสูงสุด 100 รายการ
         {tab === "tables" ? " · แสดงเฉพาะโต๊ะที่เปิดใช้งาน" : ""}

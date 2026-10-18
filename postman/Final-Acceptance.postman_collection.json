@@ -2,7 +2,7 @@
   "info": {
     "name": "Food Service - Final acceptance",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": "Run in order. Uses Local environment and an admin account. Creates test data. Expired JWT case requires expired_token; scripts/test-postman.js supplies a genuinely expired signed token locally."
+    "description": "Run in order. Uses Local environment and an admin account. Creates test data. Expired JWT case requires expired_token; scripts/test-postman.js supplies a genuinely expired signed token locally. Table creation is disabled. Supply final_table_id for a disposable DB test fixture (never a real restaurant table); scripts/test-postman.js provisions one automatically."
   },
   "event": [
     {
@@ -113,7 +113,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"category_id\": 1,\n      \"name\": \"ข้าวกะเพราไก่\",\n      \"description\": \"ข้าวกะเพราไก่พร้อมไข่ดาว\",\n      \"price\": \"75.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-17 18:23:45\",\n      \"category_name\": \"อาหารจานหลัก\"\n    },\n    {\n      \"id\": 2,\n      \"category_id\": 1,\n      \"name\": \"ข้าวผัดกุ้ง\",\n      \"description\": \"ข้าวผัดกุ้งสด\",\n      \"price\": \"90.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-17 18:23:45\",\n      \"category_name\": \"อาหารจานหลัก\"\n    },\n    {\n      \"id\": 3,\n      \"category_id\": 2,\n      \"name\": \"ชาไทยเย็น\",\n      \"description\": \"ชาไทยใส่นม\",\n      \"price\": \"45.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-17 18:23:45\",\n      \"category_name\": \"เครื่องดื่ม\"\n    },\n    {\n      \"id\": 4,\n      \"category_id\": 3,\n      \"name\": \"ไอศกรีมกะทิ\",\n      \"description\": \"ไอศกรีมกะทิพร้อมถั่วลิสง\",\n      \"price\": \"50.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-17 18:23:45\",\n      \"category_name\": \"ของหวาน\"\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
+          "body": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"category_id\": 1,\n      \"name\": \"ข้าวกะเพราไก่\",\n      \"description\": \"ไก่ผัดพริกกระเทียมและใบกะเพรา เสิร์ฟพร้อมข้าวสวย ไม่รวมไข่ดาว\",\n      \"price\": \"55.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-17 18:23:45\",\n      \"category_name\": \"ข้าวจานเดียว / อาหารแห้ง\"\n    },\n    {\n      \"id\": 2,\n      \"category_id\": 1,\n      \"name\": \"ข้าวผัดกุ้ง\",\n      \"description\": \"ข้าวผัดไข่กับกุ้ง หอมกลิ่นกระทะ เสิร์ฟพร้อมแตงกวาและมะนาว\",\n      \"price\": \"75.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-17 18:23:45\",\n      \"category_name\": \"ข้าวจานเดียว / อาหารแห้ง\"\n    },\n    {\n      \"id\": 53,\n      \"category_id\": 1,\n      \"name\": \"ข้าวกะเพราหมูสับ\",\n      \"description\": \"หมูสับผัดกะเพราหอม ๆ รสจัดจ้าน เสิร์ฟพร้อมข้าวสวย ไม่รวมไข่ดาว\",\n      \"price\": \"60.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"ข้าวจานเดียว / อาหารแห้ง\"\n    },\n    {\n      \"id\": 54,\n      \"category_id\": 1,\n      \"name\": \"ข้าวหมูกระเทียม\",\n      \"description\": \"หมูนุ่มผัดกระเทียมพริกไทย เสิร์ฟพร้อมข้าวสวย\",\n      \"price\": \"60.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"ข้าวจานเดียว / อาหารแห้ง\"\n    },\n    {\n      \"id\": 55,\n      \"category_id\": 1,\n      \"name\": \"ข้าวไก่กระเทียม\",\n      \"description\": \"ไก่ผัดกระเทียมหอม ๆ กินง่าย เสิร์ฟพร้อมข้าวสวย\",\n      \"price\": \"55.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"ข้าวจานเดียว / อาหารแห้ง\"\n    },\n    {\n      \"id\": 56,\n      \"category_id\": 1,\n      \"name\": \"ข้าวผัดหมู\",\n      \"description\": \"ข้าวผัดไข่และหมู เสิร์ฟพร้อมแตงกวาและมะนาว\",\n      \"price\": \"60.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"ข้าวจานเดียว / อาหารแห้ง\"\n    },\n    {\n      \"id\": 57,\n      \"category_id\": 3,\n      \"name\": \"ต้มจืดเต้าหู้หมูสับ + ข้าว\",\n      \"description\": \"น้ำซุปใส เต้าหู้ไข่ หมูสับ และผักกาดขาว รวมข้าวสวย 1 จาน\",\n      \"price\": \"70.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"ต้มและแกง พร้อมข้าว\"\n    },\n    {\n      \"id\": 58,\n      \"category_id\": 3,\n      \"name\": \"ต้มยำไก่น้ำใส + ข้าว\",\n      \"description\": \"เปรี้ยวเผ็ด หอมข่า ตะไคร้ และใบมะกรูด รวมข้าวสวย 1 จาน\",\n      \"price\": \"75.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"ต้มและแกง พร้อมข้าว\"\n    },\n    {\n      \"id\": 59,\n      \"category_id\": 3,\n      \"name\": \"ต้มยำกุ้งน้ำข้น + ข้าว\",\n      \"description\": \"น้ำต้มยำเข้มข้น หอมมันและรสจัดจ้าน รวมข้าวสวย 1 จาน\",\n      \"price\": \"95.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"ต้มและแกง พร้อมข้าว\"\n    },\n    {\n      \"id\": 60,\n      \"category_id\": 3,\n      \"name\": \"แกงเขียวหวานไก่ + ข้าว\",\n      \"description\": \"กะทิหอมมัน เนื้อไก่ มะเขือ และโหระพา รวมข้าวสวย 1 จาน\",\n      \"price\": \"80.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"ต้มและแกง พร้อมข้าว\"\n    },\n    {\n      \"id\": 61,\n      \"category_id\": 2,\n      \"name\": \"ชามะนาว\",\n      \"description\": \"ชาหอมเข้ม ตัดด้วยรสเปรี้ยวของมะนาว เสิร์ฟเย็น\",\n      \"price\": \"35.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"เครื่องดื่มสดชื่น\"\n    },\n    {\n      \"id\": 62,\n      \"category_id\": 2,\n      \"name\": \"น้ำมะนาว\",\n      \"description\": \"เปรี้ยวหวาน ดื่มคู่กับอาหารรสจัด เสิร์ฟเย็น\",\n      \"price\": \"35.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"เครื่องดื่มสดชื่น\"\n    },\n    {\n      \"id\": 63,\n      \"category_id\": 2,\n      \"name\": \"น้ำผึ้งมะนาว\",\n      \"description\": \"หอมกลิ่นน้ำผึ้ง เปรี้ยวหวานกลมกล่อม เสิร์ฟเย็น\",\n      \"price\": \"40.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"เครื่องดื่มสดชื่น\"\n    },\n    {\n      \"id\": 64,\n      \"category_id\": 2,\n      \"name\": \"น้ำผึ้งมะนาวโซดา\",\n      \"description\": \"น้ำผึ้งและมะนาวเติมโซดาซ่า เสิร์ฟเย็น\",\n      \"price\": \"45.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"เครื่องดื่มสดชื่น\"\n    },\n    {\n      \"id\": 65,\n      \"category_id\": 2,\n      \"name\": \"แดงมะนาวโซดา\",\n      \"description\": \"สีสดใส หวานซ่าอมเปรี้ยว เสิร์ฟเย็น\",\n      \"price\": \"35.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"เครื่องดื่มสดชื่น\"\n    },\n    {\n      \"id\": 66,\n      \"category_id\": 2,\n      \"name\": \"น้ำกระเจี๊ยบ\",\n      \"description\": \"เปรี้ยวหวาน หอมกระเจี๊ยบ เสิร์ฟเย็น\",\n      \"price\": \"30.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"เครื่องดื่มสดชื่น\"\n    },\n    {\n      \"id\": 67,\n      \"category_id\": 2,\n      \"name\": \"น้ำเก๊กฮวย\",\n      \"description\": \"หอมดอกเก๊กฮวย รสหวานละมุน เสิร์ฟเย็น\",\n      \"price\": \"30.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"เครื่องดื่มสดชื่น\"\n    },\n    {\n      \"id\": 68,\n      \"category_id\": 2,\n      \"name\": \"น้ำอัญชันมะนาว\",\n      \"description\": \"สีม่วงสวย เปรี้ยวหวานสดชื่น เสิร์ฟเย็น\",\n      \"price\": \"35.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"เครื่องดื่มสดชื่น\"\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
         }
       ]
     },
@@ -161,7 +161,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"name\": \"อาหารจานหลัก\"\n    },\n    {\n      \"id\": 2,\n      \"name\": \"เครื่องดื่ม\"\n    },\n    {\n      \"id\": 3,\n      \"name\": \"ของหวาน\"\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
+          "body": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"name\": \"ข้าวจานเดียว / อาหารแห้ง\"\n    },\n    {\n      \"id\": 2,\n      \"name\": \"เครื่องดื่มสดชื่น\"\n    },\n    {\n      \"id\": 3,\n      \"name\": \"ต้มและแกง พร้อมข้าว\"\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
         }
       ]
     },
@@ -227,7 +227,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": {\n    \"id\": 34,\n    \"name\": \"Postman Customer\",\n    \"email\": \"postman-17922375674966jwt@example.com\",\n    \"role\": \"customer\"\n  }\n}"
+          "body": "{\n  \"data\": {\n    \"id\": 164,\n    \"name\": \"Postman Customer\",\n    \"email\": \"postman-1792312716359ud7i@example.com\",\n    \"role\": \"customer\"\n  }\n}"
         }
       ]
     },
@@ -294,7 +294,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"token\": \"[REDACTED]\",\n  \"token_type\": \"[REDACTED]\",\n  \"user\": {\n    \"id\": 34,\n    \"name\": \"Postman Customer\",\n    \"email\": \"postman-17922375674966jwt@example.com\",\n    \"role\": \"customer\",\n    \"created_at\": \"2026-10-17 18:46:08\"\n  }\n}"
+          "body": "{\n  \"token\": \"[REDACTED]\",\n  \"token_type\": \"[REDACTED]\",\n  \"user\": {\n    \"id\": 164,\n    \"name\": \"Postman Customer\",\n    \"email\": \"postman-1792312716359ud7i@example.com\",\n    \"role\": \"customer\",\n    \"created_at\": \"2026-10-18 15:38:36\"\n  }\n}"
         }
       ]
     },
@@ -350,7 +350,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": {\n    \"id\": 34,\n    \"name\": \"Postman Customer\",\n    \"email\": \"postman-17922375674966jwt@example.com\",\n    \"role\": \"customer\"\n  }\n}"
+          "body": "{\n  \"data\": {\n    \"id\": 164,\n    \"name\": \"Postman Customer\",\n    \"email\": \"postman-1792312716359ud7i@example.com\",\n    \"role\": \"customer\"\n  }\n}"
         }
       ]
     },
@@ -548,7 +548,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": {\n    \"id\": 13,\n    \"category_id\": 1,\n    \"name\": \"Postman menu 17922375674966jwt\",\n    \"description\": \"API test item\",\n    \"price\": 65,\n    \"image_url\": null,\n    \"is_available\": true\n  }\n}"
+          "body": "{\n  \"data\": {\n    \"id\": 104,\n    \"category_id\": 1,\n    \"name\": \"Postman menu 1792312716359ud7i\",\n    \"description\": \"API test item\",\n    \"price\": 65,\n    \"image_url\": null,\n    \"is_available\": true\n  }\n}"
         }
       ]
     },
@@ -596,7 +596,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": {\n    \"id\": 13,\n    \"category_id\": 1,\n    \"name\": \"Postman menu 17922375674966jwt\",\n    \"description\": \"API test item\",\n    \"price\": \"65.00\",\n    \"image_url\": null,\n    \"is_available\": 1,\n    \"deleted_at\": null,\n    \"created_at\": \"2026-10-17 18:46:08\"\n  }\n}"
+          "body": "{\n  \"data\": {\n    \"id\": 104,\n    \"category_id\": 1,\n    \"name\": \"Postman menu 1792312716359ud7i\",\n    \"description\": \"API test item\",\n    \"price\": \"65.00\",\n    \"image_url\": null,\n    \"is_available\": 1,\n    \"deleted_at\": null,\n    \"created_at\": \"2026-10-18 15:38:37\"\n  }\n}"
         }
       ]
     },
@@ -670,7 +670,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": {\n    \"id\": 13,\n    \"category_id\": 1,\n    \"name\": \"Postman menu 17922375674966jwt\",\n    \"description\": \"API test item\",\n    \"price\": 70,\n    \"image_url\": null,\n    \"is_available\": true\n  }\n}"
+          "body": "{\n  \"data\": {\n    \"id\": 104,\n    \"category_id\": 1,\n    \"name\": \"Postman menu 1792312716359ud7i\",\n    \"description\": \"API test item\",\n    \"price\": 70,\n    \"image_url\": null,\n    \"is_available\": true\n  }\n}"
         }
       ]
     },
@@ -768,7 +768,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"table_number\": \"T01\",\n      \"capacity\": 2,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 2,\n      \"table_number\": \"T02\",\n      \"capacity\": 2,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 3,\n      \"table_number\": \"T03\",\n      \"capacity\": 4,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 4,\n      \"table_number\": \"T04\",\n      \"capacity\": 4,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 5,\n      \"table_number\": \"T05\",\n      \"capacity\": 6,\n      \"is_active\": 1\n    }\n  ]\n}"
+          "body": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"table_number\": \"T01\",\n      \"capacity\": 2,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 2,\n      \"table_number\": \"T02\",\n      \"capacity\": 2,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 103,\n      \"table_number\": \"T06\",\n      \"capacity\": 2,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 3,\n      \"table_number\": \"T03\",\n      \"capacity\": 4,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 4,\n      \"table_number\": \"T04\",\n      \"capacity\": 4,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 104,\n      \"table_number\": \"T07\",\n      \"capacity\": 4,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 105,\n      \"table_number\": \"T08\",\n      \"capacity\": 4,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 110,\n      \"table_number\": \"QA1792312716197\",\n      \"capacity\": 4,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 5,\n      \"table_number\": \"T05\",\n      \"capacity\": 6,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 106,\n      \"table_number\": \"T09\",\n      \"capacity\": 6,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 107,\n      \"table_number\": \"T10\",\n      \"capacity\": 8,\n      \"is_active\": 1\n    }\n  ]\n}"
         }
       ]
     },
@@ -843,7 +843,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": {\n    \"id\": 19,\n    \"table_id\": 1,\n    \"date\": \"2026-10-24\",\n    \"slot\": \"11:00\",\n    \"guests\": 2,\n    \"note\": \"\",\n    \"status\": \"confirmed\"\n  }\n}"
+          "body": "{\n  \"data\": {\n    \"id\": 109,\n    \"table_id\": 1,\n    \"date\": \"2026-10-25\",\n    \"slot\": \"11:00\",\n    \"guests\": 2,\n    \"note\": \"\",\n    \"status\": \"confirmed\"\n  }\n}"
         }
       ]
     },
@@ -973,7 +973,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": [\n    {\n      \"id\": 19,\n      \"user_id\": 34,\n      \"table_id\": 1,\n      \"reservation_date\": \"2026-10-24\",\n      \"slot\": \"11:00\",\n      \"guests\": 2,\n      \"status\": \"confirmed\",\n      \"note\": \"\",\n      \"active_slot\": 1,\n      \"created_at\": \"2026-10-17 18:46:09\",\n      \"table_number\": \"T01\"\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
+          "body": "{\n  \"data\": [\n    {\n      \"id\": 109,\n      \"user_id\": 164,\n      \"table_id\": 1,\n      \"reservation_date\": \"2026-10-25\",\n      \"slot\": \"11:00\",\n      \"guests\": 2,\n      \"status\": \"confirmed\",\n      \"note\": \"\",\n      \"active_slot\": 1,\n      \"created_at\": \"2026-10-18 15:38:38\",\n      \"table_number\": \"T01\"\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
         }
       ]
     },
@@ -1049,7 +1049,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": {\n    \"id\": 13,\n    \"reservation_id\": 19,\n    \"total\": \"140.00\",\n    \"status\": \"pending\",\n    \"items\": [\n      {\n        \"menu_item_id\": 13,\n        \"quantity\": 2,\n        \"menu_name\": \"Postman menu 17922375674966jwt\",\n        \"unit_price\": \"70.00\"\n      }\n    ]\n  }\n}"
+          "body": "{\n  \"data\": {\n    \"id\": 105,\n    \"reservation_id\": 109,\n    \"total\": \"140.00\",\n    \"status\": \"pending\",\n    \"items\": [\n      {\n        \"menu_item_id\": 104,\n        \"quantity\": 2,\n        \"menu_name\": \"Postman menu 1792312716359ud7i\",\n        \"unit_price\": \"70.00\"\n      }\n    ]\n  }\n}"
         }
       ]
     },
@@ -1105,7 +1105,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": [\n    {\n      \"id\": 13,\n      \"user_id\": 34,\n      \"reservation_id\": 19,\n      \"total\": \"140.00\",\n      \"status\": \"pending\",\n      \"note\": \"\",\n      \"created_at\": \"2026-10-17 18:46:09\"\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
+          "body": "{\n  \"data\": [\n    {\n      \"id\": 105,\n      \"user_id\": 164,\n      \"reservation_id\": 109,\n      \"total\": \"140.00\",\n      \"status\": \"pending\",\n      \"note\": \"\",\n      \"created_at\": \"2026-10-18 15:38:38\"\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
         }
       ]
     },
@@ -1161,7 +1161,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": {\n    \"id\": 13,\n    \"user_id\": 34,\n    \"reservation_id\": 19,\n    \"total\": \"140.00\",\n    \"status\": \"pending\",\n    \"note\": \"\",\n    \"created_at\": \"2026-10-17 18:46:09\",\n    \"items\": [\n      {\n        \"id\": 13,\n        \"order_id\": 13,\n        \"menu_item_id\": 13,\n        \"menu_name\": \"Postman menu 17922375674966jwt\",\n        \"quantity\": 2,\n        \"unit_price\": \"70.00\"\n      }\n    ]\n  }\n}"
+          "body": "{\n  \"data\": {\n    \"id\": 105,\n    \"user_id\": 164,\n    \"reservation_id\": 109,\n    \"total\": \"140.00\",\n    \"status\": \"pending\",\n    \"note\": \"\",\n    \"created_at\": \"2026-10-18 15:38:38\",\n    \"items\": [\n      {\n        \"id\": 105,\n        \"order_id\": 105,\n        \"menu_item_id\": 104,\n        \"menu_name\": \"Postman menu 1792312716359ud7i\",\n        \"quantity\": 2,\n        \"unit_price\": \"70.00\"\n      }\n    ]\n  }\n}"
         }
       ]
     },
@@ -1273,7 +1273,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": [\n    {\n      \"id\": 13,\n      \"user_id\": 34,\n      \"reservation_id\": 19,\n      \"total\": \"140.00\",\n      \"status\": \"pending\",\n      \"note\": \"\",\n      \"created_at\": \"2026-10-17 18:46:09\"\n    },\n    {\n      \"id\": 12,\n      \"user_id\": 33,\n      \"reservation_id\": null,\n      \"total\": \"70.00\",\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"created_at\": \"2026-10-17 18:42:07\"\n    },\n    {\n      \"id\": 11,\n      \"user_id\": 33,\n      \"reservation_id\": 15,\n      \"total\": \"140.00\",\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"created_at\": \"2026-10-17 18:42:06\"\n    },\n    {\n      \"id\": 4,\n      \"user_id\": 8,\n      \"reservation_id\": null,\n      \"total\": \"70.00\",\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"created_at\": \"2026-10-17 18:27:14\"\n    },\n    {\n      \"id\": 3,\n      \"user_id\": 8,\n      \"reservation_id\": 4,\n      \"total\": \"140.00\",\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"created_at\": \"2026-10-17 18:27:13\"\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
+          "body": "{\n  \"data\": [\n    {\n      \"id\": 105,\n      \"user_id\": 164,\n      \"reservation_id\": 109,\n      \"total\": \"140.00\",\n      \"status\": \"pending\",\n      \"note\": \"\",\n      \"created_at\": \"2026-10-18 15:38:38\"\n    },\n    {\n      \"id\": 55,\n      \"user_id\": 112,\n      \"reservation_id\": null,\n      \"total\": \"75.00\",\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"created_at\": \"2026-10-18 00:05:53\"\n    },\n    {\n      \"id\": 52,\n      \"user_id\": 103,\n      \"reservation_id\": null,\n      \"total\": \"75.00\",\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"created_at\": \"2026-10-17 23:38:23\"\n    },\n    {\n      \"id\": 14,\n      \"user_id\": 34,\n      \"reservation_id\": null,\n      \"total\": \"70.00\",\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"created_at\": \"2026-10-17 18:46:10\"\n    },\n    {\n      \"id\": 13,\n      \"user_id\": 34,\n      \"reservation_id\": 19,\n      \"total\": \"140.00\",\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"created_at\": \"2026-10-17 18:46:09\"\n    },\n    {\n      \"id\": 12,\n      \"user_id\": 33,\n      \"reservation_id\": null,\n      \"total\": \"70.00\",\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"created_at\": \"2026-10-17 18:42:07\"\n    },\n    {\n      \"id\": 11,\n      \"user_id\": 33,\n      \"reservation_id\": 15,\n      \"total\": \"140.00\",\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"created_at\": \"2026-10-17 18:42:06\"\n    },\n    {\n      \"id\": 4,\n      \"user_id\": 8,\n      \"reservation_id\": null,\n      \"total\": \"70.00\",\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"created_at\": \"2026-10-17 18:27:14\"\n    },\n    {\n      \"id\": 3,\n      \"user_id\": 8,\n      \"reservation_id\": 4,\n      \"total\": \"140.00\",\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"created_at\": \"2026-10-17 18:27:13\"\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
         }
       ]
     },
@@ -1329,7 +1329,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": [\n    {\n      \"id\": 19,\n      \"user_id\": 34,\n      \"table_id\": 1,\n      \"reservation_date\": \"2026-10-24\",\n      \"slot\": \"11:00\",\n      \"guests\": 2,\n      \"status\": \"confirmed\",\n      \"note\": \"\",\n      \"active_slot\": 1,\n      \"created_at\": \"2026-10-17 18:46:09\"\n    },\n    {\n      \"id\": 17,\n      \"user_id\": 33,\n      \"table_id\": 10,\n      \"reservation_date\": \"2026-10-24\",\n      \"slot\": \"12:30\",\n      \"guests\": 4,\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"active_slot\": null,\n      \"created_at\": \"2026-10-17 18:42:09\"\n    },\n    {\n      \"id\": 15,\n      \"user_id\": 33,\n      \"table_id\": 1,\n      \"reservation_date\": \"2026-10-24\",\n      \"slot\": \"11:00\",\n      \"guests\": 2,\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"active_slot\": null,\n      \"created_at\": \"2026-10-17 18:42:06\"\n    },\n    {\n      \"id\": 4,\n      \"user_id\": 8,\n      \"table_id\": 1,\n      \"reservation_date\": \"2026-10-24\",\n      \"slot\": \"11:00\",\n      \"guests\": 2,\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"active_slot\": null,\n      \"created_at\": \"2026-10-17 18:27:13\"\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
+          "body": "{\n  \"data\": [\n    {\n      \"id\": 109,\n      \"user_id\": 164,\n      \"table_id\": 1,\n      \"reservation_date\": \"2026-10-25\",\n      \"slot\": \"11:00\",\n      \"guests\": 2,\n      \"status\": \"confirmed\",\n      \"note\": \"\",\n      \"active_slot\": 1,\n      \"created_at\": \"2026-10-18 15:38:38\"\n    },\n    {\n      \"id\": 105,\n      \"user_id\": 154,\n      \"table_id\": 2,\n      \"reservation_date\": \"2026-11-10\",\n      \"slot\": \"11:00\",\n      \"guests\": 2,\n      \"status\": \"confirmed\",\n      \"note\": \"\",\n      \"active_slot\": 1,\n      \"created_at\": \"2026-10-18 15:13:00\"\n    },\n    {\n      \"id\": 104,\n      \"user_id\": 154,\n      \"table_id\": 1,\n      \"reservation_date\": \"2026-12-15\",\n      \"slot\": \"11:00\",\n      \"guests\": 2,\n      \"status\": \"cancelled\",\n      \"note\": \"ไม่ทานเผ็ด\",\n      \"active_slot\": null,\n      \"created_at\": \"2026-10-18 15:12:06\"\n    },\n    {\n      \"id\": 103,\n      \"user_id\": 154,\n      \"table_id\": 2,\n      \"reservation_date\": \"2026-10-20\",\n      \"slot\": \"11:00\",\n      \"guests\": 2,\n      \"status\": \"cancelled\",\n      \"note\": \"ไม่ทานเผ็ด\",\n      \"active_slot\": null,\n      \"created_at\": \"2026-10-18 14:55:12\"\n    },\n    {\n      \"id\": 56,\n      \"user_id\": 112,\n      \"table_id\": 1,\n      \"reservation_date\": \"2026-10-25\",\n      \"slot\": \"11:00\",\n      \"guests\": 2,\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"active_slot\": null,\n      \"created_at\": \"2026-10-18 00:05:54\"\n    },\n    {\n      \"id\": 52,\n      \"user_id\": 103,\n      \"table_id\": 1,\n      \"reservation_date\": \"2026-10-25\",\n      \"slot\": \"11:00\",\n      \"guests\": 2,\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"active_slot\": null,\n      \"created_at\": \"2026-10-17 23:38:24\"\n    },\n    {\n      \"id\": 21,\n      \"user_id\": 34,\n      \"table_id\": 11,\n      \"reservation_date\": \"2026-10-24\",\n      \"slot\": \"12:30\",\n      \"guests\": 4,\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"active_slot\": null,\n      \"created_at\": \"2026-10-17 18:46:13\"\n    },\n    {\n      \"id\": 19,\n      \"user_id\": 34,\n      \"table_id\": 1,\n      \"reservation_date\": \"2026-10-24\",\n      \"slot\": \"11:00\",\n      \"guests\": 2,\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"active_slot\": null,\n      \"created_at\": \"2026-10-17 18:46:09\"\n    },\n    {\n      \"id\": 17,\n      \"user_id\": 33,\n      \"table_id\": 10,\n      \"reservation_date\": \"2026-10-24\",\n      \"slot\": \"12:30\",\n      \"guests\": 4,\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"active_slot\": null,\n      \"created_at\": \"2026-10-17 18:42:09\"\n    },\n    {\n      \"id\": 15,\n      \"user_id\": 33,\n      \"table_id\": 1,\n      \"reservation_date\": \"2026-10-24\",\n      \"slot\": \"11:00\",\n      \"guests\": 2,\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"active_slot\": null,\n      \"created_at\": \"2026-10-17 18:42:06\"\n    },\n    {\n      \"id\": 4,\n      \"user_id\": 8,\n      \"table_id\": 1,\n      \"reservation_date\": \"2026-10-24\",\n      \"slot\": \"11:00\",\n      \"guests\": 2,\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"active_slot\": null,\n      \"created_at\": \"2026-10-17 18:27:13\"\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
         }
       ]
     },
@@ -1403,7 +1403,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": {\n    \"id\": 13,\n    \"status\": \"confirmed\"\n  }\n}"
+          "body": "{\n  \"data\": {\n    \"id\": 105,\n    \"status\": \"confirmed\"\n  }\n}"
         }
       ]
     },
@@ -1477,7 +1477,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": {\n    \"id\": 13,\n    \"status\": \"cancelled\"\n  }\n}"
+          "body": "{\n  \"data\": {\n    \"id\": 105,\n    \"status\": \"cancelled\"\n  }\n}"
         }
       ]
     },
@@ -1533,7 +1533,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": {\n    \"id\": 19,\n    \"status\": \"cancelled\"\n  }\n}"
+          "body": "{\n  \"data\": {\n    \"id\": 109,\n    \"status\": \"cancelled\"\n  }\n}"
         }
       ]
     },
@@ -1608,7 +1608,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": {\n    \"id\": 14,\n    \"reservation_id\": null,\n    \"total\": \"70.00\",\n    \"status\": \"pending\",\n    \"items\": [\n      {\n        \"menu_item_id\": 13,\n        \"quantity\": 1,\n        \"menu_name\": \"Postman menu 17922375674966jwt\",\n        \"unit_price\": \"70.00\"\n      }\n    ]\n  }\n}"
+          "body": "{\n  \"data\": {\n    \"id\": 106,\n    \"reservation_id\": null,\n    \"total\": \"70.00\",\n    \"status\": \"pending\",\n    \"items\": [\n      {\n        \"menu_item_id\": 104,\n        \"quantity\": 1,\n        \"menu_name\": \"Postman menu 1792312716359ud7i\",\n        \"unit_price\": \"70.00\"\n      }\n    ]\n  }\n}"
         }
       ]
     },
@@ -1664,7 +1664,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": {\n    \"id\": 14,\n    \"status\": \"cancelled\"\n  }\n}"
+          "body": "{\n  \"data\": {\n    \"id\": 106,\n    \"status\": \"cancelled\"\n  }\n}"
         }
       ]
     },
@@ -1891,7 +1891,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": {\n    \"id\": 6,\n    \"name\": \"Category 17922375674966jwt\"\n  }\n}"
+          "body": "{\n  \"data\": {\n    \"id\": 103,\n    \"name\": \"Category 1792312716359ud7i\"\n  }\n}"
         }
       ]
     },
@@ -1947,7 +1947,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": {\n    \"id\": 6,\n    \"name\": \"Category 17922375674966jwt\"\n  }\n}"
+          "body": "{\n  \"data\": {\n    \"id\": 103,\n    \"name\": \"Category 1792312716359ud7i\"\n  }\n}"
         }
       ]
     },
@@ -2021,7 +2021,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": {\n    \"id\": 6,\n    \"name\": \"Updated 17922375674966jwt\"\n  }\n}"
+          "body": "{\n  \"data\": {\n    \"id\": 103,\n    \"name\": \"Updated 1792312716359ud7i\"\n  }\n}"
         }
       ]
     },
@@ -2318,7 +2318,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": {\n    \"id\": 14,\n    \"category_id\": 6,\n    \"name\": \"Final menu 17922375674966jwt\",\n    \"description\": \"\",\n    \"price\": 25.25,\n    \"image_url\": null,\n    \"is_available\": true\n  }\n}"
+          "body": "{\n  \"data\": {\n    \"id\": 105,\n    \"category_id\": 103,\n    \"name\": \"Final menu 1792312716359ud7i\",\n    \"description\": \"\",\n    \"price\": 25.25,\n    \"image_url\": null,\n    \"is_available\": true\n  }\n}"
         }
       ]
     },
@@ -2670,7 +2670,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": {\n    \"id\": 14,\n    \"category_id\": 6,\n    \"name\": \"Final menu 17922375674966jwt\",\n    \"description\": \"\",\n    \"price\": 25.25,\n    \"image_url\": null,\n    \"is_available\": false\n  }\n}"
+          "body": "{\n  \"data\": {\n    \"id\": 105,\n    \"category_id\": 103,\n    \"name\": \"Final menu 1792312716359ud7i\",\n    \"description\": \"\",\n    \"price\": 25.25,\n    \"image_url\": null,\n    \"is_available\": false\n  }\n}"
         }
       ]
     },
@@ -2744,7 +2744,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"error\": \"Menu item 14 is unavailable\"\n}"
+          "body": "{\n  \"error\": \"Menu item 105 is unavailable\"\n}"
         }
       ]
     },
@@ -2818,7 +2818,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": {\n    \"id\": 14,\n    \"category_id\": 1,\n    \"name\": \"Final menu 17922375674966jwt\",\n    \"description\": \"\",\n    \"price\": 25.25,\n    \"image_url\": null,\n    \"is_available\": true\n  }\n}"
+          "body": "{\n  \"data\": {\n    \"id\": 105,\n    \"category_id\": 1,\n    \"name\": \"Final menu 1792312716359ud7i\",\n    \"description\": \"\",\n    \"price\": 25.25,\n    \"image_url\": null,\n    \"is_available\": true\n  }\n}"
         }
       ]
     },
@@ -2991,7 +2991,7 @@
       ]
     },
     {
-      "name": "48 Create table",
+      "name": "48 Admin cannot add table",
       "request": {
         "method": "POST",
         "url": "{{base_url}}/api/tables",
@@ -3021,15 +3021,14 @@
           "script": {
             "type": "text/javascript",
             "exec": [
-              "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
-              "if (pm.response.code < 300) pm.environment.set('final_table_id', pm.response.json().data.id);"
+              "pm.test('HTTP 403', () => pm.response.to.have.status(403));"
             ]
           }
         }
       ],
       "response": [
         {
-          "name": "Actual 201 response",
+          "name": "Actual 403 response",
           "originalRequest": {
             "method": "POST",
             "url": "{{base_url}}/api/tables",
@@ -3053,15 +3052,15 @@
               }
             }
           },
-          "status": "Created",
-          "code": 201,
+          "status": "Forbidden",
+          "code": 403,
           "header": [
             {
               "key": "Content-Type",
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": {\n    \"id\": 11,\n    \"table_number\": \"T17922375674966jwt\",\n    \"capacity\": 4,\n    \"is_active\": true\n  }\n}"
+          "body": "{\n  \"error\": \"Adding tables is disabled\"\n}"
         }
       ]
     },
@@ -3117,7 +3116,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"table_number\": \"T01\",\n      \"capacity\": 2,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 2,\n      \"table_number\": \"T02\",\n      \"capacity\": 2,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 3,\n      \"table_number\": \"T03\",\n      \"capacity\": 4,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 4,\n      \"table_number\": \"T04\",\n      \"capacity\": 4,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 5,\n      \"table_number\": \"T05\",\n      \"capacity\": 6,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 11,\n      \"table_number\": \"T17922375674966jwt\",\n      \"capacity\": 4,\n      \"is_active\": 1\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
+          "body": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"table_number\": \"T01\",\n      \"capacity\": 2,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 2,\n      \"table_number\": \"T02\",\n      \"capacity\": 2,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 3,\n      \"table_number\": \"T03\",\n      \"capacity\": 4,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 4,\n      \"table_number\": \"T04\",\n      \"capacity\": 4,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 5,\n      \"table_number\": \"T05\",\n      \"capacity\": 6,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 103,\n      \"table_number\": \"T06\",\n      \"capacity\": 2,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 104,\n      \"table_number\": \"T07\",\n      \"capacity\": 4,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 105,\n      \"table_number\": \"T08\",\n      \"capacity\": 4,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 106,\n      \"table_number\": \"T09\",\n      \"capacity\": 6,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 107,\n      \"table_number\": \"T10\",\n      \"capacity\": 8,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 110,\n      \"table_number\": \"QA1792312716197\",\n      \"capacity\": 4,\n      \"is_active\": 1\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
         }
       ]
     },
@@ -3191,15 +3190,15 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": {\n    \"id\": 11,\n    \"table_number\": \"T17922375674966jwt\",\n    \"capacity\": 6,\n    \"is_active\": true\n  }\n}"
+          "body": "{\n  \"data\": {\n    \"id\": 110,\n    \"table_number\": \"T1792312716359ud7i\",\n    \"capacity\": 6,\n    \"is_active\": true\n  }\n}"
         }
       ]
     },
     {
       "name": "51 Invalid capacity",
       "request": {
-        "method": "POST",
-        "url": "{{base_url}}/api/tables",
+        "method": "PUT",
+        "url": "{{base_url}}/api/tables/{{final_table_id}}",
         "header": [
           {
             "key": "Content-Type",
@@ -3235,8 +3234,8 @@
         {
           "name": "Actual 400 response",
           "originalRequest": {
-            "method": "POST",
-            "url": "{{base_url}}/api/tables",
+            "method": "PUT",
+            "url": "{{base_url}}/api/tables/{{final_table_id}}",
             "header": [
               {
                 "key": "Content-Type",
@@ -3636,7 +3635,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": {\n    \"id\": 21,\n    \"table_id\": 11,\n    \"date\": \"2026-10-24\",\n    \"slot\": \"12:30\",\n    \"guests\": 4,\n    \"note\": \"\",\n    \"status\": \"confirmed\"\n  }\n}"
+          "body": "{\n  \"data\": {\n    \"id\": 111,\n    \"table_id\": 110,\n    \"date\": \"2026-10-25\",\n    \"slot\": \"12:30\",\n    \"guests\": 4,\n    \"note\": \"\",\n    \"status\": \"confirmed\"\n  }\n}"
         }
       ]
     },
@@ -3766,7 +3765,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": [\n    {\n      \"id\": 21,\n      \"user_id\": 34,\n      \"table_id\": 11,\n      \"reservation_date\": \"2026-10-24\",\n      \"slot\": \"12:30\",\n      \"guests\": 4,\n      \"status\": \"confirmed\",\n      \"note\": \"\",\n      \"active_slot\": 1,\n      \"created_at\": \"2026-10-17 18:46:13\",\n      \"table_number\": \"T17922375674966jwt\"\n    },\n    {\n      \"id\": 19,\n      \"user_id\": 34,\n      \"table_id\": 1,\n      \"reservation_date\": \"2026-10-24\",\n      \"slot\": \"11:00\",\n      \"guests\": 2,\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"active_slot\": null,\n      \"created_at\": \"2026-10-17 18:46:09\",\n      \"table_number\": \"T01\"\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
+          "body": "{\n  \"data\": [\n    {\n      \"id\": 111,\n      \"user_id\": 164,\n      \"table_id\": 110,\n      \"reservation_date\": \"2026-10-25\",\n      \"slot\": \"12:30\",\n      \"guests\": 4,\n      \"status\": \"confirmed\",\n      \"note\": \"\",\n      \"active_slot\": 1,\n      \"created_at\": \"2026-10-18 15:38:41\",\n      \"table_number\": \"T1792312716359ud7i\"\n    },\n    {\n      \"id\": 109,\n      \"user_id\": 164,\n      \"table_id\": 1,\n      \"reservation_date\": \"2026-10-25\",\n      \"slot\": \"11:00\",\n      \"guests\": 2,\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"active_slot\": null,\n      \"created_at\": \"2026-10-18 15:38:38\",\n      \"table_number\": \"T01\"\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
         }
       ]
     },
@@ -4082,7 +4081,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": {\n    \"id\": 21,\n    \"status\": \"cancelled\"\n  }\n}"
+          "body": "{\n  \"data\": {\n    \"id\": 111,\n    \"status\": \"cancelled\"\n  }\n}"
         }
       ]
     },
@@ -4530,7 +4529,7 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"category_id\": 1,\n      \"name\": \"ข้าวกะเพราไก่\",\n      \"description\": \"ข้าวกะเพราไก่พร้อมไข่ดาว\",\n      \"price\": \"75.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-17 18:23:45\",\n      \"category_name\": \"อาหารจานหลัก\"\n    },\n    {\n      \"id\": 2,\n      \"category_id\": 1,\n      \"name\": \"ข้าวผัดกุ้ง\",\n      \"description\": \"ข้าวผัดกุ้งสด\",\n      \"price\": \"90.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-17 18:23:45\",\n      \"category_name\": \"อาหารจานหลัก\"\n    },\n    {\n      \"id\": 3,\n      \"category_id\": 2,\n      \"name\": \"ชาไทยเย็น\",\n      \"description\": \"ชาไทยใส่นม\",\n      \"price\": \"45.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-17 18:23:45\",\n      \"category_name\": \"เครื่องดื่ม\"\n    },\n    {\n      \"id\": 4,\n      \"category_id\": 3,\n      \"name\": \"ไอศกรีมกะทิ\",\n      \"description\": \"ไอศกรีมกะทิพร้อมถั่วลิสง\",\n      \"price\": \"50.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-17 18:23:45\",\n      \"category_name\": \"ของหวาน\"\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
+          "body": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"category_id\": 1,\n      \"name\": \"ข้าวกะเพราไก่\",\n      \"description\": \"ไก่ผัดพริกกระเทียมและใบกะเพรา เสิร์ฟพร้อมข้าวสวย ไม่รวมไข่ดาว\",\n      \"price\": \"55.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-17 18:23:45\",\n      \"category_name\": \"ข้าวจานเดียว / อาหารแห้ง\"\n    },\n    {\n      \"id\": 2,\n      \"category_id\": 1,\n      \"name\": \"ข้าวผัดกุ้ง\",\n      \"description\": \"ข้าวผัดไข่กับกุ้ง หอมกลิ่นกระทะ เสิร์ฟพร้อมแตงกวาและมะนาว\",\n      \"price\": \"75.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-17 18:23:45\",\n      \"category_name\": \"ข้าวจานเดียว / อาหารแห้ง\"\n    },\n    {\n      \"id\": 53,\n      \"category_id\": 1,\n      \"name\": \"ข้าวกะเพราหมูสับ\",\n      \"description\": \"หมูสับผัดกะเพราหอม ๆ รสจัดจ้าน เสิร์ฟพร้อมข้าวสวย ไม่รวมไข่ดาว\",\n      \"price\": \"60.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"ข้าวจานเดียว / อาหารแห้ง\"\n    },\n    {\n      \"id\": 54,\n      \"category_id\": 1,\n      \"name\": \"ข้าวหมูกระเทียม\",\n      \"description\": \"หมูนุ่มผัดกระเทียมพริกไทย เสิร์ฟพร้อมข้าวสวย\",\n      \"price\": \"60.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"ข้าวจานเดียว / อาหารแห้ง\"\n    },\n    {\n      \"id\": 55,\n      \"category_id\": 1,\n      \"name\": \"ข้าวไก่กระเทียม\",\n      \"description\": \"ไก่ผัดกระเทียมหอม ๆ กินง่าย เสิร์ฟพร้อมข้าวสวย\",\n      \"price\": \"55.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"ข้าวจานเดียว / อาหารแห้ง\"\n    },\n    {\n      \"id\": 56,\n      \"category_id\": 1,\n      \"name\": \"ข้าวผัดหมู\",\n      \"description\": \"ข้าวผัดไข่และหมู เสิร์ฟพร้อมแตงกวาและมะนาว\",\n      \"price\": \"60.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"ข้าวจานเดียว / อาหารแห้ง\"\n    },\n    {\n      \"id\": 57,\n      \"category_id\": 3,\n      \"name\": \"ต้มจืดเต้าหู้หมูสับ + ข้าว\",\n      \"description\": \"น้ำซุปใส เต้าหู้ไข่ หมูสับ และผักกาดขาว รวมข้าวสวย 1 จาน\",\n      \"price\": \"70.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"ต้มและแกง พร้อมข้าว\"\n    },\n    {\n      \"id\": 58,\n      \"category_id\": 3,\n      \"name\": \"ต้มยำไก่น้ำใส + ข้าว\",\n      \"description\": \"เปรี้ยวเผ็ด หอมข่า ตะไคร้ และใบมะกรูด รวมข้าวสวย 1 จาน\",\n      \"price\": \"75.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"ต้มและแกง พร้อมข้าว\"\n    },\n    {\n      \"id\": 59,\n      \"category_id\": 3,\n      \"name\": \"ต้มยำกุ้งน้ำข้น + ข้าว\",\n      \"description\": \"น้ำต้มยำเข้มข้น หอมมันและรสจัดจ้าน รวมข้าวสวย 1 จาน\",\n      \"price\": \"95.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"ต้มและแกง พร้อมข้าว\"\n    },\n    {\n      \"id\": 60,\n      \"category_id\": 3,\n      \"name\": \"แกงเขียวหวานไก่ + ข้าว\",\n      \"description\": \"กะทิหอมมัน เนื้อไก่ มะเขือ และโหระพา รวมข้าวสวย 1 จาน\",\n      \"price\": \"80.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"ต้มและแกง พร้อมข้าว\"\n    },\n    {\n      \"id\": 61,\n      \"category_id\": 2,\n      \"name\": \"ชามะนาว\",\n      \"description\": \"ชาหอมเข้ม ตัดด้วยรสเปรี้ยวของมะนาว เสิร์ฟเย็น\",\n      \"price\": \"35.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"เครื่องดื่มสดชื่น\"\n    },\n    {\n      \"id\": 62,\n      \"category_id\": 2,\n      \"name\": \"น้ำมะนาว\",\n      \"description\": \"เปรี้ยวหวาน ดื่มคู่กับอาหารรสจัด เสิร์ฟเย็น\",\n      \"price\": \"35.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"เครื่องดื่มสดชื่น\"\n    },\n    {\n      \"id\": 63,\n      \"category_id\": 2,\n      \"name\": \"น้ำผึ้งมะนาว\",\n      \"description\": \"หอมกลิ่นน้ำผึ้ง เปรี้ยวหวานกลมกล่อม เสิร์ฟเย็น\",\n      \"price\": \"40.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"เครื่องดื่มสดชื่น\"\n    },\n    {\n      \"id\": 64,\n      \"category_id\": 2,\n      \"name\": \"น้ำผึ้งมะนาวโซดา\",\n      \"description\": \"น้ำผึ้งและมะนาวเติมโซดาซ่า เสิร์ฟเย็น\",\n      \"price\": \"45.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"เครื่องดื่มสดชื่น\"\n    },\n    {\n      \"id\": 65,\n      \"category_id\": 2,\n      \"name\": \"แดงมะนาวโซดา\",\n      \"description\": \"สีสดใส หวานซ่าอมเปรี้ยว เสิร์ฟเย็น\",\n      \"price\": \"35.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"เครื่องดื่มสดชื่น\"\n    },\n    {\n      \"id\": 66,\n      \"category_id\": 2,\n      \"name\": \"น้ำกระเจี๊ยบ\",\n      \"description\": \"เปรี้ยวหวาน หอมกระเจี๊ยบ เสิร์ฟเย็น\",\n      \"price\": \"30.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"เครื่องดื่มสดชื่น\"\n    },\n    {\n      \"id\": 67,\n      \"category_id\": 2,\n      \"name\": \"น้ำเก๊กฮวย\",\n      \"description\": \"หอมดอกเก๊กฮวย รสหวานละมุน เสิร์ฟเย็น\",\n      \"price\": \"30.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"เครื่องดื่มสดชื่น\"\n    },\n    {\n      \"id\": 68,\n      \"category_id\": 2,\n      \"name\": \"น้ำอัญชันมะนาว\",\n      \"description\": \"สีม่วงสวย เปรี้ยวหวานสดชื่น เสิร์ฟเย็น\",\n      \"price\": \"35.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-18 00:16:59\",\n      \"category_name\": \"เครื่องดื่มสดชื่น\"\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
         }
       ]
     },

@@ -56,5 +56,6 @@ WHERE c.name='เครื่องดื่มสดชื่น' AND NOT EXIST
 INSERT INTO menu_items (category_id, name, description, price)
 SELECT c.id, 'น้ำอัญชันมะนาว', 'สีม่วงสวย เปรี้ยวหวานสดชื่น เสิร์ฟเย็น', 35.00 FROM categories c
 WHERE c.name='เครื่องดื่มสดชื่น' AND NOT EXISTS (SELECT 1 FROM menu_items WHERE name='น้ำอัญชันมะนาว');
-INSERT IGNORE INTO `tables` (id, table_number, capacity) VALUES
-  (1, 'T01', 2), (2, 'T02', 2), (3, 'T03', 4), (4, 'T04', 4), (5, 'T05', 6);
+INSERT IGNORE INTO `tables` (table_number, capacity) VALUES
+  ('T01', 2), ('T02', 2), ('T03', 4), ('T04', 4), ('T05', 6),
+  ('T06', 2), ('T07', 4), ('T08', 4), ('T09', 6), ('T10', 8);

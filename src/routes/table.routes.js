@@ -14,10 +14,9 @@ router.get('/', async (req, res) => {
   const [rows] = await pool.query('SELECT * FROM `tables` WHERE is_active=TRUE ORDER BY id LIMIT ? OFFSET ?', [limit, offset]);
   res.json({ data: rows, limit, offset });
 });
-router.post('/', ...admin, async (req, res) => {
-  const d = parse(tableSchema, req.body);
-  const [result] = await pool.execute('INSERT INTO `tables` (table_number, capacity, is_active) VALUES (?, ?, ?)', [d.table_number, d.capacity, d.is_active]);
-  res.status(201).json({ data: { id: result.insertId, ...d } });
+// The restaurant layout is provisioned during setup, never through admin actions.
+router.post('/', ...admin, (_req, _res) => {
+  throw new HttpError(403, 'Adding tables is disabled');
 });
 router.put('/:id', ...admin, async (req, res) => {
   const tableId = parse(id, req.params.id), d = parse(tableSchema, req.body);

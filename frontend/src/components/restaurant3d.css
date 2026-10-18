@@ -1,0 +1,35 @@
+.room3d { border: 1px solid #e6d4ba; border-radius: 24px; background: #f9f2e6; overflow: hidden; }
+.room3d-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 6px; padding: 14px; }
+.room3d-actions button { min-width: 44px; min-height: 44px; border-radius: 12px; padding: 8px 12px; border: 1px solid #e3cfb4; background: #fffdf7; color: #775237; font: inherit; cursor: pointer; }
+.room3d-actions button:hover { background: #ffe8cb; }
+.room3d-actions button:focus-visible, .room3d-table:focus-visible { outline: 3px solid #f45b0b; outline-offset: 3px; }
+.room3d-stage { position: relative; height: clamp(430px, 52vw, 680px); width: 100%; }
+.room3d-stage canvas { touch-action: none; }
+.room3d-overlay { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.room3d-label { position: absolute; transform: translate(-50%, -100%); pointer-events: none; }
+.room3d-table { pointer-events: auto; min-width: 72px; min-height: 46px; border: 1px solid #9bc5a3; border-radius: 9px; background: #f6fff8; box-shadow: 0 3px 10px #5840231a; padding: 5px 8px; display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; white-space: nowrap; font-family: inherit; }
+.room3d-table strong { font-size: 12px; color: #3f563f; }.room3d-table strong span { font-size: 10px; font-weight: 400; }
+.room3d-table small { font-size: 10px; font-weight: 700; color: #237346; }
+.room3d-table.status-full { background: #fff0ee; border-color: #d98f88; }.room3d-table.status-full small { color: #af3030; }
+.room3d-table.status-too-small { background: #efede8; border-color: #b9b2a8; }.room3d-table.status-too-small small { color: #71685a; }
+.room3d-table:disabled { cursor: not-allowed; opacity: 1; }
+.room3d-table.selected { background: #fff0dc; border: 2px solid #f45b0b; }.room3d-table.selected small { color: #b34c0e; }
+.room3d-landmark { background: #fffaf0dd; border-radius: 6px; padding: 4px 8px; font-size: 11px; white-space: nowrap; color: #795b3f; }
+.room3d-hint { font-size: 12px; color: #8c745a; text-align: center; padding: 12px 16px 18px; margin: 0; }
+.room3d-fallback { padding: 40px 20px; min-height: 220px; display: grid; place-content: center; gap: 16px; text-align: center; background: #fff8eb; border-radius: 18px; }
+@media (max-width:600px) {
+ .room3d { border-radius: 16px; }.room3d-stage { height: 430px; }
+ .room3d-actions { padding: 8px; gap: 5px; justify-content: center; }
+ .room3d-actions button { padding: 6px 10px; font-size: 12px; }
+ .room3d-table { min-width: 54px; padding: 4px; }.room3d-table strong { font-size: 11px; }.room3d-table strong span { display: none; }.room3d-table small { font-size: 9px; }
+ .room3d-landmark { font-size: 10px; padding: 3px 5px; }
+ .floorplan-view { flex-wrap: wrap; }
+}
+@media (min-width:601px) and (max-width:1100px) {
+ .room3d-table { min-width: 54px; padding: 4px; }
+ .room3d-table strong { font-size: 11px; }.room3d-table strong span { display: none; }.room3d-table small { font-size: 9px; }
+}
+@media (max-width:389px) {
+ .room3d-table { min-width: 44px; width: 44px; padding: 3px 1px; }
+ .room3d-table strong { font-size: 10px; }.room3d-table small { font-size: 8px; }
+}

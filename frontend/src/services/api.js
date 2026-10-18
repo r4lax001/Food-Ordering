@@ -20,6 +20,7 @@ api.interceptors.response.use(
   },
 );
 const messages = {
+  "Adding tables is disabled": "ไม่อนุญาตให้เพิ่มโต๊ะใหม่",
   "Invalid email or password": "อีเมลหรือรหัสผ่านไม่ถูกต้อง",
   "Record already exists":
     "ข้อมูลนี้มีอยู่แล้ว กรุณาตรวจสอบอีเมลหรือชื่ออีกครั้ง",

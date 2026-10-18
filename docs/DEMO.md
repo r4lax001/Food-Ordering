@@ -8,7 +8,7 @@
 6. เลือกเมนูและ POST /api/orders แล้วดู total ที่ server คำนวณ; เปลี่ยนราคาทาง client ไม่ได้
 7. GET /api/tables/availability → POST /api/reservations → GET /api/reservations/my
 8. ส่งจองเดิมซ้ำเพื่อแสดง 409 และลองจำนวนคนเกิน capacity เพื่อแสดง 400
-9. ใช้ token customer เพิ่มโต๊ะ/เมนู จะได้ 403; เปลี่ยนเป็น admin แล้วทำได้
+9. เพิ่มโต๊ะด้วย token customer หรือ admin จะได้ 403; เพิ่มเมนูทำได้เฉพาะ admin
 10. ลองลบโต๊ะที่มีการจอง จะได้ 409; ยกเลิกการจองของตนเองก่อน แล้วปิดโต๊ะได้
 
 ## การเก็บภาพใน Postman

@@ -1334,3 +1334,15 @@ textarea {
 .centered h1 {
   margin: 50px 0 30px;
 }
+
+/* --- React Bits integration --- */
+.star-border.full {
+  width: 100%;
+}
+.home-actions .star-border {
+  font-weight: 600;
+}
+.animated-heading .gradient-text {
+  display: inline-flex;
+  vertical-align: baseline;
+}

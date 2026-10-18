@@ -1,7 +1,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 const collection = JSON.parse(await readFile('postman/Food-Service.postman_collection.json', 'utf8'));
 collection.info.name = 'Food Service - Final acceptance';
-collection.info.description = 'Run in order. Uses Local environment and an admin account. Creates test data. Expired JWT case requires expired_token; scripts/test-postman.js supplies a genuinely expired signed token locally.';
+collection.info.description = 'Run in order. Uses Local environment and an admin account. Creates test data. Requires final_table_id of a disposable table provisioned outside the API; never use a real restaurant table. The local test runner provisions it automatically. Expired JWT case requires expired_token; scripts/test-postman.js supplies a genuinely expired signed token locally.';
 const save = (key, expr) => `if (pm.response.code < 300) pm.environment.set('${key}', ${expr});`;
 function add(name, method, path, status=200, body, token='admin_token', checks=[], headers=[]) {
   collection.item.push({ name, request: { method, url: '{{base_url}}'+path, header: [{ key:'Content-Type', value:'application/json' }, ...(token ? [{key:'Authorization',value:`Bearer {{${token}}}`}]:[]), ...headers], ...(body?{body:{mode:'raw',raw:JSON.stringify(body,null,2),options:{raw:{language:'json'}}}}:{}) }, event:[{listen:'test',script:{type:'text/javascript',exec:[`pm.test('HTTP ${status}', () => pm.response.to.have.status(${status}));`,...checks]}}] });
@@ -24,10 +24,10 @@ add('44 Move menu to seed category','PUT','/api/menu/{{final_menu_id}}',200,{...
 add('45 Delete empty category','DELETE','/api/categories/{{category_id}}',204);
 add('46 Deleted category missing','GET','/api/categories/{{category_id}}',404);
 add('47 Delete test menu','DELETE','/api/menu/{{final_menu_id}}',204);
-add('48 Create table','POST','/api/tables',201,{table_number:'T{{run_id}}',capacity:4},'admin_token',[save('final_table_id','pm.response.json().data.id')]);
+add('48 Admin cannot add table','POST','/api/tables',403,{table_number:'T{{run_id}}',capacity:4});
 add('49 List tables','GET','/api/tables');
 add('50 Update table','PUT','/api/tables/{{final_table_id}}',200,{table_number:'T{{run_id}}',capacity:6});
-add('51 Invalid capacity','POST','/api/tables',400,{table_number:'Bad',capacity:0});
+add('51 Invalid capacity','PUT','/api/tables/{{final_table_id}}',400,{table_number:'Bad',capacity:0});
 add('52 Customer cannot add table','POST','/api/tables',403,{table_number:'No',capacity:2},'token');
 const booking={table_id:'{{final_table_id}}',date:'{{booking_date}}',slot:'12:30',guests:4};
 add('53 Over capacity','POST','/api/reservations',400,{...booking,guests:7},'token');

@@ -695,26 +695,11 @@ Response 409:
 
 ## POST /api/tables
 
-สิทธิ์: Admin
+ปิดการเพิ่มโต๊ะผ่านระบบ Admin บัญชี Admin และ Customer ได้ HTTP 403 โดยไม่มีการสร้างข้อมูล; ผู้ที่ไม่ได้เข้าสู่ระบบได้ HTTP 401
 
-Request body:
+Response 403 (Admin):
 ```json
-{
-  "table_number": "T{{run_id}}",
-  "capacity": 4
-}
-```
-
-Response 201:
-```json
-{
-  "data": {
-    "id": 11,
-    "table_number": "T17922375674966jwt",
-    "capacity": 4,
-    "is_active": true
-  }
-}
+{ "error": "Adding tables is disabled" }
 ```
 
 ## GET /api/tables
@@ -857,3 +842,10 @@ Response 409:
 DELETE เมนูเป็น soft delete; DELETE โต๊ะเป็น is_active=0 และห้ามเมื่อมี confirmed reservation ที่เวลาสิ้นสุดยังมาไม่ถึง; PUT โต๊ะห้ามปิดใช้งานหรือลด capacity จนรองรับการจองเดิมไม่ได้; DELETE หมวดหมู่ห้ามถ้ายังมีเมนูอ้างอิง รวมเมนู soft delete
 
 สถานะออเดอร์ pending → confirmed → preparing → ready → completed; admin ยกเลิก pending/confirmed ได้ ลูกค้ายกเลิกเฉพาะ pending ระบบคำนวณยอดจากฐานข้อมูลเอง
+
+## GET /api/admin/users
+
+สิทธิ์: Admin เท่านั้น (ไม่มี token: 401, Customer: 403)
+Query: q (ชื่อ/อีเมล/รหัส, ไม่เกิน 190 ตัวอักษร), role (admin หรือ customer), limit (1–100, ค่าเริ่มต้น 50), offset (0–1000000)
+Response 200: { data: [{ id, name, email, role, created_at }], total, limit, offset }
+เลือกเฉพาะคอลัมน์ที่เปิดเผยได้ ไม่มี password_hash หรือ token; ค้นหาและกรองด้วย parameterized queries

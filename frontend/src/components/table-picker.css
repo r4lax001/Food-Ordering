@@ -1,0 +1,93 @@
+.table-picker { margin-top: 32px; }
+.table-picker-heading { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 14px; flex-wrap: wrap; }
+.table-picker-heading h2 { font-size: clamp(20px, 3vw, 26px); margin: 6px 0; }
+.table-picker-heading p { color: #8a796b; font-size: 13px; margin: 0; }
+.table-legend, .table-legend span { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.table-legend { gap: 16px; flex-wrap: wrap; }
+.table-legend i { width: 9px; height: 9px; border-radius: 50%; background: #7b9970; }
+.table-legend .chosen { background: #f45b0b; }
+.table-legend .unavailable-dot { background: #b9b4ad; }
+.floorplan-description, .floorplan-scroll-hint { font-size: 12px; color: #947b65; margin: 10px 0; }
+.floorplan-scroll { max-width: 100%; overflow: auto; border: 1px solid #e7d8c6; border-radius: 24px; background: #f9f3e9; padding: 14px; }
+.floorplan-scroll:focus-visible { outline: 3px solid #f7a16a; outline-offset: 3px; }
+.restaurant-floor { position: relative; width: 980px; height: 840px; margin: auto; border: 7px solid #dbc6ad; border-radius: 14px; background: repeating-linear-gradient(0deg, transparent 0 69px, #e4d3bc33 70px 71px), #fffaf2; }
+.room-counter, .room-restroom { position: absolute; top: 16px; height: 68px; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 14px; }
+.room-counter { left: 45px; width: 310px; background: #e7d6bf; color: #755637; border-bottom: 5px solid #c7aa85; }
+.room-restroom { right: 38px; width: 150px; background: #e8e9df; color: #717a62; border: 1px solid #c9cebc; }
+.room-service-path { position: absolute; top: 105px; right: 40px; width: 500px; text-align: center; font-size: 11px; color: #a38d75; border-bottom: 1px dashed #d5bea0; padding-bottom: 10px; }
+.room-window { position: absolute; left: 8px; top: 210px; height: 365px; writing-mode: vertical-rl; text-align: center; font-size: 12px; letter-spacing: 3px; color: #86a6a2; border-left: 5px solid #cce3df; padding-left: 7px; }
+.room-aisle { position: absolute; left: 425px; top: 145px; width: 130px; bottom: 38px; background: #f1e8d955; border-left: 1px dashed #e5d5be; border-right: 1px dashed #e5d5be; display: grid; place-items: center; }
+.room-aisle span { writing-mode: vertical-rl; letter-spacing: 5px; color: #b29b7f; font-size: 12px; }
+.room-zone { position: absolute; top: 136px; font-size: 11px; color: #a38c71; }
+.room-zone-left { left: 170px; }.room-zone-right { left: 710px; }
+.room-entry { position: absolute; bottom: -7px; left: 425px; width: 130px; padding: 12px 0; text-align: center; background: #fff5e6; border-bottom: 4px solid #e99450; color: #b1682f; font-size: 13px; }
+.room-plant { position: absolute; bottom: 22px; color: #739665; padding: 12px; border-radius: 50%; background: #e4e9d8; }.plant-left { left: 38px; }.plant-right { right: 38px; }
+.table-picker .dining-table { position: absolute; width: 148px; height: 170px; display: flex; flex-direction: column; align-items: center; gap: 3px; border: 1px solid transparent; border-radius: 18px; background: transparent; padding: 20px 4px 8px; transition: transform .2s, background .2s, box-shadow .2s; }
+.table-picker .dining-table:hover:not(:disabled) { transform: translateY(-4px); background: #fff; box-shadow: 0 8px 18px #9c70451a; }
+.table-picker .dining-table:focus-visible { outline: 3px solid #f7a16a; outline-offset: 3px; }
+.table-picker .dining-table.selected { background: #fff0df; border: 2px solid #f45b0b; box-shadow: 0 6px 18px #f45b0b18; }
+.table-picker .table-illustration { width: 134px; height: 97px; flex-shrink: 0; }
+.table-chair { fill: #e2c7a4; stroke: #cba87c; }
+.table-edge { fill: #b68b5c; }.table-surface { fill: #f2dbb9; }
+.selected .table-chair { fill: #f9a768; stroke: #df7934; }.selected .table-surface { fill: #ffce9a; }
+.table-picker .table-choice { position: absolute; top: 3px; font-size: 10px; color: #638157; display: flex; gap: 4px; align-items: center; }
+.table-picker .selected .table-choice { color: #c74c0b; }
+.table-picker .table-capacity { display: flex; gap: 5px; align-items: center; color: #806f60; font-size: 11px; }
+.table-picker .dining-table strong { font-size: 14px; color: #6a4c2e; }
+.table-picker .dining-table.unavailable { cursor: not-allowed; opacity: .6; filter: grayscale(1); }
+.booking-confirm h3 { margin: 0 0 16px; color: #a74d1a; }
+.unplaced-tables { margin-top: 20px; }.unplaced-tables h3 { font-size: 15px; }.unplaced-tables > div { display: flex; flex-wrap: wrap; gap: 16px; }.table-picker .unplaced-tables .dining-table { position: relative; }
+@media (prefers-reduced-motion: reduce) { .table-picker .dining-table { transition: none; }.table-picker .dining-table:hover:not(:disabled) { transform: none; } }
+/* Fit the complete room to its container; zoom keeps touch targets full size. */
+.floorplan-scroll { width: 100%; min-width: 0; padding: 0; overscroll-behavior-x: contain; }
+.floorplan-sized { position: relative; margin-inline: auto; }
+.restaurant-floor { margin: 0; transform-origin: top left; }
+.floorplan-toolbar { display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap; margin: 18px 0 12px; }
+.floorplan-view { display: flex; gap: 4px; padding: 4px; background: #f8efe4; border-radius: 14px; }
+.floorplan-toolbar button { min-height: 44px; padding: 10px 16px; border: 1px solid transparent; border-radius: 10px; background: transparent; font: inherit; font-size: 13px; color: #79593c; cursor: pointer; }
+.floorplan-view button[aria-pressed="true"] { background: white; color: #c05216; box-shadow: 0 2px 6px #80542a14; }
+.floorplan-toolbar .floorplan-zoom { border-color: #e5c9aa; background: #fffbf5; }
+.floorplan-toolbar button:focus-visible { outline: 3px solid #f7a16a; outline-offset: 2px; }
+.room-table-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+.table-picker .room-table-list .dining-table { position: relative; width: 100%; background: #fffaf2; border-color: #ead8c1; }
+.table-picker .room-table-list .dining-table.selected { border-color: #f45b0b; }
+.table-picker { min-width: 0; max-width: 100%; }
+.booking-confirm { width: 100%; box-sizing: border-box; }
+@media (max-width: 600px) {
+ .table-picker-heading { gap: 14px; }
+ .table-picker-heading > div { min-width: 0; }
+ .table-legend { gap: 12px; }
+ .floorplan-description { line-height: 1.8; }
+ .floorplan-scroll { border-radius: 12px; }
+ .floorplan-toolbar { gap: 8px; }
+ .floorplan-toolbar button { padding-inline: 12px; font-size: 12px; }
+ .room-table-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+ .booking-confirm { padding: 18px; }
+ .booking-confirm > .btn { width: 100%; min-height: 48px; }
+}
+/* Status is communicated by text, shape and colour in both views. */
+.table-status-summary { display: flex; flex-wrap: wrap; gap: 12px; margin: 18px 0; }
+.table-status-summary > div { flex: 1 1 150px; padding: 14px 18px; border-radius: 16px; display: flex; gap: 12px; align-items: center; border: 1px solid; }
+.table-status-summary strong { font-size: 30px; line-height: 1.2; }
+.table-status-summary span { font-size: 13px; font-weight: 600; }
+.summary-available { color: #17623e; background: #e9f7ef; border-color: #9ed4b6 !important; }
+.summary-full { color: #a02c2c; background: #fff0ef; border-color: #eeb3ae !important; }
+.summary-small { color: #6d6357; background: #f4f1eb; border-color: #d7cfc3 !important; }
+.table-legend .full-dot { background: #cf4141; }
+.table-picker .dining-table.status-available { background: #edf8ee; border: 2px solid #81bd92; }
+.table-picker .dining-table.unavailable { opacity: 1; filter: none; }
+.table-picker .dining-table.status-full { background: #fff0ef; border: 2px solid #de7771; }
+.table-picker .dining-table.status-too-small { background: #f0eee9; border: 2px dashed #bab2a5; }
+.status-full .table-chair { fill: #efb3aa; stroke: #ce7770; }
+.status-full .table-surface { fill: #f4c9c0; }
+.status-too-small .table-chair, .status-too-small .table-surface { fill: #d9d4ca; stroke: #bdb5a8; }
+.table-picker .dining-table .table-choice { top: 5px; padding: 3px 9px; min-height: 23px; border-radius: 999px; font-size: 12px; font-weight: 700; background: #237a49; color: white; z-index: 1; }
+.table-picker .status-full .table-choice { background: #bb3636; color: white; }
+.table-picker .status-too-small .table-choice { background: #746b5f; color: white; }
+.table-picker .dining-table.selected { background: #fff0df; border: 3px solid #f45b0b; }
+.table-picker .selected .table-choice { background: #c4500d; color: white; }
+.table-picker .room-table-list .status-available { background: #edf8ee; border-color: #81bd92; }
+.table-picker .room-table-list .status-full { background: #fff0ef; border-color: #de7771; }
+.table-picker .room-table-list .status-too-small { background: #f0eee9; border-color: #bab2a5; }
+.table-picker .room-table-list .selected { background: #fff0df; border-color: #f45b0b; }
+@media(max-width: 600px) { .table-status-summary { gap: 8px; }.table-status-summary > div { flex-basis: 120px; padding: 12px; gap: 8px; }.table-status-summary strong { font-size: 26px; }.table-status-summary span { font-size: 12px; } }

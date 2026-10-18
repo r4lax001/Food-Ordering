@@ -9,8 +9,6 @@ import React, {
 import { photos } from "../utils";
 import "./food3d.css";
 
-const LIMIT = Math.PI / 2;
-const clamp = (angle) => Math.max(-LIMIT, Math.min(LIMIT, angle));
 const FoodScene = lazy(() => import("./FoodScene"));
 function Fallback() {
   return (
@@ -70,7 +68,9 @@ export default function Food3D() {
       frame = requestAnimationFrame(() => {
         const top = container.current.getBoundingClientRect().top;
         const touch = matchMedia('(hover: none)').matches;
-        const progress = touch ? (innerHeight * .72 - top) / (innerHeight * .36) : window.scrollY / 240;
+        // Full reveal at page bottom even if the page is shorter than 240px of scroll.
+        const span = Math.min(240, Math.max(document.documentElement.scrollHeight - innerHeight, 1));
+        const progress = touch ? (innerHeight * .72 - top) / (innerHeight * .36) : window.scrollY / span;
         setScrollProgress(Math.max(0, Math.min(1, progress)));
       });
     };
@@ -81,7 +81,7 @@ export default function Food3D() {
   }, []);
   const progress = reduced || hovered || focused ? 1 : scrollProgress;
   const turn = (amount) => {
-    setAngle((a) => clamp(a + amount));
+    setAngle((a) => a + amount);
   };
   return (
     <section ref={container} className="food3d" aria-label="จานอาหารสามมิติ">
@@ -111,7 +111,7 @@ export default function Food3D() {
           if (drag.current === null) return;
           const delta = (e.clientX - drag.current) * 0.012;
           drag.current = e.clientX;
-          setAngle((a) => clamp(a + delta));
+          setAngle((a) => a + delta);
         }}
         onPointerUp={() => {
           drag.current = null;

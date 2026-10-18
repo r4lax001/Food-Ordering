@@ -74,6 +74,20 @@ app.patch('/api/orders/:id/cancel', requireAuth, async (req, res) => {
   const [result] = await pool.execute("UPDATE orders SET status='cancelled' WHERE id=? AND user_id=? AND status='pending'", [orderId, req.user.id]);
   if (!result.affectedRows) throw new HttpError(409, 'Only your pending orders can be cancelled'); res.json({ data: { id: orderId, status: 'cancelled' } });
 });
+app.get('/api/admin/users', ...admin, async (req, res) => {
+  const { limit, offset } = pagination(req);
+  const { q, role } = parse(z.object({
+    q: z.string().trim().max(190).default(''),
+    role: z.enum(['admin', 'customer']).optional(),
+  }), req.query);
+  const conditions = [], values = [];
+  if (q) { conditions.push('(LOCATE(?, name)>0 OR LOCATE(?, email)>0 OR CAST(id AS CHAR)=?)'); values.push(q, q, q); }
+  if (role) { conditions.push('role=?'); values.push(role); }
+  const where = conditions.length ? ' WHERE ' + conditions.join(' AND ') : '';
+  const [[count]] = await pool.execute('SELECT COUNT(*) AS total FROM users' + where, values);
+  const [rows] = await pool.query('SELECT id, name, email, role, created_at FROM users' + where + ' ORDER BY id DESC LIMIT ? OFFSET ?', [...values, limit, offset]);
+  res.json({ data: rows, total: count.total, limit, offset });
+});
 for (const resource of ['orders', 'reservations']) {
   app.get(`/api/admin/${resource}`, ...admin, async (req, res) => {
     const { limit, offset } = pagination(req);

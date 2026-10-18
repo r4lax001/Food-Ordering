@@ -1,3 +1,4 @@
+import AnimatedHeading from "./components/AnimatedHeading";
 import React, { useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import {
@@ -31,6 +32,7 @@ import {
   History,
 } from "./pages";
 import Admin from "./admin";
+import ClickSpark from "./components/reactbits/ClickSpark";
 import { Dialog } from "@base-ui/react/dialog";
 import "./styles.css";
 import "./responsive.css";
@@ -238,7 +240,7 @@ function App() {
               path="*"
               element={
                 <div className="page centered">
-                  <h1>หน้านี้ยังไม่อยู่ในเมนู</h1>
+                  <AnimatedHeading>หน้านี้ยังไม่อยู่ในเมนู</AnimatedHeading>
                   <Link className="btn" to="/">
                     กลับหน้าหลัก
                   </Link>
@@ -247,42 +249,18 @@ function App() {
             />
           </Routes>
         </main>
-        <footer>
-          <div className="footer-brand">
+        {location.pathname === "/admin" || location.pathname.startsWith("/admin/") ? (
+          <footer className="admin-footer-minimal">© {new Date().getFullYear()} พุงป่อง · PhungPong</footer>
+        ) : (
+          <footer className="site-footer-compact">
             <Brand />
-            <p>อิ่มอร่อย ส่งไว ถูกใจทุกมื้อ</p>
-            <small>Good Food, Happy Belly.</small>
-          </div>
-          <div>
-            <h4>มื้ออร่อยของคุณ</h4>
-            <Link to="/menu">เลือกเมนูอาหาร</Link>
-            <Link to="/reservation">จองโต๊ะ</Link>
-            <Link to="/cart">ตะกร้าของฉัน</Link>
-          </div>
-          <div>
-            <h4>บัญชีของฉัน</h4>
-            <Link to="/orders">รายการสั่งซื้อของฉัน</Link>
-            <Link to="/reservations">การจองของฉัน</Link>
-            <Link to={user ? "/orders" : "/register"}>
-              {user ? "ดูประวัติ" : "สมัครสมาชิก"}
-            </Link>
-          </div>
-          <div className="footer-message">
-            <h4>หิวเมื่อไหร่ พุงป่องจัดให้</h4>
-            <p>
-              เลือกของอร่อย แล้วมาอิ่มด้วยกัน
-              <br />
-              สั่งล่วงหน้า รับและชำระเงินที่ร้าน
-            </p>
-            <span className="made-with">
-              <Heart size={15} /> ทำทุกมื้อด้วยความใส่ใจ
-            </span>
-          </div>
-          <div className="copyright">
-            © {new Date().getFullYear()} พุงป่อง · PhungPong{" "}
-            <span>อร่อยง่าย ๆ ในทุกวัน</span>
-          </div>
-        </footer>
+            <div className="footer-links">
+              <Link to="/menu">เมนูอาหาร</Link>
+              <Link to="/reservation">จองโต๊ะ</Link>
+            </div>
+            <small className="footer-credit">© {new Date().getFullYear()} พุงป่อง · PhungPong</small>
+          </footer>
+        )}
       </div>
       {notice && (
         <div className="toast" role="status">
@@ -295,7 +273,9 @@ function App() {
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <Store>
-      <App />
+      <ClickSpark sparkColor="#F45B0B" sparkSize={13} sparkCount={10} glow={0.5}>
+        <App />
+      </ClickSpark>
     </Store>
   </BrowserRouter>,
 );
