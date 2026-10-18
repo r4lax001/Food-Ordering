@@ -1,0 +1,395 @@
+{
+  "schema_version": 1,
+  "diagram_type": "erd",
+  "meta": {
+    "title": "ความสัมพันธ์ฐานข้อมูล Food Service",
+    "locale": "th",
+    "output": ".archify/erd-food-service-20261017-190000/food-service.html",
+    "quality_profile": "standard"
+  },
+  "layout": {
+    "mode": "grid",
+    "gapX": 60,
+    "gapY": 85,
+    "entityW": 330,
+    "rowH": 24
+  },
+  "entities": [
+    {
+      "id": "users",
+      "label": "users",
+      "row": 0,
+      "col": 0,
+      "tag": "สมาชิก",
+      "attributes": [
+        {
+          "name": "id",
+          "type": "int",
+          "key": [
+            "pk"
+          ]
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)"
+        },
+        {
+          "name": "email",
+          "type": "varchar(190)",
+          "key": [
+            "uk"
+          ]
+        },
+        {
+          "name": "password_hash",
+          "type": "varchar(255)"
+        },
+        {
+          "name": "role",
+          "type": "enum('customer','admin')"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp"
+        }
+      ]
+    },
+    {
+      "id": "tables",
+      "label": "tables",
+      "row": 0,
+      "col": 1,
+      "tag": "การจอง",
+      "attributes": [
+        {
+          "name": "id",
+          "type": "int",
+          "key": [
+            "pk"
+          ]
+        },
+        {
+          "name": "table_number",
+          "type": "varchar(20)",
+          "key": [
+            "uk"
+          ]
+        },
+        {
+          "name": "capacity",
+          "type": "int"
+        },
+        {
+          "name": "is_active",
+          "type": "tinyint(1)"
+        }
+      ]
+    },
+    {
+      "id": "reservations",
+      "label": "reservations",
+      "row": 1,
+      "col": 1,
+      "tag": "การจอง",
+      "attributes": [
+        {
+          "name": "id",
+          "type": "int",
+          "key": [
+            "pk"
+          ]
+        },
+        {
+          "name": "user_id",
+          "type": "int",
+          "key": [
+            "fk"
+          ],
+          "references": "users.id"
+        },
+        {
+          "name": "table_id",
+          "type": "int",
+          "key": [
+            "uk",
+            "fk"
+          ],
+          "references": "tables.id"
+        },
+        {
+          "name": "reservation_date",
+          "type": "date",
+          "key": [
+            "uk"
+          ]
+        },
+        {
+          "name": "slot",
+          "type": "char(5)",
+          "key": [
+            "uk"
+          ]
+        },
+        {
+          "name": "guests",
+          "type": "int"
+        },
+        {
+          "name": "status",
+          "type": "enum('confirmed','completed','cancelled')"
+        },
+        {
+          "name": "note",
+          "type": "varchar(500)"
+        },
+        {
+          "name": "active_slot",
+          "type": "tinyint",
+          "key": [
+            "uk"
+          ]
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp"
+        }
+      ],
+      "width": 460
+    },
+    {
+      "id": "orders",
+      "label": "orders",
+      "row": 0,
+      "col": 2,
+      "tag": "คำสั่งซื้อ",
+      "attributes": [
+        {
+          "name": "id",
+          "type": "int",
+          "key": [
+            "pk"
+          ]
+        },
+        {
+          "name": "user_id",
+          "type": "int",
+          "key": [
+            "fk"
+          ],
+          "references": "users.id"
+        },
+        {
+          "name": "reservation_id",
+          "type": "int",
+          "key": [
+            "fk"
+          ],
+          "references": "reservations.id"
+        },
+        {
+          "name": "total",
+          "type": "decimal(12,2)"
+        },
+        {
+          "name": "status",
+          "type": "enum('pending','confirmed','preparing','ready','completed','cancelled')"
+        },
+        {
+          "name": "note",
+          "type": "varchar(500)"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp"
+        }
+      ],
+      "width": 550
+    },
+    {
+      "id": "order_items",
+      "label": "order_items",
+      "row": 1,
+      "col": 2,
+      "tag": "คำสั่งซื้อ",
+      "attributes": [
+        {
+          "name": "id",
+          "type": "int",
+          "key": [
+            "pk"
+          ]
+        },
+        {
+          "name": "order_id",
+          "type": "int",
+          "key": [
+            "uk",
+            "fk"
+          ],
+          "references": "orders.id"
+        },
+        {
+          "name": "menu_item_id",
+          "type": "int",
+          "key": [
+            "uk",
+            "fk"
+          ],
+          "references": "menu_items.id"
+        },
+        {
+          "name": "menu_name",
+          "type": "varchar(150)"
+        },
+        {
+          "name": "quantity",
+          "type": "int"
+        },
+        {
+          "name": "unit_price",
+          "type": "decimal(10,2)"
+        }
+      ]
+    },
+    {
+      "id": "categories",
+      "label": "categories",
+      "row": 0,
+      "col": 3,
+      "tag": "อาหาร",
+      "attributes": [
+        {
+          "name": "id",
+          "type": "int",
+          "key": [
+            "pk"
+          ]
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "key": [
+            "uk"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "menu_items",
+      "label": "menu_items",
+      "row": 1,
+      "col": 3,
+      "tag": "อาหาร",
+      "attributes": [
+        {
+          "name": "id",
+          "type": "int",
+          "key": [
+            "pk"
+          ]
+        },
+        {
+          "name": "category_id",
+          "type": "int",
+          "key": [
+            "fk"
+          ],
+          "references": "categories.id"
+        },
+        {
+          "name": "name",
+          "type": "varchar(150)"
+        },
+        {
+          "name": "description",
+          "type": "text"
+        },
+        {
+          "name": "price",
+          "type": "decimal(10,2)"
+        },
+        {
+          "name": "image_url",
+          "type": "varchar(1000)"
+        },
+        {
+          "name": "is_available",
+          "type": "tinyint(1)"
+        },
+        {
+          "name": "deleted_at",
+          "type": "datetime"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "id": "reservations_user_id",
+      "from": "reservations",
+      "to": "users",
+      "fromCardinality": "many",
+      "fromOptional": true,
+      "toCardinality": "one",
+      "toOptional": false
+    },
+    {
+      "id": "reservations_table_id",
+      "from": "reservations",
+      "to": "tables",
+      "fromCardinality": "many",
+      "fromOptional": true,
+      "toCardinality": "one",
+      "toOptional": false
+    },
+    {
+      "id": "orders_user_id",
+      "from": "orders",
+      "to": "users",
+      "fromCardinality": "many",
+      "fromOptional": true,
+      "toCardinality": "one",
+      "toOptional": false
+    },
+    {
+      "id": "orders_reservation_id",
+      "from": "orders",
+      "to": "reservations",
+      "fromCardinality": "many",
+      "fromOptional": true,
+      "toCardinality": "one",
+      "toOptional": true
+    },
+    {
+      "id": "order_items_order_id",
+      "from": "order_items",
+      "to": "orders",
+      "fromCardinality": "many",
+      "fromOptional": true,
+      "toCardinality": "one",
+      "toOptional": false
+    },
+    {
+      "id": "order_items_menu_item_id",
+      "from": "order_items",
+      "to": "menu_items",
+      "fromCardinality": "many",
+      "fromOptional": true,
+      "toCardinality": "one",
+      "toOptional": false
+    },
+    {
+      "id": "menu_items_category_id",
+      "from": "menu_items",
+      "to": "categories",
+      "fromCardinality": "many",
+      "fromOptional": true,
+      "toCardinality": "one",
+      "toOptional": false
+    }
+  ]
+}

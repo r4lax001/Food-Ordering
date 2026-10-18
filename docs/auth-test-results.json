@@ -1,0 +1,12 @@
+{
+  "requests": 15,
+  "assertions": 19,
+  "failures": 0,
+  "database": {
+    "user_id": 23,
+    "role": "customer",
+    "bcrypt_cost": 12,
+    "stored_as_plaintext": false,
+    "bcrypt_compare_passed": true
+  }
+}

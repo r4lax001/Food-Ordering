@@ -1,0 +1,54 @@
+.food3d {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 38% 38% 24px 24px;
+  background: radial-gradient(
+    ellipse at center,
+    #ffe3ba 0%,
+    #fff2df 52%,
+    #fff2df00 72%
+  );
+}
+.food3d-stage {
+  width: 100%;
+  flex: 1;
+  min-height: 210px;
+  cursor: grab;
+  touch-action: pan-y;
+  position: relative;
+}
+.food3d-stage:active {
+  cursor: grabbing;
+}
+.food3d-stage:focus-visible {
+  outline: 2px solid #f49a59;
+  border-radius: 24px;
+  outline-offset: -4px;
+}
+.food3d-stage > div,
+.food3d-stage canvas {
+  touch-action: pan-y !important;
+}
+.food3d-fallback {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  object-fit: contain;
+  border-radius: 24px;
+}
+.hero-art:has(.food3d) { height: 470px; }
+.hero-art .food3d {
+  position: absolute;
+  inset: 0;
+  min-height: 0;
+  background: none;
+  border-radius: 0;
+}
+@media (max-width: 767px) { .hero-art:has(.food3d) { height: 450px; } }
+@media (max-width: 559px) { .hero-art:has(.food3d) { height: 410px; width: 100%; } }

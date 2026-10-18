@@ -1,0 +1,38 @@
+{
+  "requests": 23,
+  "assertions": 42,
+  "failures": 0,
+  "database": [
+    {
+      "step": "POST inserted into MySQL",
+      "id": 8,
+      "name": "Menu CRUD 1792236808937",
+      "category_id": 1,
+      "price": "65.50",
+      "is_available": 1,
+      "deleted_at": null
+    },
+    {
+      "step": "PUT updated MySQL",
+      "id": 8,
+      "name": "Updated menu 1792236808937",
+      "category_id": 1,
+      "price": "80.00",
+      "is_available": 1,
+      "deleted_at": null
+    },
+    {
+      "step": "Invalid updates left MySQL unchanged",
+      "passed": true
+    },
+    {
+      "step": "DELETE marked MySQL row deleted",
+      "id": 8,
+      "name": "Updated menu 1792236808937",
+      "category_id": 1,
+      "price": "80.00",
+      "is_available": 0,
+      "deleted_at": "2026-10-17 18:33:30"
+    }
+  ]
+}

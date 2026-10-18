@@ -1,0 +1,13 @@
+{
+  "node": "v24.21.0",
+  "npm_ci": "passed",
+  "schema_on_empty_database": "passed",
+  "unit_tests": 6,
+  "integration_scenarios": 2,
+  "server_start": "passed",
+  "health": {
+    "status": "ok",
+    "database": "connected"
+  },
+  "seed_menu_count": 4
+}

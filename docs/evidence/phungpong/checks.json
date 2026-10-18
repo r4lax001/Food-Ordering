@@ -1,0 +1,13 @@
+{
+  "desktop": "1440x1050",
+  "mobile": "390x844",
+  "overflow": false,
+  "imagesLoaded": true,
+  "registerLogin": true,
+  "cartOrderCancellation": true,
+  "reservationCancellation": true,
+  "adminRouteProtection": true,
+  "adminCategoryCreateDelete": true,
+  "mobileNavigation": true,
+  "pageErrors": []
+}

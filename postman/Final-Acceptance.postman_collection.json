@@ -1,0 +1,4762 @@
+{
+  "info": {
+    "name": "Food Service - Final acceptance",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Run in order. Uses Local environment and an admin account. Creates test data. Expired JWT case requires expired_token; scripts/test-postman.js supplies a genuinely expired signed token locally."
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "if (pm.info.requestName === '01 Health: MySQL connection') {",
+          "  pm.environment.set('run_id', Date.now().toString() + Math.random().toString(36).slice(2, 6));",
+          "  pm.environment.set('booking_date', new Date(Date.now() + 7*86400000).toISOString().slice(0,10));",
+          "}"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "01 Health: MySQL connection",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/health"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+              "pm.test('Database connected', () => pm.expect(pm.response.json().database).to.eql('connected'));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/health"
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"status\": \"ok\",\n  \"database\": \"connected\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "02 GET menu from MySQL",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/menu"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+              "pm.test('Menu is an array', () => pm.expect(pm.response.json().data).to.be.an('array'));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/menu"
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"category_id\": 1,\n      \"name\": \"ข้าวกะเพราไก่\",\n      \"description\": \"ข้าวกะเพราไก่พร้อมไข่ดาว\",\n      \"price\": \"75.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-17 18:23:45\",\n      \"category_name\": \"อาหารจานหลัก\"\n    },\n    {\n      \"id\": 2,\n      \"category_id\": 1,\n      \"name\": \"ข้าวผัดกุ้ง\",\n      \"description\": \"ข้าวผัดกุ้งสด\",\n      \"price\": \"90.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-17 18:23:45\",\n      \"category_name\": \"อาหารจานหลัก\"\n    },\n    {\n      \"id\": 3,\n      \"category_id\": 2,\n      \"name\": \"ชาไทยเย็น\",\n      \"description\": \"ชาไทยใส่นม\",\n      \"price\": \"45.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-17 18:23:45\",\n      \"category_name\": \"เครื่องดื่ม\"\n    },\n    {\n      \"id\": 4,\n      \"category_id\": 3,\n      \"name\": \"ไอศกรีมกะทิ\",\n      \"description\": \"ไอศกรีมกะทิพร้อมถั่วลิสง\",\n      \"price\": \"50.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-17 18:23:45\",\n      \"category_name\": \"ของหวาน\"\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
+        }
+      ]
+    },
+    {
+      "name": "03 Categories",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/categories"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/categories"
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"name\": \"อาหารจานหลัก\"\n    },\n    {\n      \"id\": 2,\n      \"name\": \"เครื่องดื่ม\"\n    },\n    {\n      \"id\": 3,\n      \"name\": \"ของหวาน\"\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
+        }
+      ]
+    },
+    {
+      "name": "04 Register customer",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/auth/register",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Postman Customer\",\n  \"email\": \"postman-{{run_id}}@example.com\",\n  \"password\": \"PostmanTest123!\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 201', () => pm.response.to.have.status(201));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 201 response",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Postman Customer\",\n  \"email\": \"postman-{{run_id}}@example.com\",\n  \"password\": \"PostmanTest123!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": 34,\n    \"name\": \"Postman Customer\",\n    \"email\": \"postman-17922375674966jwt@example.com\",\n    \"role\": \"customer\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "05 Customer login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/auth/login",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"postman-{{run_id}}@example.com\",\n  \"password\": \"PostmanTest123!\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+              "if (pm.response.code < 300) pm.environment.set('token', pm.response.json().token);"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"postman-{{run_id}}@example.com\",\n  \"password\": \"PostmanTest123!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"token\": \"[REDACTED]\",\n  \"token_type\": \"[REDACTED]\",\n  \"user\": {\n    \"id\": 34,\n    \"name\": \"Postman Customer\",\n    \"email\": \"postman-17922375674966jwt@example.com\",\n    \"role\": \"customer\",\n    \"created_at\": \"2026-10-17 18:46:08\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "06 My profile",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/me"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/me"
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": 34,\n    \"name\": \"Postman Customer\",\n    \"email\": \"postman-17922375674966jwt@example.com\",\n    \"role\": \"customer\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "07 Admin login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/auth/login",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{admin_email}}\",\n  \"password\": \"{{admin_password}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+              "if (pm.response.code < 300) pm.environment.set('admin_token', pm.response.json().token);"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{admin_email}}\",\n  \"password\": \"{{admin_password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"token\": \"[REDACTED]\",\n  \"token_type\": \"[REDACTED]\",\n  \"user\": {\n    \"id\": 7,\n    \"name\": \"Demo Admin\",\n    \"email\": \"admin-2e9b572c@example.com\",\n    \"role\": \"admin\",\n    \"created_at\": \"2026-10-17 18:27:06\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "08 Customer forbidden from admin",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/admin/orders"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 403', () => pm.response.to.have.status(403));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 403 response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/admin/orders"
+          },
+          "status": "Forbidden",
+          "code": 403,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Administrator access required\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "09 Create menu",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/menu",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"category_id\": 1,\n  \"name\": \"Postman menu {{run_id}}\",\n  \"price\": 65,\n  \"description\": \"API test item\",\n  \"is_available\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+              "if (pm.response.code < 300) pm.environment.set('menu_id', pm.response.json().data.id);"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 201 response",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/menu",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category_id\": 1,\n  \"name\": \"Postman menu {{run_id}}\",\n  \"price\": 65,\n  \"description\": \"API test item\",\n  \"is_available\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": 13,\n    \"category_id\": 1,\n    \"name\": \"Postman menu 17922375674966jwt\",\n    \"description\": \"API test item\",\n    \"price\": 65,\n    \"image_url\": null,\n    \"is_available\": true\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "10 Menu detail",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/menu/{{menu_id}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/menu/{{menu_id}}"
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": 13,\n    \"category_id\": 1,\n    \"name\": \"Postman menu 17922375674966jwt\",\n    \"description\": \"API test item\",\n    \"price\": \"65.00\",\n    \"image_url\": null,\n    \"is_available\": 1,\n    \"deleted_at\": null,\n    \"created_at\": \"2026-10-17 18:46:08\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "11 Update menu",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/menu/{{menu_id}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"category_id\": 1,\n  \"name\": \"Postman menu {{run_id}}\",\n  \"price\": 70,\n  \"description\": \"API test item\",\n  \"is_available\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/menu/{{menu_id}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category_id\": 1,\n  \"name\": \"Postman menu {{run_id}}\",\n  \"price\": 70,\n  \"description\": \"API test item\",\n  \"is_available\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": 13,\n    \"category_id\": 1,\n    \"name\": \"Postman menu 17922375674966jwt\",\n    \"description\": \"API test item\",\n    \"price\": 70,\n    \"image_url\": null,\n    \"is_available\": true\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "12 Reservation slots",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/reservation-slots"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/reservation-slots"
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": [\n    \"11:00\",\n    \"12:30\",\n    \"14:00\",\n    \"17:00\",\n    \"18:30\",\n    \"20:00\"\n  ],\n  \"duration_minutes\": 90,\n  \"timezone\": \"Asia/Bangkok\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "13 Available tables",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/tables/availability?date={{booking_date}}&slot=11:00&guests=2"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+              "pm.test('A table is available', () => pm.expect(pm.response.json().data.length).to.be.above(0));",
+              "if (pm.response.code < 300) pm.environment.set('table_id', pm.response.json().data[0]?.id);"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/tables/availability?date={{booking_date}}&slot=11:00&guests=2"
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"table_number\": \"T01\",\n      \"capacity\": 2,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 2,\n      \"table_number\": \"T02\",\n      \"capacity\": 2,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 3,\n      \"table_number\": \"T03\",\n      \"capacity\": 4,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 4,\n      \"table_number\": \"T04\",\n      \"capacity\": 4,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 5,\n      \"table_number\": \"T05\",\n      \"capacity\": 6,\n      \"is_active\": 1\n    }\n  ]\n}"
+        }
+      ]
+    },
+    {
+      "name": "14 Reserve table",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/reservations",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"table_id\": \"{{table_id}}\",\n  \"date\": \"{{booking_date}}\",\n  \"slot\": \"11:00\",\n  \"guests\": 2\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+              "if (pm.response.code < 300) pm.environment.set('reservation_id', pm.response.json().data.id);"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 201 response",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/reservations",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table_id\": \"{{table_id}}\",\n  \"date\": \"{{booking_date}}\",\n  \"slot\": \"11:00\",\n  \"guests\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": 19,\n    \"table_id\": 1,\n    \"date\": \"2026-10-24\",\n    \"slot\": \"11:00\",\n    \"guests\": 2,\n    \"note\": \"\",\n    \"status\": \"confirmed\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "15 Duplicate reservation is rejected",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/reservations",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"table_id\": \"{{table_id}}\",\n  \"date\": \"{{booking_date}}\",\n  \"slot\": \"11:00\",\n  \"guests\": 2\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 409', () => pm.response.to.have.status(409));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 409 response",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/reservations",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table_id\": \"{{table_id}}\",\n  \"date\": \"{{booking_date}}\",\n  \"slot\": \"11:00\",\n  \"guests\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Conflict",
+          "code": 409,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Table is already booked for this slot\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "16 My reservations",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/me/reservations"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/me/reservations"
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": [\n    {\n      \"id\": 19,\n      \"user_id\": 34,\n      \"table_id\": 1,\n      \"reservation_date\": \"2026-10-24\",\n      \"slot\": \"11:00\",\n      \"guests\": 2,\n      \"status\": \"confirmed\",\n      \"note\": \"\",\n      \"active_slot\": 1,\n      \"created_at\": \"2026-10-17 18:46:09\",\n      \"table_number\": \"T01\"\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
+        }
+      ]
+    },
+    {
+      "name": "17 Create linked order",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/orders",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"reservation_id\": \"{{reservation_id}}\",\n  \"items\": [\n    {\n      \"menu_item_id\": \"{{menu_id}}\",\n      \"quantity\": 2\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+              "if (pm.response.code < 300) pm.environment.set('order_id', pm.response.json().data.id);",
+              "pm.test('Server calculated 140 baht', () => pm.expect(pm.response.json().data.total).to.eql('140.00'));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 201 response",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/orders",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reservation_id\": \"{{reservation_id}}\",\n  \"items\": [\n    {\n      \"menu_item_id\": \"{{menu_id}}\",\n      \"quantity\": 2\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": 13,\n    \"reservation_id\": 19,\n    \"total\": \"140.00\",\n    \"status\": \"pending\",\n    \"items\": [\n      {\n        \"menu_item_id\": 13,\n        \"quantity\": 2,\n        \"menu_name\": \"Postman menu 17922375674966jwt\",\n        \"unit_price\": \"70.00\"\n      }\n    ]\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "18 My orders",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/me/orders"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/me/orders"
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": [\n    {\n      \"id\": 13,\n      \"user_id\": 34,\n      \"reservation_id\": 19,\n      \"total\": \"140.00\",\n      \"status\": \"pending\",\n      \"note\": \"\",\n      \"created_at\": \"2026-10-17 18:46:09\"\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
+        }
+      ]
+    },
+    {
+      "name": "19 Order detail",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/orders/{{order_id}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/orders/{{order_id}}"
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": 13,\n    \"user_id\": 34,\n    \"reservation_id\": 19,\n    \"total\": \"140.00\",\n    \"status\": \"pending\",\n    \"note\": \"\",\n    \"created_at\": \"2026-10-17 18:46:09\",\n    \"items\": [\n      {\n        \"id\": 13,\n        \"order_id\": 13,\n        \"menu_item_id\": 13,\n        \"menu_name\": \"Postman menu 17922375674966jwt\",\n        \"quantity\": 2,\n        \"unit_price\": \"70.00\"\n      }\n    ]\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "20 Cannot cancel reservation with order",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/reservations/{{reservation_id}}/cancel"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 409', () => pm.response.to.have.status(409));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 409 response",
+          "originalRequest": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/reservations/{{reservation_id}}/cancel"
+          },
+          "status": "Conflict",
+          "code": 409,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Cancel linked orders before cancelling the reservation\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "21 All orders (admin)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/admin/orders"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/admin/orders"
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": [\n    {\n      \"id\": 13,\n      \"user_id\": 34,\n      \"reservation_id\": 19,\n      \"total\": \"140.00\",\n      \"status\": \"pending\",\n      \"note\": \"\",\n      \"created_at\": \"2026-10-17 18:46:09\"\n    },\n    {\n      \"id\": 12,\n      \"user_id\": 33,\n      \"reservation_id\": null,\n      \"total\": \"70.00\",\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"created_at\": \"2026-10-17 18:42:07\"\n    },\n    {\n      \"id\": 11,\n      \"user_id\": 33,\n      \"reservation_id\": 15,\n      \"total\": \"140.00\",\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"created_at\": \"2026-10-17 18:42:06\"\n    },\n    {\n      \"id\": 4,\n      \"user_id\": 8,\n      \"reservation_id\": null,\n      \"total\": \"70.00\",\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"created_at\": \"2026-10-17 18:27:14\"\n    },\n    {\n      \"id\": 3,\n      \"user_id\": 8,\n      \"reservation_id\": 4,\n      \"total\": \"140.00\",\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"created_at\": \"2026-10-17 18:27:13\"\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
+        }
+      ]
+    },
+    {
+      "name": "22 All reservations (admin)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/admin/reservations"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/admin/reservations"
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": [\n    {\n      \"id\": 19,\n      \"user_id\": 34,\n      \"table_id\": 1,\n      \"reservation_date\": \"2026-10-24\",\n      \"slot\": \"11:00\",\n      \"guests\": 2,\n      \"status\": \"confirmed\",\n      \"note\": \"\",\n      \"active_slot\": 1,\n      \"created_at\": \"2026-10-17 18:46:09\"\n    },\n    {\n      \"id\": 17,\n      \"user_id\": 33,\n      \"table_id\": 10,\n      \"reservation_date\": \"2026-10-24\",\n      \"slot\": \"12:30\",\n      \"guests\": 4,\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"active_slot\": null,\n      \"created_at\": \"2026-10-17 18:42:09\"\n    },\n    {\n      \"id\": 15,\n      \"user_id\": 33,\n      \"table_id\": 1,\n      \"reservation_date\": \"2026-10-24\",\n      \"slot\": \"11:00\",\n      \"guests\": 2,\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"active_slot\": null,\n      \"created_at\": \"2026-10-17 18:42:06\"\n    },\n    {\n      \"id\": 4,\n      \"user_id\": 8,\n      \"table_id\": 1,\n      \"reservation_date\": \"2026-10-24\",\n      \"slot\": \"11:00\",\n      \"guests\": 2,\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"active_slot\": null,\n      \"created_at\": \"2026-10-17 18:27:13\"\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
+        }
+      ]
+    },
+    {
+      "name": "23 Confirm order",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/admin/orders/{{order_id}}/status",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"confirmed\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/admin/orders/{{order_id}}/status",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"confirmed\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": 13,\n    \"status\": \"confirmed\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "24 Admin cancel confirmed order",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/admin/orders/{{order_id}}/status",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"cancelled\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/admin/orders/{{order_id}}/status",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"cancelled\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": 13,\n    \"status\": \"cancelled\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "25 Cancel reservation",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/reservations/{{reservation_id}}/cancel"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/reservations/{{reservation_id}}/cancel"
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": 19,\n    \"status\": \"cancelled\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "26 Create standalone order",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/orders",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"items\": [\n    {\n      \"menu_item_id\": \"{{menu_id}}\",\n      \"quantity\": 1\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+              "if (pm.response.code < 300) pm.environment.set('order_id', pm.response.json().data.id);"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 201 response",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/orders",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    {\n      \"menu_item_id\": \"{{menu_id}}\",\n      \"quantity\": 1\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": 14,\n    \"reservation_id\": null,\n    \"total\": \"70.00\",\n    \"status\": \"pending\",\n    \"items\": [\n      {\n        \"menu_item_id\": 13,\n        \"quantity\": 1,\n        \"menu_name\": \"Postman menu 17922375674966jwt\",\n        \"unit_price\": \"70.00\"\n      }\n    ]\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "27 Customer cancels pending order",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/orders/{{order_id}}/cancel"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/orders/{{order_id}}/cancel"
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": 14,\n    \"status\": \"cancelled\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "28 Delete menu",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/menu/{{menu_id}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 204', () => pm.response.to.have.status(204));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 204 response",
+          "originalRequest": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/menu/{{menu_id}}"
+          },
+          "status": "No Content",
+          "code": 204,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": ""
+        }
+      ]
+    },
+    {
+      "name": "29 Deleted menu is hidden",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/menu/{{menu_id}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 404', () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 404 response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/menu/{{menu_id}}"
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Menu item not found\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "30 Authentication is required",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/me"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 401', () => pm.response.to.have.status(401));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 401 response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/me"
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Bearer token required\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "31 Create category",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/categories",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Category {{run_id}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+              "if (pm.response.code < 300) pm.environment.set('category_id', pm.response.json().data.id);"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 201 response",
+          "originalRequest": {
+            "method": "POST",
+            "url": "{{base_url}}/api/categories",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Category {{run_id}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": 6,\n    \"name\": \"Category 17922375674966jwt\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "32 Category detail",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/categories/{{category_id}}",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "GET",
+            "url": "{{base_url}}/api/categories/{{category_id}}",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ]
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": 6,\n    \"name\": \"Category 17922375674966jwt\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "33 Rename category",
+      "request": {
+        "method": "PUT",
+        "url": "{{base_url}}/api/categories/{{category_id}}",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Updated {{run_id}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "PUT",
+            "url": "{{base_url}}/api/categories/{{category_id}}",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated {{run_id}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": 6,\n    \"name\": \"Updated 17922375674966jwt\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "34 Duplicate category",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/categories",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Updated {{run_id}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 409', () => pm.response.to.have.status(409));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 409 response",
+          "originalRequest": {
+            "method": "POST",
+            "url": "{{base_url}}/api/categories",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated {{run_id}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Conflict",
+          "code": 409,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Record already exists\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "35 Category invalid",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/categories",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \" \"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 400', () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 400 response",
+          "originalRequest": {
+            "method": "POST",
+            "url": "{{base_url}}/api/categories",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \" \"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"name: Too small: expected string to have >=1 characters\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "36 Customer cannot add category",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/categories",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Forbidden\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 403', () => pm.response.to.have.status(403));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 403 response",
+          "originalRequest": {
+            "method": "POST",
+            "url": "{{base_url}}/api/categories",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Forbidden\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Forbidden",
+          "code": 403,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Administrator access required\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "37 Add menu in category",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/menu",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"category_id\": \"{{category_id}}\",\n  \"name\": \"Final menu {{run_id}}\",\n  \"price\": 25.25,\n  \"is_available\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+              "if (pm.response.code < 300) pm.environment.set('final_menu_id', pm.response.json().data.id);"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 201 response",
+          "originalRequest": {
+            "method": "POST",
+            "url": "{{base_url}}/api/menu",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category_id\": \"{{category_id}}\",\n  \"name\": \"Final menu {{run_id}}\",\n  \"price\": 25.25,\n  \"is_available\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": 14,\n    \"category_id\": 6,\n    \"name\": \"Final menu 17922375674966jwt\",\n    \"description\": \"\",\n    \"price\": 25.25,\n    \"image_url\": null,\n    \"is_available\": true\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "38 Referenced category cannot be deleted",
+      "request": {
+        "method": "DELETE",
+        "url": "{{base_url}}/api/categories/{{category_id}}",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 409', () => pm.response.to.have.status(409));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 409 response",
+          "originalRequest": {
+            "method": "DELETE",
+            "url": "{{base_url}}/api/categories/{{category_id}}",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ]
+          },
+          "status": "Conflict",
+          "code": 409,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Record is still referenced by menu items or history\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "39 Invalid category",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/menu",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"category_id\": 2147483647,\n  \"name\": \"Final menu {{run_id}}\",\n  \"price\": 25.25,\n  \"is_available\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 400', () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 400 response",
+          "originalRequest": {
+            "method": "POST",
+            "url": "{{base_url}}/api/menu",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category_id\": 2147483647,\n  \"name\": \"Final menu {{run_id}}\",\n  \"price\": 25.25,\n  \"is_available\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Category does not exist\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "40 Negative price",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/menu",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"category_id\": \"{{category_id}}\",\n  \"name\": \"Final menu {{run_id}}\",\n  \"price\": -1,\n  \"is_available\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 400', () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 400 response",
+          "originalRequest": {
+            "method": "POST",
+            "url": "{{base_url}}/api/menu",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category_id\": \"{{category_id}}\",\n  \"name\": \"Final menu {{run_id}}\",\n  \"price\": -1,\n  \"is_available\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"price: Too small: expected number to be >0\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "41 Invalid sale status",
+      "request": {
+        "method": "PUT",
+        "url": "{{base_url}}/api/menu/{{final_menu_id}}",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"category_id\": \"{{category_id}}\",\n  \"name\": \"Final menu {{run_id}}\",\n  \"price\": 25.25,\n  \"is_available\": \"yes\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 400', () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 400 response",
+          "originalRequest": {
+            "method": "PUT",
+            "url": "{{base_url}}/api/menu/{{final_menu_id}}",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category_id\": \"{{category_id}}\",\n  \"name\": \"Final menu {{run_id}}\",\n  \"price\": 25.25,\n  \"is_available\": \"yes\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"is_available: Invalid input: expected boolean, received string\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "42 Set unavailable",
+      "request": {
+        "method": "PUT",
+        "url": "{{base_url}}/api/menu/{{final_menu_id}}",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"category_id\": \"{{category_id}}\",\n  \"name\": \"Final menu {{run_id}}\",\n  \"price\": 25.25,\n  \"is_available\": false\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "PUT",
+            "url": "{{base_url}}/api/menu/{{final_menu_id}}",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category_id\": \"{{category_id}}\",\n  \"name\": \"Final menu {{run_id}}\",\n  \"price\": 25.25,\n  \"is_available\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": 14,\n    \"category_id\": 6,\n    \"name\": \"Final menu 17922375674966jwt\",\n    \"description\": \"\",\n    \"price\": 25.25,\n    \"image_url\": null,\n    \"is_available\": false\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "43 Cannot order unavailable menu",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/orders",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"items\": [\n    {\n      \"menu_item_id\": \"{{final_menu_id}}\",\n      \"quantity\": 1\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 400', () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 400 response",
+          "originalRequest": {
+            "method": "POST",
+            "url": "{{base_url}}/api/orders",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    {\n      \"menu_item_id\": \"{{final_menu_id}}\",\n      \"quantity\": 1\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Menu item 14 is unavailable\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "44 Move menu to seed category",
+      "request": {
+        "method": "PUT",
+        "url": "{{base_url}}/api/menu/{{final_menu_id}}",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"category_id\": 1,\n  \"name\": \"Final menu {{run_id}}\",\n  \"price\": 25.25,\n  \"is_available\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "PUT",
+            "url": "{{base_url}}/api/menu/{{final_menu_id}}",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category_id\": 1,\n  \"name\": \"Final menu {{run_id}}\",\n  \"price\": 25.25,\n  \"is_available\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": 14,\n    \"category_id\": 1,\n    \"name\": \"Final menu 17922375674966jwt\",\n    \"description\": \"\",\n    \"price\": 25.25,\n    \"image_url\": null,\n    \"is_available\": true\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "45 Delete empty category",
+      "request": {
+        "method": "DELETE",
+        "url": "{{base_url}}/api/categories/{{category_id}}",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 204', () => pm.response.to.have.status(204));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 204 response",
+          "originalRequest": {
+            "method": "DELETE",
+            "url": "{{base_url}}/api/categories/{{category_id}}",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ]
+          },
+          "status": "No Content",
+          "code": 204,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": ""
+        }
+      ]
+    },
+    {
+      "name": "46 Deleted category missing",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/categories/{{category_id}}",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 404', () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 404 response",
+          "originalRequest": {
+            "method": "GET",
+            "url": "{{base_url}}/api/categories/{{category_id}}",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ]
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Category not found\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "47 Delete test menu",
+      "request": {
+        "method": "DELETE",
+        "url": "{{base_url}}/api/menu/{{final_menu_id}}",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 204', () => pm.response.to.have.status(204));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 204 response",
+          "originalRequest": {
+            "method": "DELETE",
+            "url": "{{base_url}}/api/menu/{{final_menu_id}}",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ]
+          },
+          "status": "No Content",
+          "code": 204,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": ""
+        }
+      ]
+    },
+    {
+      "name": "48 Create table",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/tables",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"table_number\": \"T{{run_id}}\",\n  \"capacity\": 4\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+              "if (pm.response.code < 300) pm.environment.set('final_table_id', pm.response.json().data.id);"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 201 response",
+          "originalRequest": {
+            "method": "POST",
+            "url": "{{base_url}}/api/tables",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table_number\": \"T{{run_id}}\",\n  \"capacity\": 4\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": 11,\n    \"table_number\": \"T17922375674966jwt\",\n    \"capacity\": 4,\n    \"is_active\": true\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "49 List tables",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/tables",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "GET",
+            "url": "{{base_url}}/api/tables",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ]
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"table_number\": \"T01\",\n      \"capacity\": 2,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 2,\n      \"table_number\": \"T02\",\n      \"capacity\": 2,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 3,\n      \"table_number\": \"T03\",\n      \"capacity\": 4,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 4,\n      \"table_number\": \"T04\",\n      \"capacity\": 4,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 5,\n      \"table_number\": \"T05\",\n      \"capacity\": 6,\n      \"is_active\": 1\n    },\n    {\n      \"id\": 11,\n      \"table_number\": \"T17922375674966jwt\",\n      \"capacity\": 4,\n      \"is_active\": 1\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
+        }
+      ]
+    },
+    {
+      "name": "50 Update table",
+      "request": {
+        "method": "PUT",
+        "url": "{{base_url}}/api/tables/{{final_table_id}}",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"table_number\": \"T{{run_id}}\",\n  \"capacity\": 6\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "PUT",
+            "url": "{{base_url}}/api/tables/{{final_table_id}}",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table_number\": \"T{{run_id}}\",\n  \"capacity\": 6\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": 11,\n    \"table_number\": \"T17922375674966jwt\",\n    \"capacity\": 6,\n    \"is_active\": true\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "51 Invalid capacity",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/tables",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"table_number\": \"Bad\",\n  \"capacity\": 0\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 400', () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 400 response",
+          "originalRequest": {
+            "method": "POST",
+            "url": "{{base_url}}/api/tables",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table_number\": \"Bad\",\n  \"capacity\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"capacity: Too small: expected number to be >=1\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "52 Customer cannot add table",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/tables",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"table_number\": \"No\",\n  \"capacity\": 2\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 403', () => pm.response.to.have.status(403));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 403 response",
+          "originalRequest": {
+            "method": "POST",
+            "url": "{{base_url}}/api/tables",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table_number\": \"No\",\n  \"capacity\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Forbidden",
+          "code": 403,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Administrator access required\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "53 Over capacity",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/reservations",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"table_id\": \"{{final_table_id}}\",\n  \"date\": \"{{booking_date}}\",\n  \"slot\": \"12:30\",\n  \"guests\": 7\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 400', () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 400 response",
+          "originalRequest": {
+            "method": "POST",
+            "url": "{{base_url}}/api/reservations",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table_id\": \"{{final_table_id}}\",\n  \"date\": \"{{booking_date}}\",\n  \"slot\": \"12:30\",\n  \"guests\": 7\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Table capacity exceeded\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "54 Invalid date",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/reservations",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"table_id\": \"{{final_table_id}}\",\n  \"date\": \"2026-02-30\",\n  \"slot\": \"12:30\",\n  \"guests\": 4\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 400', () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 400 response",
+          "originalRequest": {
+            "method": "POST",
+            "url": "{{base_url}}/api/reservations",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table_id\": \"{{final_table_id}}\",\n  \"date\": \"2026-02-30\",\n  \"slot\": \"12:30\",\n  \"guests\": 4\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Invalid booking date\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "55 Invalid slot",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/reservations",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"table_id\": \"{{final_table_id}}\",\n  \"date\": \"{{booking_date}}\",\n  \"slot\": \"11:30\",\n  \"guests\": 4\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 400', () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 400 response",
+          "originalRequest": {
+            "method": "POST",
+            "url": "{{base_url}}/api/reservations",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table_id\": \"{{final_table_id}}\",\n  \"date\": \"{{booking_date}}\",\n  \"slot\": \"11:30\",\n  \"guests\": 4\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"slot: Invalid option: expected one of \\\"11:00\\\"|\\\"12:30\\\"|\\\"14:00\\\"|\\\"17:00\\\"|\\\"18:30\\\"|\\\"20:00\\\"\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "56 Book table",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/reservations",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"table_id\": \"{{final_table_id}}\",\n  \"date\": \"{{booking_date}}\",\n  \"slot\": \"12:30\",\n  \"guests\": 4\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+              "if (pm.response.code < 300) pm.environment.set('final_reservation_id', pm.response.json().data.id);"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 201 response",
+          "originalRequest": {
+            "method": "POST",
+            "url": "{{base_url}}/api/reservations",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table_id\": \"{{final_table_id}}\",\n  \"date\": \"{{booking_date}}\",\n  \"slot\": \"12:30\",\n  \"guests\": 4\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": 21,\n    \"table_id\": 11,\n    \"date\": \"2026-10-24\",\n    \"slot\": \"12:30\",\n    \"guests\": 4,\n    \"note\": \"\",\n    \"status\": \"confirmed\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "57 Duplicate booking",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/reservations",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"table_id\": \"{{final_table_id}}\",\n  \"date\": \"{{booking_date}}\",\n  \"slot\": \"12:30\",\n  \"guests\": 4\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 409', () => pm.response.to.have.status(409));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 409 response",
+          "originalRequest": {
+            "method": "POST",
+            "url": "{{base_url}}/api/reservations",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table_id\": \"{{final_table_id}}\",\n  \"date\": \"{{booking_date}}\",\n  \"slot\": \"12:30\",\n  \"guests\": 4\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Conflict",
+          "code": 409,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Table is already booked for this slot\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "58 My reservations new endpoint",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/reservations/my",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "GET",
+            "url": "{{base_url}}/api/reservations/my",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": [\n    {\n      \"id\": 21,\n      \"user_id\": 34,\n      \"table_id\": 11,\n      \"reservation_date\": \"2026-10-24\",\n      \"slot\": \"12:30\",\n      \"guests\": 4,\n      \"status\": \"confirmed\",\n      \"note\": \"\",\n      \"active_slot\": 1,\n      \"created_at\": \"2026-10-17 18:46:13\",\n      \"table_number\": \"T17922375674966jwt\"\n    },\n    {\n      \"id\": 19,\n      \"user_id\": 34,\n      \"table_id\": 1,\n      \"reservation_date\": \"2026-10-24\",\n      \"slot\": \"11:00\",\n      \"guests\": 2,\n      \"status\": \"cancelled\",\n      \"note\": \"\",\n      \"active_slot\": null,\n      \"created_at\": \"2026-10-17 18:46:09\",\n      \"table_number\": \"T01\"\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
+        }
+      ]
+    },
+    {
+      "name": "59 Cannot delete booked table",
+      "request": {
+        "method": "DELETE",
+        "url": "{{base_url}}/api/tables/{{final_table_id}}",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 409', () => pm.response.to.have.status(409));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 409 response",
+          "originalRequest": {
+            "method": "DELETE",
+            "url": "{{base_url}}/api/tables/{{final_table_id}}",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ]
+          },
+          "status": "Conflict",
+          "code": 409,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Cannot delete a table with active reservations\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "60 Cannot shrink booked table",
+      "request": {
+        "method": "PUT",
+        "url": "{{base_url}}/api/tables/{{final_table_id}}",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"table_number\": \"T{{run_id}}\",\n  \"capacity\": 2\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 409', () => pm.response.to.have.status(409));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 409 response",
+          "originalRequest": {
+            "method": "PUT",
+            "url": "{{base_url}}/api/tables/{{final_table_id}}",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table_number\": \"T{{run_id}}\",\n  \"capacity\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Conflict",
+          "code": 409,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Table has active reservations incompatible with this change\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "61 Cannot disable booked table",
+      "request": {
+        "method": "PUT",
+        "url": "{{base_url}}/api/tables/{{final_table_id}}",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"table_number\": \"T{{run_id}}\",\n  \"capacity\": 6,\n  \"is_active\": false\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 409', () => pm.response.to.have.status(409));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 409 response",
+          "originalRequest": {
+            "method": "PUT",
+            "url": "{{base_url}}/api/tables/{{final_table_id}}",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table_number\": \"T{{run_id}}\",\n  \"capacity\": 6,\n  \"is_active\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Conflict",
+          "code": 409,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Table has active reservations incompatible with this change\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "62 Cannot cancel another user booking",
+      "request": {
+        "method": "PATCH",
+        "url": "{{base_url}}/api/reservations/{{final_reservation_id}}/cancel",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 404', () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 404 response",
+          "originalRequest": {
+            "method": "PATCH",
+            "url": "{{base_url}}/api/reservations/{{final_reservation_id}}/cancel",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ]
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Reservation not found\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "63 Owner cancels",
+      "request": {
+        "method": "PATCH",
+        "url": "{{base_url}}/api/reservations/{{final_reservation_id}}/cancel",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "PATCH",
+            "url": "{{base_url}}/api/reservations/{{final_reservation_id}}/cancel",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": 21,\n    \"status\": \"cancelled\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "64 Delete unbooked table",
+      "request": {
+        "method": "DELETE",
+        "url": "{{base_url}}/api/tables/{{final_table_id}}",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 204', () => pm.response.to.have.status(204));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 204 response",
+          "originalRequest": {
+            "method": "DELETE",
+            "url": "{{base_url}}/api/tables/{{final_table_id}}",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ]
+          },
+          "status": "No Content",
+          "code": 204,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": ""
+        }
+      ]
+    },
+    {
+      "name": "65 Cannot book inactive table",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/reservations",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"table_id\": \"{{final_table_id}}\",\n  \"date\": \"{{booking_date}}\",\n  \"slot\": \"12:30\",\n  \"guests\": 4\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 404', () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 404 response",
+          "originalRequest": {
+            "method": "POST",
+            "url": "{{base_url}}/api/reservations",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table_id\": \"{{final_table_id}}\",\n  \"date\": \"{{booking_date}}\",\n  \"slot\": \"12:30\",\n  \"guests\": 4\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Table not found\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "66 Missing table",
+      "request": {
+        "method": "PUT",
+        "url": "{{base_url}}/api/tables/2147483647",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"table_number\": \"Missing\",\n  \"capacity\": 2\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 404', () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 404 response",
+          "originalRequest": {
+            "method": "PUT",
+            "url": "{{base_url}}/api/tables/2147483647",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"table_number\": \"Missing\",\n  \"capacity\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Table not found\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "67 Wrong password",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/auth/login",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"postman-{{run_id}}@example.com\",\n  \"password\": \"WrongPassword123!\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 401', () => pm.response.to.have.status(401));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 401 response",
+          "originalRequest": {
+            "method": "POST",
+            "url": "{{base_url}}/api/auth/login",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"postman-{{run_id}}@example.com\",\n  \"password\": \"WrongPassword123!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Invalid email or password\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "68 Invalid token",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/me",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{invalid_token}}"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 401', () => pm.response.to.have.status(401));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 401 response",
+          "originalRequest": {
+            "method": "GET",
+            "url": "{{base_url}}/api/me",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{invalid_token}}"
+              }
+            ]
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Invalid or expired token\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "69 Expired signed token",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/me",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{expired_token}}"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (!pm.environment.get('expired_token')) { console.warn('Set expired_token to test JWT expiry; local test runner generates it.'); pm.execution.skipRequest(); }"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 401', () => pm.response.to.have.status(401));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 401 response",
+          "originalRequest": {
+            "method": "GET",
+            "url": "{{base_url}}/api/me",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{expired_token}}"
+              }
+            ]
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Invalid or expired token\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "70 Allowed CORS",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/menu",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Origin",
+            "value": "http://localhost:5173"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+              "pm.test('Allowed origin header',()=>pm.expect(pm.response.headers.get('Access-Control-Allow-Origin')).to.eql('http://localhost:5173'));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 200 response",
+          "originalRequest": {
+            "method": "GET",
+            "url": "{{base_url}}/api/menu",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:5173"
+              }
+            ]
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"category_id\": 1,\n      \"name\": \"ข้าวกะเพราไก่\",\n      \"description\": \"ข้าวกะเพราไก่พร้อมไข่ดาว\",\n      \"price\": \"75.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-17 18:23:45\",\n      \"category_name\": \"อาหารจานหลัก\"\n    },\n    {\n      \"id\": 2,\n      \"category_id\": 1,\n      \"name\": \"ข้าวผัดกุ้ง\",\n      \"description\": \"ข้าวผัดกุ้งสด\",\n      \"price\": \"90.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-17 18:23:45\",\n      \"category_name\": \"อาหารจานหลัก\"\n    },\n    {\n      \"id\": 3,\n      \"category_id\": 2,\n      \"name\": \"ชาไทยเย็น\",\n      \"description\": \"ชาไทยใส่นม\",\n      \"price\": \"45.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-17 18:23:45\",\n      \"category_name\": \"เครื่องดื่ม\"\n    },\n    {\n      \"id\": 4,\n      \"category_id\": 3,\n      \"name\": \"ไอศกรีมกะทิ\",\n      \"description\": \"ไอศกรีมกะทิพร้อมถั่วลิสง\",\n      \"price\": \"50.00\",\n      \"image_url\": null,\n      \"is_available\": 1,\n      \"deleted_at\": null,\n      \"created_at\": \"2026-10-17 18:23:45\",\n      \"category_name\": \"ของหวาน\"\n    }\n  ],\n  \"limit\": 50,\n  \"offset\": 0\n}"
+        }
+      ]
+    },
+    {
+      "name": "71 Disallowed CORS",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/menu",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Origin",
+            "value": "https://untrusted.example"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 403', () => pm.response.to.have.status(403));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 403 response",
+          "originalRequest": {
+            "method": "GET",
+            "url": "{{base_url}}/api/menu",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Origin",
+                "value": "https://untrusted.example"
+              }
+            ]
+          },
+          "status": "Forbidden",
+          "code": 403,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Origin is not allowed\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "72 CORS preflight",
+      "request": {
+        "method": "OPTIONS",
+        "url": "{{base_url}}/api/menu",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Origin",
+            "value": "http://localhost:5173"
+          },
+          {
+            "key": "Access-Control-Request-Method",
+            "value": "POST"
+          },
+          {
+            "key": "Access-Control-Request-Headers",
+            "value": "authorization,content-type"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 204', () => pm.response.to.have.status(204));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 204 response",
+          "originalRequest": {
+            "method": "OPTIONS",
+            "url": "{{base_url}}/api/menu",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:5173"
+              },
+              {
+                "key": "Access-Control-Request-Method",
+                "value": "POST"
+              },
+              {
+                "key": "Access-Control-Request-Headers",
+                "value": "authorization,content-type"
+              }
+            ]
+          },
+          "status": "No Content",
+          "code": 204,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": ""
+        }
+      ]
+    },
+    {
+      "name": "73 SQL input rejected",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/menu/1%20OR%201=1",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 400', () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 400 response",
+          "originalRequest": {
+            "method": "GET",
+            "url": "{{base_url}}/api/menu/1%20OR%201=1",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \": Invalid input\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "74 Unknown endpoint",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/does-not-exist",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 404', () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "Actual 404 response",
+          "originalRequest": {
+            "method": "GET",
+            "url": "{{base_url}}/api/does-not-exist",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Endpoint not found\"\n}"
+        }
+      ]
+    }
+  ]
+}

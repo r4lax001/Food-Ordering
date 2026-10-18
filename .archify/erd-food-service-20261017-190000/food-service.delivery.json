@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "8fe20b34-d7e0-4ef0-8053-f0624b69add1",
+  "status": "current",
+  "command": "deliver",
+  "type": "erd",
+  "input": "C:\\Users\\Queen VIP\\Desktop\\Food Ordering_Reservation Web Service\\.archify\\erd-food-service-20261017-190000\\candidate.json",
+  "output": "C:\\Users\\Queen VIP\\Desktop\\Food Ordering_Reservation Web Service\\.archify\\erd-food-service-20261017-190000\\food-service.html",
+  "specification": {
+    "sha256": "82698472b4819d5bc1ad56b29aa2d38218a05da9154de66e5939f8a2b8d5968f",
+    "bytes": 8024
+  },
+  "artifact": {
+    "sha256": "6c8b4ac97cc0ce5f6b17231eaf50af6cd0cdb49e3204979eed218904353bce91",
+    "bytes": 845686
+  }
+}
