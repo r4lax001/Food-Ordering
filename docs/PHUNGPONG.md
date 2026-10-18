@@ -90,3 +90,8 @@ frontend/src/main.jsx: layout/navigation/routes; pages.jsx: ลูกค้า; 
 dependencies เพิ่ม: `gsap`, `@gsap/react` (SplitText/AnimatedContent), `motion` (BlurText/CountUp) — ติดตั้งแล้วใน `frontend/package.json` ทุกคอมโพเนนต์เคารพ `prefers-reduced-motion` ยกเว้นการหมุนเพลาของจาน 3D ที่เจ้าของเว็บกำหนดให้หมุนตลอด
 
 ผลตรวจ: production build ผ่าน, Playwright responsive 146 จุดผ่าน, `frontend/tests/food3d.mjs` ผ่าน (ปรับ locator เป็น `.food3d-stage canvas` เพราะปุ่ม StarBorder มี canvas ของตัวเอง)
+
+## โหลดเดอร์ 3D และฉากฉลอง — 18 ตุลาคม 2569
+
+- ClocheLoader (`frontend/src/components/ClocheLoader.jsx` + `ClocheScene.jsx`) — จานคลุมจิ๋วหมุนบนวงแหวนสีส้มแทน spinner เดิมใน Feedback ทุกจุด มี error boundary และ lazy scene หาก WebGL ใช้ไม่ได้จะกลับไป spinner แบบเดิมอัตโนมัติ ผู้ใช้ reduced motion จะเห็นจานนิ่ง
+- Celebration (`frontend/src/components/Celebration.jsx` + `CelebrationScene.jsx`) — หลังสั่งอาหารหรือจองโต๊ะสำเร็จ ขึ้นการ์ดกลางจอแบบคลิกทะลุ (pointer-events: none): จานคลุมยกฝาเผยข้าวและผัดกะเพรา ดาวขาว/ทอง/ส้มระเบิดวนช้า ๆ พร้อมข้อความสำเร็จ แสดงราว 4.6 วินาทีผ่านสถานะ `celebrate` ใน Store (state.jsx) ผู้ใช้ reduced motion จะเห็นการ์ดข้อความโดยไม่มีอนิเมชัน

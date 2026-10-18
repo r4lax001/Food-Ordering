@@ -34,6 +34,7 @@ import {
 } from "./pages";
 import Admin from "./admin";
 import ClickSpark from "./components/reactbits/ClickSpark";
+import Celebration from "./components/Celebration";
 import { Dialog } from "@base-ui/react/dialog";
 import "./styles.css";
 import "./responsive.css";
@@ -50,7 +51,7 @@ function Protected({ children, admin = false }) {
   return children;
 }
 function App() {
-  const { notice } = useStore();
+  const { notice, celebrate } = useStore();
   const location = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -147,6 +148,7 @@ function App() {
           {notice}
         </div>
       )}
+      <Celebration message={celebrate} />
     </>
   );
 }
@@ -159,3 +161,4 @@ createRoot(document.getElementById("root")).render(
     </Store>
   </BrowserRouter>,
 );
+import "./auth-mobile.css";

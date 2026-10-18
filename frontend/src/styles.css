@@ -1346,3 +1346,48 @@ textarea {
   display: inline-flex;
   vertical-align: baseline;
 }
+
+/* --- Celebration overlay --- */
+.celebration {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 80;
+  animation: celebration-in 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.celebration-card {
+  background: rgba(255, 252, 244, 0.94);
+  border-radius: 26px;
+  padding: 18px 36px 24px;
+  text-align: center;
+  box-shadow: 0 26px 70px rgba(70, 32, 4, 0.2);
+  backdrop-filter: blur(8px);
+}
+.celebration-card strong {
+  display: block;
+  font-size: 24px;
+  font-weight: 800;
+  color: #3d2c1d;
+}
+.celebration-card p,
+.celebration-card p {
+  margin-top: 4px;
+  font-size: 15px;
+  color: #8a6a4a;
+}
+.celebration-art {
+  width: 220px;
+  max-width: 70vw;
+  height: 150px;
+  margin: 0 auto 6px;
+}
+@keyframes celebration-in {
+  from { opacity: 0; transform: scale(0.85) translateY(14px); }
+  to { opacity: 1; transform: none;  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .celebration { animation: none; }
+}

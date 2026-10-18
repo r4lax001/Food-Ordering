@@ -5,7 +5,8 @@ export const useStore = () => useContext(Context);
 export function Store({ children }) {
   const [user, setUser] = useState(null),
     [ready, setReady] = useState(false),
-    [notice, setNotice] = useState("");
+    [notice, setNotice] = useState(""),
+    [celebrate, setCelebrate] = useState("");
   const [cart, setCart] = useState(() => {
     try {
       const v = JSON.parse(localStorage.getItem("phungpong.cart") || "[]");
@@ -48,6 +49,11 @@ export function Store({ children }) {
     const t = setTimeout(() => setNotice(""), 4500);
     return () => clearTimeout(t);
   }, [notice]);
+  useEffect(() => {
+    if (!celebrate) return;
+    const t = setTimeout(() => setCelebrate(""), 4600);
+    return () => clearTimeout(t);
+  }, [celebrate]);
   function add(item, quantity = 1) {
     setCart((old) => {
       const found = old.find((i) => i.id === item.id);
@@ -82,6 +88,8 @@ export function Store({ children }) {
         add,
         notice,
         setNotice,
+        celebrate,
+        setCelebrate,
       }}
     >
       {children}

@@ -140,39 +140,15 @@ try {
   );
   await page.screenshot({ path: `${output}/cart-390.png`, fullPage: true });
 
-  // Dialog traps focus, supports Escape/backdrop, and closes after navigation/resize.
-  const trigger = page.getByRole("button", { name: "เปิดเมนู" });
-  await trigger.click();
-  const dialog = page.getByRole("dialog");
-  await dialog.waitFor();
-  for (let i = 0; i < 14; i++) {
-    await page.keyboard.press("Tab");
-    await page.waitForFunction(
-      () =>
-        document
-          .querySelector('[role="dialog"]')
-          ?.contains(document.activeElement),
-      undefined,
-      { timeout: 2000 },
-    );
-  }
-  await page.screenshot({
-    path: `${output}/navigation-390.png`,
-    fullPage: true,
-  });
-  await page.keyboard.press("Escape");
-  await dialog.waitFor({ state: "hidden" });
-  assert.ok(await trigger.evaluate((el) => el === document.activeElement));
-  await trigger.click();
-  await page.locator(".menu-backdrop").click({ position: { x: 5, y: 100 } });
-  await dialog.waitFor({ state: "hidden" });
-  await trigger.click();
-  await dialog.getByRole("link", { name: "เมนูอาหาร", exact: true }).click();
+  // Bottom dock replaces the old drawer: links navigate directly on mobile.
+  const dock = page.locator("nav.bottom-dock");
+  assert.ok(await dock.isVisible(), "bottom dock visible on mobile");
+  await dock.getByRole("link", { name: "เมนูอาหาร" }).click();
   await page.waitForURL("**/menu");
-  await dialog.waitFor({ state: "hidden" });
-  await trigger.click();
-  await page.setViewportSize({ width: 1440, height: 900 });
-  await dialog.waitFor({ state: "hidden" });
+  await visit("/cart");
+  await dock.getByRole("link", { name: "จองโต๊ะ" }).click();
+  await page.waitForURL("**/reservation");
+  await visit("/cart");
 
   // Error state and empty menu remain usable in narrow layouts.
   await page.setViewportSize({ width: 320, height: 740 });
@@ -264,6 +240,44 @@ try {
         });
     }
   }
+  // Account dialog on mobile: focus trap, Escape/backdrop close, navigate.
+  await page.setViewportSize({ width: 390, height: 844 });
+  await visit("/menu");
+  const accountTrigger = page.getByRole("button", { name: "เปิดเมนูบัญชี" });
+  await accountTrigger.click();
+  const accountDialog = page.getByRole("dialog");
+  await accountDialog.waitFor();
+  for (let i = 0; i < 6; i++) {
+    await page.keyboard.press("Tab");
+    await page.waitForFunction(
+      () =>
+        document
+          .querySelector('[role="dialog"]')
+          ?.contains(document.activeElement),
+      undefined,
+      { timeout: 2000 },
+    );
+  }
+  await page.screenshot({
+    path: `${output}/navigation-390.png`,
+    fullPage: true,
+  });
+  await page.keyboard.press("Escape");
+  await accountDialog.waitFor({ state: "hidden" });
+  assert.ok(
+    await accountTrigger.evaluate((el) => el === document.activeElement),
+  );
+  await accountTrigger.click();
+  await accountDialog.waitFor();
+  await page.locator(".menu-backdrop").click({ position: { x: 5, y: 100 } });
+  await accountDialog.waitFor({ state: "hidden" });
+  await accountTrigger.click();
+  await accountDialog
+    .getByRole("link", { name: "รายการสั่งซื้อของฉัน" })
+    .click();
+  await page.waitForURL("**/orders");
+  await accountDialog.waitFor({ state: "hidden" });
+  await page.setViewportSize({ width: 1440, height: 900 });
   assert.deepEqual(errors, []);
   await fs.writeFile(
     `${output}/checks.json`,

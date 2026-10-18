@@ -1,0 +1,25 @@
+.auth-intro { text-align: center; margin-bottom: 22px; }
+.auth-intro > img { margin: 0 auto 14px; border-radius: 14px; }
+.auth-form .auth-intro h1 { font-size: 28px; margin: 0 0 8px; }
+.auth-intro p { font-size: 13px; color: #897460; margin: 0; }
+.auth-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin: 0 0 24px; padding: 4px; border-radius: 14px; background: #f7ede2; }
+.auth-tabs a { display: flex; align-items: center; justify-content: center; min-height: 44px; font-size: 14px; color: #806650; border-radius: 10px; }
+.auth-tabs a[aria-current="page"] { background: white; color: #b44000; font-weight: 600; box-shadow: 0 2px 6px #663a1510; }
+.auth-tabs a::after { display: none; }
+.auth-password-field { display: grid; gap: 8px; }
+.auth-password-control { position: relative; min-width: 0; }
+.auth-form .auth-password-control input { padding-right: 56px; }
+.auth-password-control .password-toggle { position: absolute; right: 4px; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; display: grid; place-items: center; border: 0; border-radius: 10px; background: transparent; color: #88644a; cursor: pointer; }
+.auth-form input { width: 100%; min-width: 0; min-height: 52px; padding: 13px 14px; border: 1px solid #e8dccc; background: #fff; font-size: 16px; line-height: 24px; border-radius: 12px; box-sizing: border-box; }
+.auth-form form > label, .auth-password-field { gap: 8px; }
+.auth-form form { gap: 20px; }
+.auth-form form > .btn { min-height: 52px; border-radius: 12px; font-size: 16px; }
+.auth-tabs a:focus-visible, .password-toggle:focus-visible { outline: 2px solid #bd4800; outline-offset: 2px; }
+@media(max-width:767px) {
+ .auth-page { background: #fff8f0; padding: 24px 16px 32px; min-height: 0; }
+ .auth-page .auth-form { width: 100%; max-width: 440px; margin: 0 auto; padding: 24px 20px 20px; border: 1px solid #f1e2d2; border-radius: 24px; background: #fff; box-shadow: 0 8px 28px #79552f08; }
+ .auth-form .auth-intro h1 { font-size: 25px; }
+ .auth-form form { gap: 20px; }
+ .auth-form .auth-switch { margin: 0; font-size: 12px; text-align: center; }
+ .auth-switch a { display: inline-flex; min-height: 44px; align-items: center; }
+}

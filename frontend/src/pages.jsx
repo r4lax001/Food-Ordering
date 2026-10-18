@@ -1,3 +1,5 @@
+import { Eye, EyeOff } from "lucide-react";
+import ReservationDate from "./components/ReservationDate";
 import CategoryPicker from "./components/CategoryPicker";
 import AnimatedHeading from "./components/AnimatedHeading";
 import React, { useState, useEffect } from "react";
@@ -213,7 +215,7 @@ function Quantity({ value, onChange }) {
   );
 }
 export function Cart() {
-  const { cart, setCart, user, setNotice } = useStore(),
+  const { cart, setCart, user, setNotice, setCelebrate } = useStore(),
     [note, setNote] = useState(""),
     [busy, setBusy] = useState(false),
     [error, setError] = useState("");
@@ -239,6 +241,7 @@ export function Cart() {
       setNotice(
         `รับคำสั่งซื้อ #${data.data.id} แล้ว ยอด ${money(data.data.total)}`,
       );
+      setCelebrate(`สั่งอาหารสำเร็จ · ออเดอร์ #${data.data.id} ยอด ${money(data.data.total)}`);
       navigate("/orders");
     } catch (e) {
       setError(errorText(e));
@@ -354,12 +357,13 @@ export function Cart() {
 }
 
 export function Auth({ register = false }) {
+  const [showPassword, setShowPassword] = useState(false);
   const { setUser, user, setNotice } = useStore(),
     [busy, setBusy] = useState(false),
     [error, setError] = useState("");
   const navigate = useNavigate(),
     location = useLocation();
-  useEffect(() => setError(""), [register]);
+  useEffect(() => { setError(""); setShowPassword(false); }, [register]);
   async function submit(e) {
     e.preventDefault();
     const d = Object.fromEntries(new FormData(e.currentTarget));
@@ -398,13 +402,15 @@ export function Auth({ register = false }) {
         <FoodImage src={photos.hero} alt="ข้าวจานโปรด ภาพประกอบอาหารตามสั่ง" />
       </div>
       <div className="auth-form">
-        <span className="eyebrow orange"><ShinyText text="GOOD FOOD, HAPPY BELLY." color="#F45B0B" shineColor="#ffd9a8" speed={3} /></span>
-        <AnimatedHeading>{register ? "มาเป็นเพื่อนกันนะ" : "ดีใจที่ได้เจอกันอีก"}</AnimatedHeading>
-        <p>
-          {register
-            ? "สมัครสมาชิกเพื่อสั่งอาหารและจองโต๊ะ"
-            : "เข้าสู่ระบบ แล้วเลือกมื้อโปรดของคุณ"}
-        </p>
+        <div className="auth-intro">
+          <img src="/logo.svg" alt="" width="48" height="48" />
+          <h1>{register ? "สมัครสมาชิก" : "ยินดีต้อนรับกลับ"}</h1>
+          <p>สั่งอาหารและจองโต๊ะได้ในบัญชีเดียว</p>
+        </div>
+        {!user && <nav className="auth-tabs" aria-label="เลือกเข้าสู่ระบบหรือสมัครสมาชิก">
+          <Link to="/login" state={location.state} aria-current={!register ? 'page' : undefined}>เข้าสู่ระบบ</Link>
+          <Link to="/register" state={location.state} aria-current={register ? 'page' : undefined}>สมัครสมาชิก</Link>
+        </nav>}
         {user ? (
           <>
             <p>คุณเข้าสู่ระบบเป็น {user.name} แล้ว</p>
@@ -432,23 +438,27 @@ export function Auth({ register = false }) {
                 name="email"
                 required
                 type="email"
+                inputMode="email"
+                autoCapitalize="none"
+                spellCheck={false}
                 maxLength={190}
                 autoComplete="email"
                 placeholder="you@example.com"
               />
             </label>
-            <label>
-              รหัสผ่าน
-              <input
-                name="password"
-                required
-                type="password"
-                minLength={8}
-                maxLength={72}
-                autoComplete={register ? "new-password" : "current-password"}
-                placeholder="อย่างน้อย 8 ตัวอักษร"
-              />
-            </label>
+            <div className="auth-password-field">
+              <label htmlFor="auth-password">รหัสผ่าน</label>
+              <div className="auth-password-control">
+                <input id="auth-password" name="password" required
+                  type={showPassword ? "text" : "password"} minLength={8} maxLength={72}
+                  autoComplete={register ? "new-password" : "current-password"}
+                  placeholder={register ? "อย่างน้อย 8 ตัวอักษร" : "กรอกรหัสผ่านของคุณ"} />
+                <button type="button" className="password-toggle" aria-label={showPassword ? "ซ่อนรหัสผ่าน" : "แสดงรหัสผ่าน"}
+                  aria-pressed={showPassword} onClick={() => setShowPassword(v => !v)}>
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
+            </div>
             <Feedback error={error} />
             <button className="btn full" disabled={busy}>
               {busy
@@ -475,6 +485,7 @@ export function Auth({ register = false }) {
 }
 
 export function Reservation() {
+  const [date, setDate] = useState("");
   const slots = useData("/reservation-slots"),
     [search, setSearch] = useState(null),
     [tables, setTables] = useState([]),
@@ -485,7 +496,7 @@ export function Reservation() {
     [selected, setSelected] = useState(null),
     [note, setNote] = useState("");
   const navigate = useNavigate(),
-    { setNotice } = useStore();
+    { setNotice, setCelebrate } = useStore();
   const today = new Date().toLocaleDateString("en-CA", {
     timeZone: "Asia/Bangkok",
   });
@@ -515,6 +526,7 @@ export function Reservation() {
     try {
       await api.post("/reservations", { ...search, table_id: selected, note });
       setNotice("จองโต๊ะเรียบร้อย แล้วพบกันที่พุงป่อง");
+      setCelebrate(`จองโต๊ะสำเร็จ · ${thaiDate(search.date)} เวลา ${search.slot} น.`);
       navigate("/reservations");
     } catch (e) {
       setError(errorText(e));
@@ -538,19 +550,9 @@ export function Reservation() {
             setSelected(null);
           }}
         >
-        <label>
-          วันที่
-          <input
-            name="date"
-            type="date"
-            min={today}
-            max={new Date(Date.now() + 89 * 86400000).toLocaleDateString(
-              "en-CA",
-              { timeZone: "Asia/Bangkok" },
-            )}
-            required
-          />
-        </label>
+        <ReservationDate today={today} value={date} onChange={value => {
+          setDate(value); setSearch(null); setSelected(null);
+        }} />
         <label>
           เวลา
           <select name="slot" required>

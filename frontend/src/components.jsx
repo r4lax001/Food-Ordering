@@ -18,6 +18,7 @@ import {
 import { useStore } from "./state";
 import { money, photoFor } from "./utils";
 import ShinyText from "./components/reactbits/ShinyText";
+import ClocheLoader from "./components/ClocheLoader";
 export function Brand() {
   return (
     <Link to="/" className="brand" aria-label="พุงป่อง หน้าหลัก">
@@ -45,7 +46,7 @@ export function FoodImage({ src, alt, ...props }) {
 export function Feedback({ loading, error, empty = false, reload }) {
   return loading ? (
     <div className="feedback" role="status" aria-live="polite">
-      <LoaderCircle className="spin" /> พุงป่องกำลังจัดเตรียมข้อมูล…
+      <ClocheLoader size={46} /> พุงป่องกำลังจัดเตรียมข้อมูล…
     </div>
   ) : error ? (
     <Alert variant="destructive" className="feedback-alert">

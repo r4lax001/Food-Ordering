@@ -40,7 +40,7 @@
 @media (prefers-reduced-motion: reduce) { .table-picker .dining-table { transition: none; }.table-picker .dining-table:hover:not(:disabled) { transform: none; } }
 /* Fit the complete room to its container; zoom keeps touch targets full size. */
 .floorplan-scroll { width: 100%; min-width: 0; padding: 0; overscroll-behavior-x: contain; }
-.floorplan-sized { position: relative; margin-inline: auto; }
+.floorplan-sized { position: relative; margin-inline: auto; overflow: clip; }
 .restaurant-floor { margin: 0; transform-origin: top left; }
 .floorplan-toolbar { display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap; margin: 18px 0 12px; }
 .floorplan-view { display: flex; gap: 4px; padding: 4px; background: #f8efe4; border-radius: 14px; }

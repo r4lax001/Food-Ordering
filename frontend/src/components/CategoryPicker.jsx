@@ -8,7 +8,8 @@ function presentation(name) {
   return { Icon: Utensils, label: name };
 }
 export default function CategoryPicker({ categories, value, onChange }) {
-  return <div className="category-icons" role="group" aria-label="หมวดหมู่อาหาร">
+  return <section className="category-panel" aria-label="เลือกหมวดหมู่">
+    <div className="category-icons" role="group" aria-label="หมวดหมู่อาหาร">
     <button type="button" aria-pressed={!value} onClick={() => onChange('')}>
       <span className="category-symbol"><LayoutGrid aria-hidden="true" /></span><span>ทั้งหมด</span>
     </button>
@@ -20,5 +21,6 @@ export default function CategoryPicker({ categories, value, onChange }) {
         <span className="category-symbol"><Icon aria-hidden="true" /></span><span>{label}</span>
       </button>;
     })}
-  </div>;
+    </div>
+  </section>;
 }
